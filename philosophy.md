@@ -5,7 +5,13 @@ permalink: /philosophy/
 ---
 
 ### My Core Philosophy
-"Earn freedom by building system that work without me."
+"Earn freedom by building system that work without me."  
+
+
+
+
+
+          
 
 I value competence over comfort, logic over emotion, creation over consumption.
 My north star is autonomy - financial, intellectual, and psychological.  
