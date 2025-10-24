@@ -13,4 +13,4 @@ My north star is autonomy - financial, intellectual, and psychological.
 ### How I Search To Apply It
 - Build systems that replace  repetition with design
 - Measure progress in independence, not approval
-- Teach others what I learn to scale clarity and patience
+- Teach others what I learn to scale clarity and patience   xxx
