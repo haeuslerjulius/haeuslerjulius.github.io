@@ -1,7 +1,7 @@
 ---
 layout: page
 title: core philosophy
-permalink: /philisophy/
+permalink: /philosophy/
 ---
 
 ### My Core Philosophy
