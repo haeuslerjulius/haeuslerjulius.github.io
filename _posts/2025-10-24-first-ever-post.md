@@ -8,4 +8,4 @@ subtitle: "First ever post - Exploring Github"
 
 **Github learning phase** This is all new for me. I normally work in fully perfected enviroments with beatiful UIs and helpful AI assistants. Now I just have github on one tab of my browser, and ChatGPT for a little help on tab 2. 
 
-Feels like exploring the wilderness of coding.
+Feels like exploring.
