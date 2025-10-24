@@ -20,10 +20,10 @@ author: Julius Häusler
 ###############################################
 
 navbar-links:
-  About Me: "about me"
+  About Me: "aboutme.md"
   Build Log: "posts"
   Projects: "projects"
-  Philosophy: "philosophy"
+  Philosophy: "philosophy.md"
 
 ################
 # --- Logo --- #
