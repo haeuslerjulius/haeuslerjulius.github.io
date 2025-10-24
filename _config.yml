@@ -20,7 +20,10 @@ author: Julius Häusler
 ###############################################
 
 navbar-links:
-  About Me: "aboutme"
+  About Me: "about me"
+  Build Log: "posts"
+  Projects: "projects"
+  Philosophy: "philosophy"
   Resources:
     - Beautiful Jekyll: "https://beautifuljekyll.com"
     - Learn markdown: "https://www.markdowntutorial.com/"
@@ -50,8 +53,7 @@ round-avatar: true
 # You can change the order that they show up on the page by changing the order here.
 # Uncomment the links you want to show and add your information to each one.
 social-network-links:
-  email: "haeuslerjulius@icloud.com"
-  rss: true  # remove this line if you don't want to show an RSS link at the botom
+  email: "haeuslerjulius@icloud.com"  # remove this line if you don't want to show an RSS link at the botom
   instagram: julius.haeusler
   whatsapp: +491772383924
 #  medium: yourname
