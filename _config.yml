@@ -12,7 +12,7 @@ navbar-links:
   collections:
   builds:
     output: true
-    permalink: /builds/:title/
+    permalink: /_builds/:title/
 
 # Logo
 avatar: "selfie.upscaled.jpg"
