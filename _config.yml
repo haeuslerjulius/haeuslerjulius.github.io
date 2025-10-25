@@ -1,6 +1,8 @@
+# Home link right side
 title: My personal page
 author: Julius Häusler
 
+# Links left side
 navbar-links:
   About Me: "aboutme"
   Philosophy: "philosophy"
