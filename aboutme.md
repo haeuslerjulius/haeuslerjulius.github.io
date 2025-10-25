@@ -5,7 +5,7 @@ subtitle:
 ---
 
 ### About myself
-My name is Julius Häusler, I am currently 17 years old, and I live in the best part of Germany, which is Bavaria. I go to school at a Gymnsaium (similar to high school) in Rosenheim, 11th grade.
+My name is Julius Häusler, I am currently 17 years old, and I live in the best part of Germany, which is Bavaria. I go to school at a Gymnasium (similar to high school) in Rosenheim, 11th grade.
 
 ### My story
 Right now, my main job is school. But I run school on a 4.0GPA, don't really have much to do. This is why I got to do something else. This all started at some day in September '25, at about 6pm. My parents weren't home yet, I finished school earlier, had nothing to do, so I just laid in my bed, phone in my hand, scrolling on Instagram. 
