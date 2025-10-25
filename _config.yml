@@ -8,7 +8,7 @@ navbar-links:
 
 # Logo
 avatar: "selfie.upscaled.jpg"
-round-avatar: false
+round-avatar: true
 
 # social Media
 social-network-links:
