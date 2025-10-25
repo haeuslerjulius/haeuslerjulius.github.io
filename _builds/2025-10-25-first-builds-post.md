@@ -1,20 +1,8 @@
-this is just gibberish for testing purposes.
-srt
-hrt
-h
-th
-t
-hsr
-h
-sr
-ujsr
-uj
-sr
-j
-rsz
-s
-jh
-sr
-h
-rs
-th
+---
+layout: post
+title: "testing  builds post"
+subtitle: "second post ever - builds header"
+---
+
+### Here is nothing to see
+**please go back to homepage**
