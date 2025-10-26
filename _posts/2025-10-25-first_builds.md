@@ -1,8 +1,8 @@
 ---
 layout: post
 tags: [builds]
-title: "here are my builds"
-subtitle: "first builds post"
+title: "My First Post In The Builds Section"
+subtitle: "Beginner Struggles"
 ---
 
-testing 123
+I finally added a builds section to my webiste.
