@@ -3,3 +3,17 @@ layout: home
 title: Julius H.
 subtitle: I build small AI automations for real problems and share wins and failures along my journey.
 ---
+
+
+<h1>Home</h1>
+
+<ul>
+  {% for post in site.posts %}
+    {% if post.tags contains "home" %}
+      <li>
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <small>({{ post.date | date: "%b %-d, %Y" }})</small>
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>
