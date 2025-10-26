@@ -6,7 +6,7 @@ author: Julius Häusler
 navbar-links:
   About Me: "aboutme"
   Philosophy: "philosophy"
-  Builds: "_builds"
+  Builds: "builds"
 
 # builds page with posts
   collections:
