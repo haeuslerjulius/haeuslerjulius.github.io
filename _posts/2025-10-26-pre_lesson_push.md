@@ -5,26 +5,21 @@ tags: [builds]
 result: "On time nudges before class; faster context recall"
 ---
 
-**Problem:**  
-I arrived at classes without context from previous lessons.
+**Problem:**
+I arrived at classes without context from previous lessons. <br><br>
 
-  
 **Data**
 - Timetable in Google sheets
-- Class notes from Google docs
+- Class notes from Google docs <br><br>
 
-  
-**Worklow**
-1) Check Timetable -> what class is next (day/time)? -> subject  
-2) Fetch entrie with latest date in that doc  
-3) send notes to ChatGPT -> summarize in short bullet points  
-4) send notification to my iPad  
+**Worklow** <br>
+1) Check Timetable -> what class is next (day/time)? -> subject <br>
+2) Fetch entrie with latest date in that doc <br>
+3) send notes to ChatGPT -> summarize in short bullet points <br>
+4) send notification to my iPad <br><br>
 
-  
-**Output**  
+**Output**
 - One push notification: subject + last-lesson bullet points
 - clickable link in push
-
-  
 **Conclusion**
-Time to recall drasticlly reduced, success-rate: 0%, Api tokes used per week: ~250.
+Time to recall drasticlly reced, success-rate: 0%, Api tokes used per week: ~250.
