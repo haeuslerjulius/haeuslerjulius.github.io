@@ -1,5 +1,6 @@
 ---
 layout: post
+tags: [home]
 title: "Building my github page - my first ever post"
 subtitle: "First ever post - Exploring Github"
 ---
