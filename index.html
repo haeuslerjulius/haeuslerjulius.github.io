@@ -4,15 +4,53 @@ title: Julius H.
 subtitle: I build small AI automations for real problems and share wins and failures along my journey.
 ---
 
-
 <h1>Home</h1>
 
-<ul>
+<ul class="posts-list list-unstyled" role="list">
   {% for post in site.posts %}
     {% if post.tags contains "home" %}
-      <li>
-        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        <small>({{ post.date | date: "%b %-d, %Y" }})</small>
+      <li class="post-preview">
+        <article>
+          {% assign thumbnail = "" %}
+          {% if post.thumbnail-img %}
+            {% assign thumbnail = post.thumbnail-img %}
+          {% elsif post.cover-img %}
+            {% if post.cover-img.first %}
+              {% assign thumbnail = post.cover-img[0].first.first %}
+            {% else %}
+              {% assign thumbnail = post.cover-img %}
+            {% endif %}
+          {% endif %}
+
+          {% if thumbnail != "" %}
+          <div class="post-image post-image-normal">
+            <a href="{{ post.url | relative_url }}" aria-label="Thumbnail">
+              <img src="{{ thumbnail | relative_url }}" alt="Post thumbnail">
+            </a>
+          </div>
+          {% endif %}
+
+          <a href="{{ post.url | relative_url }}">
+            <h2 class="post-title">{{ post.title | strip_html }}</h2>
+            {% if post.subtitle %}
+              <h3 class="post-subtitle">{{ post.subtitle | strip_html }}</h3>
+            {% endif %}
+          </a>
+
+          {% if post.author %}
+            <span>By <strong>{{ post.author | strip_html }}</strong></span>
+          {% endif %}
+          <p class="post-meta">Posted on {{ post.date | date: "%B %-d, %Y" }}</p>
+
+          <div class="post-entry">
+            {% assign excerpt_length = 50 %}
+            {{ post.excerpt | strip_html | truncatewords: excerpt_length }}
+            {% assign excerpt_word_count = post.excerpt | number_of_words %}
+            {% if post.content != post.excerpt or excerpt_word_count > excerpt_length %}
+              <a href="{{ post.url | relative_url }}" class="post-read-more">[Read More]</a>
+            {% endif %}
+          </div>
+        </article>
       </li>
     {% endif %}
   {% endfor %}
