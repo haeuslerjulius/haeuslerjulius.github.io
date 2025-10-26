@@ -1,16 +1,18 @@
 ---
-layout: default
+layout: home
 title: Builds
 permalink: /builds/
 ---
 
-<h1>{{ page.title }}</h1>
+<h1>Builds</h1>
 
 <ul>
-  {% for build in site.builds %}
-    <li>
-      <a href="{{ build.url | relative_url }}">{{ build.title }}</a>
-      <small>({{ build.date | date: "%b %-d, %Y" }})</small>
-    </li>
+  {% for post in site.posts %}
+    {% if post.tags contains "builds" %}
+      <li>
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <small>({{ post.date | date: "%b %-d, %Y" }})</small>
+      </li>
+    {% endif %}
   {% endfor %}
 </ul>
