@@ -20,6 +20,9 @@ I arrived at classes without context from previous lessons. <br><br>
 
 **Output**
 - One push notification: subject + last-lesson bullet points
-- clickable link in push
-**Conclusion**
-Time to recall drasticlly reced, success-rate: 0%, Api tokes used per week: ~250.
+- clickable link in push <br><br>
+
+  
+**Conclusion** <br>
+- Time to recall drasticlly reced, success-rate: 98%
+- Ai Api tokes used per week: ~250.
