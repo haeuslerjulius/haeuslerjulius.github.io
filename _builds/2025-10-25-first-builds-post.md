@@ -1,8 +1,6 @@
 ---
+title: "My First Build"
+date: 2025-10-25
 layout: post
-title: "testing  builds post"
-subtitle: "second post ever - builds header"
 ---
-
-### Here is nothing to see
-**please go back to homepage**
+This is my first build description.
