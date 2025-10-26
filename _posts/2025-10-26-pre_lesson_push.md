@@ -16,7 +16,9 @@ I arrived at classes without context from previous lessons. <br><br>
 1) Check Timetable -> what class is next (day/time)? -> subject <br>
 2) Fetch entrie with latest date in that doc <br>
 3) send notes to ChatGPT -> summarize in short bullet points <br>
-4) send notification to my iPad <br><br>
+4) send notification to my iPad. <br><br>
+
+
 
 **Output**
 - One push notification: subject + last-lesson bullet points
