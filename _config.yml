@@ -6,13 +6,13 @@ author: Julius Häusler
 navbar-links:
   About Me: "aboutme"
   Philosophy: "philosophy"
-  Builds: "builds"
+  Builds: "_builds"
 
 # builds page with posts
   collections:
   builds:
     output: true
-    permalink: /_builds/:title/
+    permalink: /_builds/
 
 # Logo
 avatar: "selfie.upscaled.jpg"
