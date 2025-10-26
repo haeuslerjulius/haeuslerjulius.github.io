@@ -8,12 +8,6 @@ navbar-links:
   Philosophy: "philosophy"
   Builds: "builds"
 
-# builds page with posts
-  collections:
-  builds:
-    output: true
-    permalink: /_builds/
-
 # Logo
 avatar: "selfie.upscaled.jpg"
 round-avatar: true
