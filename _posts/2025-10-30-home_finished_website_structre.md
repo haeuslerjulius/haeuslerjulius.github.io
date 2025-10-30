@@ -4,7 +4,7 @@ title: "Just finished building the structure of my webiste"
 tags: [home]
 ---
 
-Had so much to do with school last seven days, had about two exams a day, which was pretty stressful. Found some time in my stacked calendar to finish coding and writing this prompt. Hope I have more time during the holdidays next week.
+Had so much to do with school last seven days, had about two exams a day, which was pretty stressful. Found some time in my stacked calendar to finish coding and writing this post. Hope I have more time during the holdidays next week.
 
 ### From the roots
 I structured this website into two main pages, which are this one, called 'home' and the builds page. This is where I will upload post like this one to tell my story. 
