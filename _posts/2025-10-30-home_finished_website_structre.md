@@ -4,15 +4,17 @@ title: "Just finished building the structure of my webiste"
 tags: [home]
 ---
 
-Had so much to do with school last seven days, had about two exams a day, which was pretty stressful. Found some time in my stacked calendar to finish coding and writing this post. Hope I have more time during the holdidays next week.
+I’ve had so much to do with school over the past seven days — about two exams a day — which was pretty stressful. Still, I managed to find some time in my packed schedule to finish coding and writing this post. Hopefully, I’ll have more time during the holidays next week.
 
-### From the roots
-I structured this website into two main pages, which are this one, called 'home' and the builds page. This is where I will upload post like this one to tell my story. 
-Then there are two other pages, which are 'About me' and 'Philosophy'. Those sites serve the purpose to inform about a topic which doesn't change as much, thats why those are more like a fire-and-forget for me, even thought I'll update them sporadically.
+### From the Roots
 
-### Behind the scenes
-To fill the two main pages with content, I choose to have a folder, in which I simply upload all my posts into. I lable them with 'home' or 'builds' tags to keep them sortet and automate publishing the posts on the right page.
-I generally had no idea how this sorting algorithm could work, so I asked ChatGPT. It generated the perfect code literally after the first prompt, I was quite supprised how well that works.
-It just filters for all posts with the according tag, and outputs them sorted by the date, backwards. 
+I structured this website into two main pages: this one, called Home, and the Builds page. This is where I’ll upload posts like this one to share my story.
+Then there are two other pages — About Me and Philosophy — which serve to share information that doesn’t change very often. They’re more of a set-and-forget type of thing, though I’ll update them from time to time.
 
-I realise more and more that prompt enegeering comined with the ability to upload/transfer the data might be the next great thing.
+### Behind the Scenes
+
+To fill the two main pages with content, I chose to have a folder where I simply upload all my posts. I label them with either Home or Builds tags to keep them sorted and to automatically publish them on the correct page.
+I had no idea how this sorting algorithm could work, so I asked ChatGPT — and it generated the perfect code literally after the first prompt! I was quite surprised by how well it worked.
+The code just filters all posts with the corresponding tag and sorts them by date in reverse order.
+
+I’m starting to realize more and more that prompt engineering combined with the ability to upload and transfer data might be the next big thing.
