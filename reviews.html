@@ -61,6 +61,7 @@
     main h1 {
       font-size: clamp(1.6rem, 3vw, 2.1rem);
       margin-bottom: 0.5rem;
+      text-align: right;
     }
 
     main p {
@@ -68,6 +69,8 @@
       color: var(--muted);
       margin-bottom: 1.25rem;
       max-width: 42rem;
+      margin-left: auto;
+      text-align: right;
     }
 
     .form-card {
@@ -78,37 +81,37 @@
       box-shadow: 0 18px 40px rgba(15, 23, 42, 0.85);
     }
 
-/* ⭐ Star rating */
-.stars {
-  display: flex;
-  flex-direction: row-reverse;     /* keep left→right visual logic */
-  gap: 8px;
-  cursor: pointer;
-  margin: 0.5rem auto 1rem;        /* ← auto left/right = center the block */
-  width: fit-content;              /* ← shrink container so it can be centered */
-}
+    /* ⭐ Star rating */
+    .stars {
+      display: flex;
+      flex-direction: row-reverse;     /* keep left→right visual logic */
+      gap: 8px;
+      cursor: pointer;
+      margin: 0.5rem auto 1rem;        /* center the block */
+      width: fit-content;              /* shrink container so it can be centered */
+    }
 
-.stars input {
-  display: none;
-}
+    .stars input {
+      display: none;
+    }
 
-.stars label {
-  font-size: 34px;
-  color: #444;
-  cursor: pointer;
-  transition: color 0.2s;
-}
+    .stars label {
+      font-size: 34px;
+      color: #444;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
 
-/* Hover + selected behavior */
-.stars label:hover,
-.stars label:hover ~ label {
-  color: gold;
-}
+    /* Hover + selected behavior */
+    .stars label:hover,
+    .stars label:hover ~ label {
+      color: gold;
+    }
 
-.stars input:checked ~ label {
-  color: gold;
-}    
-    
+    .stars input:checked ~ label {
+      color: gold;
+    }
+
     input,
     textarea {
       width: 100%;
@@ -149,6 +152,16 @@
       border-top: 1px solid rgba(148, 163, 184, 0.2);
       padding-top: 0.75rem;
     }
+
+    /* Unified response block animation */
+    #response-block {
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transform: translateY(10px);
+      transition: all 0.25s ease;
+      margin-top: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -177,52 +190,26 @@
 
         <!-- ⭐ CUSTOM FEEDBACK FORM -->
         <div class="stars">
-  <input type="radio" id="r5" name="rating" value="5">
-  <label for="r5">★</label>
+          <input type="radio" id="r5" name="rating" value="5">
+          <label for="r5">★</label>
 
-  <input type="radio" id="r4" name="rating" value="4">
-  <label for="r4">★</label>
+          <input type="radio" id="r4" name="rating" value="4">
+          <label for="r4">★</label>
 
-  <input type="radio" id="r3" name="rating" value="3">
-  <label for="r3">★</label>
+          <input type="radio" id="r3" name="rating" value="3">
+          <label for="r3">★</label>
 
-  <input type="radio" id="r2" name="rating" value="2">
-  <label for="r2">★</label>
+          <input type="radio" id="r2" name="rating" value="2">
+          <label for="r2">★</label>
 
-  <input type="radio" id="r1" name="rating" value="1">
-  <label for="r1">★</label>
-</div>
+          <input type="radio" id="r1" name="rating" value="1">
+          <label for="r1">★</label>
+        </div>
 
-        <!-- shown only for 4–5 stars -->
-<div id="email-group" style="display:none; margin-top:1rem;">
-  <p>Thank you! Would you support us with a Google review?</p>
-  <button type="button" onclick="leaveGoogleReview()">
-    Leave a Google review
-  </button>
+        <!-- Unified response block (content injected by JS) -->
+        <div id="response-block"></div>
 
-  <p style="margin-top:0.5rem; font-size:0.9rem;">
-    Or leave your email so we can send you the link later:
-  </p>
-  <input type="email" id="email" placeholder="your@email.com" />
-</div>
-
-<!-- shown only for 1–3 stars -->
-<div id="message-group" style="display:none; margin-top:1rem;">
-  <label>We’re sorry. What could we improve?</label>
-  <textarea
-    id="message"
-    rows="4"
-    placeholder="Your feedback goes directly to the owner."
-  ></textarea>
-</div>
-
-<p id="status" style="margin-top:0.5rem;"></p>
-
-<!-- this button is used for 1–3 stars (and can still be used for 4–5 if you want) -->
-<button type="button" onclick="submitFeedback()" style="margin-top:0.5rem;">
-  Send feedback
-</button>
-        
+        <p id="status" style="margin-top:0.5rem;"></p>
       </div>
     </main>
 
@@ -231,94 +218,89 @@
     </footer>
   </div>
 
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw0mBicjc0S-M0KGWhXa2R_RGabLDoaLjC98un2Cw9dXmTFiVyk1l3EzFdLAPCUlOJm/exec";
+    const GOOGLE_REVIEW_URL = "https://search.google.com/local/writereview?placeid=ChIJ76rBOIgZdkcR5a5Y5D30Nxg";
 
-<div id="response-block" style="
-  opacity:0;
-  max-height:0;
-  overflow:hidden;
-  transform:translateY(10px);
-  transition:all 0.25s ease;
-"></div>
+    const block = document.getElementById("response-block");
+    const statusEl = document.getElementById("status");
 
-<p id="status" style="margin-top:0.5rem;"></p>
-  
-<script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw0mBicjc0S-M0KGWhXa2R_RGabLDoaLjC98un2Cw9dXmTFiVyk1l3EzFdLAPCUlOJm/exec";
-  const GOOGLE_REVIEW_URL = "https://search.google.com/local/writereview?placeid=ChIJ76rBOIgZdkcR5a5Y5D30Nxg";
+    function updateContent(rating) {
+      if (!rating) {
+        block.style.opacity = 0;
+        block.style.maxHeight = "0px";
+        block.style.transform = "translateY(10px)";
+        block.innerHTML = "";
+        return;
+      }
 
-  const block = document.getElementById("response-block");
-  const statusEl = document.getElementById("status");
+      block.style.opacity = 1;
+      block.style.maxHeight = "500px";
+      block.style.transform = "translateY(0)";
 
-  function updateContent(rating) {
-    if (!rating) {
-      block.style.opacity = 0;
-      block.style.maxHeight = "0px";
-      block.innerHTML = "";
-      return;
+      if (rating <= 3) {
+        // unhappy flow
+        block.innerHTML = `
+          <h3 style="margin-bottom:0.75rem;">Thank you — your feedback helps us improve.</h3>
+          <textarea id="message" rows="4" placeholder="What could we do better?" style="margin-top:0.5rem;"></textarea>
+          <button type="button" onclick="submitFeedback()" style="margin-top:0.75rem;">Send feedback</button>
+        `;
+      } else {
+        // happy flow
+        block.innerHTML = `
+          <h3 style="margin-bottom:0.75rem;">Thank you — one last thing…</h3>
+
+          <button type="button" onclick="leaveGoogleReview()" style="margin-bottom:0.75rem;">
+            Leave a Google review
+          </button>
+
+          <p style="margin-top:0.5rem; font-size:0.9rem;">
+            Or leave your email and we’ll send you the link later:
+          </p>
+
+          <input type="email" id="email" placeholder="you@example.com" style="margin-top:0.5rem;">
+
+          <button type="button" onclick="submitFeedback()" style="margin-top:0.75rem;">Send feedback</button>
+        `;
+      }
     }
 
-    block.style.opacity = 1;
-    block.style.maxHeight = "500px";
+    document.addEventListener("DOMContentLoaded", () => {
+      const ratingInputs = document.querySelectorAll('input[name="rating"]');
 
-    if (rating <= 3) {
-      block.innerHTML = `
-        <h3 style="margin-bottom:0.75rem;">Thank you — your feedback helps us improve.</h3>
-        <textarea id="message" rows="4" placeholder="What could we do better?" style="margin-top:0.5rem;"></textarea>
-        <button type="button" onclick="submitFeedback()" style="margin-top:0.75rem;">Send feedback</button>
-      `;
-    } else {
-      block.innerHTML = `
-        <h3 style="margin-bottom:0.75rem;">Thank you — one last thing…</h3>
-
-        <button type="button" onclick="leaveGoogleReview()" style="margin-bottom:0.75rem;">
-          Leave a Google review
-        </button>
-
-        <p style="margin-top:0.5rem; font-size:0.9rem;">
-          Or leave your email and we’ll send you the link later:
-        </p>
-
-        <input type="email" id="email" placeholder="you@example.com" style="margin-top:0.5rem;">
-
-        <button type="button" onclick="submitFeedback()" style="margin-top:0.75rem;">Send feedback</button>
-      `;
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const ratingInputs = document.querySelectorAll('input[name="rating"]');
-
-    ratingInputs.forEach(input => {
-      input.addEventListener("change", () => {
-        updateContent(parseInt(input.value, 10));
+      ratingInputs.forEach(input => {
+        input.addEventListener("change", () => {
+          updateContent(parseInt(input.value, 10));
+        });
       });
     });
-  });
 
-  function sendToSheet() {
-    const ratingInput = document.querySelector('input[name="rating"]:checked');
-    const rating = ratingInput ? ratingInput.value : null;
-    const email = document.getElementById("email")?.value || "";
-    const message = document.getElementById("message")?.value || "";
+    function sendToSheet() {
+      const ratingInput = document.querySelector('input[name="rating"]:checked');
+      const rating = ratingInput ? ratingInput.value : null;
+      const emailInput = document.getElementById("email");
+      const messageInput = document.getElementById("message");
 
-    const params = new URLSearchParams();
-    params.append("rating", rating);
-    params.append("email", email);
-    params.append("message", message);
+      const email = emailInput ? emailInput.value : "";
+      const message = messageInput ? messageInput.value : "";
 
-    navigator.sendBeacon(SCRIPT_URL, params.toString());
-    statusEl.innerText = "Thank you for your feedback!";
-  }
+      const params = new URLSearchParams();
+      params.append("rating", rating);
+      params.append("email", email);
+      params.append("message", message);
 
-  function submitFeedback() {
-    sendToSheet();
-  }
+      navigator.sendBeacon(SCRIPT_URL, params.toString());
+      statusEl.innerText = "Thank you for your feedback!";
+    }
 
-  function leaveGoogleReview() {
-    window.open(GOOGLE_REVIEW_URL, "_blank");
-    sendToSheet();
-  }
-</script>
-  
+    function submitFeedback() {
+      sendToSheet();
+    }
+
+    function leaveGoogleReview() {
+      window.open(GOOGLE_REVIEW_URL, "_blank");
+      sendToSheet();
+    }
+  </script>
 </body>
 </html>
