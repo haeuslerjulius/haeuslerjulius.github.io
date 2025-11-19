@@ -230,30 +230,35 @@
       Your responses are anonymous unless you provide your email voluntarily.
     </footer>
   </div>
-<script>
-  // Backend endpoint
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw0mBicjc0S-M0KGWhXa2R_RGabLDoaLjC98un2Cw9dXmTFiVyk1l3EzFdLAPCUlOJm/exec";
 
-  // Google Review URL
+
+<div id="response-block" style="
+  opacity:0;
+  max-height:0;
+  overflow:hidden;
+  transform:translateY(10px);
+  transition:all 0.25s ease;
+"></div>
+
+<p id="status" style="margin-top:0.5rem;"></p>
+  
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw0mBicjc0S-M0KGWhXa2R_RGabLDoaLjC98un2Cw9dXmTFiVyk1l3EzFdLAPCUlOJm/exec";
   const GOOGLE_REVIEW_URL = "https://search.google.com/local/writereview?placeid=ChIJ76rBOIgZdkcR5a5Y5D30Nxg";
 
   const block = document.getElementById("response-block");
   const statusEl = document.getElementById("status");
 
-  // Build dynamic content inside the unified block
   function updateContent(rating) {
     if (!rating) {
       block.style.opacity = 0;
       block.style.maxHeight = "0px";
-      block.style.transform = "translateY(10px)";
       block.innerHTML = "";
       return;
     }
 
-    // Fade open
     block.style.opacity = 1;
     block.style.maxHeight = "500px";
-    block.style.transform = "translateY(0)";
 
     if (rating <= 3) {
       block.innerHTML = `
@@ -280,9 +285,9 @@
     }
   }
 
-  // Attach rating listeners
   document.addEventListener("DOMContentLoaded", () => {
     const ratingInputs = document.querySelectorAll('input[name="rating"]');
+
     ratingInputs.forEach(input => {
       input.addEventListener("change", () => {
         updateContent(parseInt(input.value, 10));
@@ -290,7 +295,6 @@
     });
   });
 
-  // Send data to Apps Script
   function sendToSheet() {
     const ratingInput = document.querySelector('input[name="rating"]:checked');
     const rating = ratingInput ? ratingInput.value : null;
@@ -306,12 +310,10 @@
     statusEl.innerText = "Thank you for your feedback!";
   }
 
-  // For 1–3 stars
   function submitFeedback() {
     sendToSheet();
   }
 
-  // For 4–5 stars
   function leaveGoogleReview() {
     window.open(GOOGLE_REVIEW_URL, "_blank");
     sendToSheet();
