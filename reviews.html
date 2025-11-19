@@ -205,39 +205,36 @@
   </div>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-qCS3iOZclzFVkn2B3fssnBKYtkTHLCeldX2pvx9amYmWdDstpvi23toqsBSvLi3l/exec";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-qCS3iOZclzFVkn2B3fssnBKYtkTHLCeldX2pvx9amYmWdDstpvi23toqsBSvLi3l/exec";
 
-    async function sendFeedback() {
-      const rating = document.querySelector('input[name="rating"]:checked')?.value;
-      const email = document.getElementById("email").value;
-      const message = document.getElementById("message").value;
-      const status = document.getElementById("status");
+  async function sendFeedback() {
+    const rating = document.querySelector('input[name="rating"]:checked')?.value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
+    const status = document.getElementById("status");
 
-      if (!rating) {
-        status.innerText = "Please select a rating.";
-        return;
-      }
-
-      status.innerText = "Sending...";
-
-      const payload = { rating, email, message };
-
-      try {
-        const res = await fetch(SCRIPT_URL, {
-          method: "POST",
-          body: JSON.stringify(payload),
-          headers: { "Content-Type": "application/json" }
-        });
-
-        if (res.ok) {
-          status.innerText = "Thank you for your feedback!";
-        } else {
-          status.innerText = "Error sending feedback.";
-        }
-      } catch (err) {
-        status.innerText = "Network error.";
-      }
+    if (!rating) {
+      status.innerText = "Please select a rating.";
+      return;
     }
-  </script>
+
+    status.innerText = "Sending...";
+
+    const payload = { rating, email, message };
+
+    try {
+      const res = await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors", 
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      status.innerText = "Thank you for your feedback!";
+    } catch (err) {
+      status.innerText = "Error sending feedback.";
+    }
+  }
+</script>
 </body>
 </html>
