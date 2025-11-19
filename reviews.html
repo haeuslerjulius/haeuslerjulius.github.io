@@ -205,10 +205,11 @@
   </div>
 
   <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz_MhGFOoZ-BkOPGwCVSOB49IWMo1y4Rc-idSlmwWfP1eCISlszOby2dLHYxa7lb6bC/exec";
+  const SCRIPT_URL = "PASTE_YOUR_EXEC_URL_HERE"; // web app /exec URL
 
   async function sendFeedback() {
-    const rating = document.querySelector('input[name="rating"]:checked')?.value;
+    const ratingInput = document.querySelector('input[name="rating"]:checked');
+    const rating = ratingInput ? ratingInput.value : null;
     const email = document.getElementById("email").value;
     const message = document.getElementById("message").value;
     const status = document.getElementById("status");
@@ -220,26 +221,30 @@
 
     status.innerText = "Sending...";
 
-    const payload = { rating, email, message };
+    // send as form fields, not JSON
+    const params = new URLSearchParams();
+    params.append("rating", rating);
+    params.append("email", email);
+    params.append("message", message);
 
     try {
-      const res = await fetch(SCRIPT_URL, {
+      await fetch(SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload)
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+        },
+        body: params.toString()
       });
 
-      if (!res.ok) {
-        status.innerText = "Server error: " + res.status;
-        return;
-      }
-
+      // we don't read the response in no-cors mode
       status.innerText = "Thank you for your feedback!";
     } catch (err) {
-      status.innerText = "Error sending feedback.";
+      console.error(err);
+      status.innerText = "Network error – please try again.";
     }
   }
 </script>
+
 </body>
 </html>
