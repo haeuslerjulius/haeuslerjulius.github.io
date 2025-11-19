@@ -74,39 +74,65 @@
       background: var(--card);
       border-radius: 12px;
       border: 1px solid rgba(148, 163, 184, 0.4);
-      padding: 0.75rem;
+      padding: 1rem;
       box-shadow: 0 18px 40px rgba(15, 23, 42, 0.85);
     }
 
-    .form-card-header {
+    /* ⭐ Star rating */
+    .stars {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-      gap: 0.5rem;
+      gap: 8px;
+      cursor: pointer;
+      margin: 0.5rem 0 1rem;
     }
 
-    .form-title {
-      font-size: 0.95rem;
-      font-weight: 500;
+    .stars input {
+      display: none;
     }
 
-    .form-note {
-      font-size: 0.8rem;
-      color: var(--muted);
+    .stars label {
+      font-size: 34px;
+      color: #444;
+      transition: 0.2s;
     }
 
-    iframe {
+    .stars label:hover,
+    .stars label:hover ~ label,
+    .stars input:checked ~ label {
+      color: gold;
+    }
+
+    input,
+    textarea {
       width: 100%;
-      border: 0;
-      height: 480px;
-      background: #111827;
+      padding: 0.65rem;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: #0f172a;
+      color: var(--text);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
     }
 
-    @media (max-width: 600px) {
-      iframe {
-        height: 540px;
-      }
+    button {
+      background: var(--accent);
+      color: #0f172a;
+      border: none;
+      padding: 0.7rem 1.2rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    #status {
+      margin-top: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--muted);
     }
 
     footer {
@@ -139,17 +165,79 @@
       <div class="form-card">
         <div class="form-card-header">
           <div class="form-title">Feedback form</div>
-          <div class="form-note">All answers are processed via Google Forms.</div>
+          <div class="form-note">All answers are processed anonymously.</div>
         </div>
 
-        <!-- Replace ONLY the src value with your own Google Forms embed URL -->
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd6yGRtyDX0GVjMwh80FTSYcgy-oDXhlDPLHo7B23ic-jo6Zw/viewform?embedded=true" width="640" height="424" frameborder="0" marginheight="0" marginwidth="0">Wird geladen…"</iframe>
+        <!-- ⭐ CUSTOM FEEDBACK FORM -->
+        <label>Rating:</label>
+        <div class="stars">
+          <input type="radio" name="rating" id="r1" value="1">
+          <label for="r1">★</label>
+
+          <input type="radio" name="rating" id="r2" value="2">
+          <label for="r2">★</label>
+
+          <input type="radio" name="rating" id="r3" value="3">
+          <label for="r3">★</label>
+
+          <input type="radio" name="rating" id="r4" value="4">
+          <label for="r4">★</label>
+
+          <input type="radio" name="rating" id="r5" value="5">
+          <label for="r5">★</label>
+        </div>
+
+        <label>Email (optional):</label>
+        <input type="email" id="email" placeholder="your@email.com" />
+
+        <label>Message:</label>
+        <textarea id="message" rows="4" placeholder="Write your feedback..."></textarea>
+
+        <button onclick="sendFeedback()">Send feedback</button>
+
+        <p id="status"></p>
       </div>
     </main>
 
     <footer>
-      Your responses are anonymous unless the form explicitly asks for contact details.
+      Your responses are anonymous unless you provide your email voluntarily.
     </footer>
   </div>
+
+  <script>
+    const SCRIPT_URL = "YOUR_GOOGLE_SCRIPT_WEB_APP_URL";
+
+    async function sendFeedback() {
+      const rating = document.querySelector('input[name="rating"]:checked')?.value;
+      const email = document.getElementById("email").value;
+      const message = document.getElementById("message").value;
+      const status = document.getElementById("status");
+
+      if (!rating) {
+        status.innerText = "Please select a rating.";
+        return;
+      }
+
+      status.innerText = "Sending...";
+
+      const payload = { rating, email, message };
+
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method: "POST",
+          body: JSON.stringify(payload),
+          headers: { "Content-Type": "application/json" }
+        });
+
+        if (res.ok) {
+          status.innerText = "Thank you for your feedback!";
+        } else {
+          status.innerText = "Error sending feedback.";
+        }
+      } catch (err) {
+        status.innerText = "Network error.";
+      }
+    }
+  </script>
 </body>
 </html>
