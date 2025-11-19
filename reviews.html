@@ -43,14 +43,16 @@
     }
 
     .brand {
-      font-weight: 600;
-      letter-spacing: 0.05em;
+      font-weight: 100;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      color: var(--muted);
     }
 
     .brand span {
       color: var(--accent);
+      font-weight: 600;
     }
 
     .tagline {
@@ -60,12 +62,13 @@
 
     main h1 {
       font-size: clamp(1.6rem, 3vw, 2.1rem);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
       text-align: right;
+      font-weight: 600;
     }
 
     main p {
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       color: var(--muted);
       margin-bottom: 1.25rem;
       max-width: 42rem;
@@ -75,10 +78,27 @@
 
     .form-card {
       background: var(--card);
-      border-radius: 12px;
+      border-radius: 16px;
       border: 1px solid rgba(148, 163, 184, 0.4);
-      padding: 1rem;
+      padding: 1.5rem 1.25rem 1.25rem;
       box-shadow: 0 18px 40px rgba(15, 23, 42, 0.85);
+    }
+
+    .form-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.75rem;
+    }
+
+    .form-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .form-note {
+      font-size: 0.8rem;
+      color: var(--muted);
     }
 
     /* ⭐ Star rating */
@@ -87,7 +107,7 @@
       flex-direction: row-reverse;
       gap: 8px;
       cursor: pointer;
-      margin: 0.5rem auto 1rem;
+      margin: 0.75rem auto 1rem;
       width: fit-content;
     }
 
@@ -99,12 +119,13 @@
       font-size: 34px;
       color: #444;
       cursor: pointer;
-      transition: color 0.2s;
+      transition: color 0.18s ease, transform 0.1s ease;
     }
 
     .stars label:hover,
     .stars label:hover ~ label {
       color: gold;
+      transform: translateY(-1px);
     }
 
     .stars input:checked ~ label {
@@ -116,42 +137,60 @@
       opacity: 0;
       max-height: 0;
       overflow: hidden;
-      transform: translateY(10px);
-      transition: all 0.25s ease;
+      transform: translateY(6px);
+      transition: all 0.22s ease;
       margin-top: 1rem;
     }
 
     input,
     textarea {
       width: 100%;
-      padding: 0.65rem;
+      padding: 0.65rem 0.85rem;
       border-radius: 8px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      background: #0f172a;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: #020617;
       color: var(--text);
       font-size: 0.9rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.35);
     }
 
     button {
       background: var(--accent);
       color: #0f172a;
       border: none;
-      padding: 0.7rem 1.2rem;
+      padding: 0.7rem 1.3rem;
       font-weight: 600;
-      border-radius: 8px;
+      border-radius: 999px;
       cursor: pointer;
-      transition: 0.2s;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      text-transform: none;
+      transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.05s ease;
     }
 
     button:hover {
-      opacity: 0.9;
+      background: #0ea5e9;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.4);
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: none;
     }
 
     #status {
       margin-top: 0.6rem;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: var(--muted);
+      min-height: 1.2em;
     }
 
     footer {
@@ -160,37 +199,42 @@
       color: var(--muted);
       border-top: 1px solid rgba(148, 163, 184, 0.2);
       padding-top: 0.75rem;
+      text-align: right;
     }
 
- /* GOOGLE WHITE BUTTON */
-.google-btn-white {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: #ffffff;
-  color: #1a73e8;               /* Google Blue text */
-  border: 1px solid #dadce0;    /* light Google border */
-  padding: 0.65rem 1.2rem;
-  font-size: 0.95rem;
-  font-weight: 500;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.15s ease, box-shadow 0.15s ease;
-}
+    /* GOOGLE WHITE BUTTON */
+    .google-btn-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #ffffff;
+      color: #1a73e8;               /* Google Blue text */
+      border: 1px solid #dadce0;    /* light Google border */
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
 
-.google-btn-white:hover {
-  background: #f8f9fa;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-}
+    .google-btn-white:hover {
+      background: #f8f9fa;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+      transform: translateY(-1px);
+    }
 
-.google-btn-white:active {
-  background: #f1f3f4;
-}
+    .google-btn-white:active {
+      background: #f1f3f4;
+      box-shadow: none;
+      transform: translateY(0);
+    }
 
-.google-g-icon {
-  width: 20px;
-  height: 20px;
-}
+    .google-g-icon {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -243,13 +287,13 @@
     </main>
 
     <footer>
-      Your responses are anonymous unless you provide your email voluntarily.
+      Your responses are anonymous unless you provide your feedback voluntarily.
     </footer>
   </div>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw0mBicjc0S-M0KGWhXa2R_RGabLDoaLjC98un2Cw9dXmTFiVyk1l3EzFdLAPCUlOJm/exec";
-    const GOOGLE_REVIEW_URL = "https://search.google.com/local/writereview?placeid=ChIJ76rBOIgZdkcR5a5Y5D30Nxg";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw0mBicjc0S-M0KGWhXa2R_RGd0ZxTSiZtD1-XzaHUjc1TDxstHWy3Jug5tPXswhpR/exec";
+    const GOOGLE_REVIEW_URL = "https://search.google.com/local/writereview?placeid=ChIJ76rBOIgZdkcRPRBj8zK9Oec";
 
     const block = document.getElementById("response-block");
     const statusEl = document.getElementById("status");
@@ -268,27 +312,28 @@
       block.style.transform = "translateY(0)";
 
       if (rating <= 3) {
+        // unhappy flow
         block.innerHTML = `
           <h3 style="margin-bottom:0.75rem;">Thank you — your feedback helps us improve.</h3>
           <textarea id="message" rows="4" placeholder="What could we do better?" style="margin-top:0.5rem;"></textarea>
           <button type="button" onclick="submitFeedback()" style="margin-top:0.75rem;">Send feedback</button>
         `;
       } else {
+        // happy flow
         block.innerHTML = `
           <h3 style="margin-bottom:0.75rem;">Thank you — one last thing…</h3>
 
-<button type="button" class="google-btn-white" onclick="leaveGoogleReview()" style="margin-bottom:0.75rem;">
-  <svg class="google-g-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-    <path fill="#EA4335" d="M12 2.04c2.41 0 4.6.9 6.29 2.36l-2.55 2.55C14.7 6.03 13.42 5.5 12 5.5c-3.04 0-5.6 2.06-6.51 4.82l-2.65-2.05C4.32 4.39 7.87 2.04 12 2.04z"/>
-    <path fill="#FBBC05" d="M22 12c0-.72-.07-1.42-.2-2.09H12v4.18h5.62c-.24 1.4-.98 2.6-2.09 3.37l2.55 2.55C20.36 17.58 22 15 22 12z"/>
-    <path fill="#34A853" d="M12 22c3.25 0 6-1.07 7.94-2.9l-2.55-2.55C16.25 17.52 14.25 18.5 12 18.5c-3.04 0-5.6-2.06-6.51-4.82l-2.65 2.05C4.32 19.61 7.87 22 12 22z"/>
-    <path fill="#4285F4" d="M5.49 13.68A6.52 6.52 0 0 1 5.49 10.3l-2.65-2.05A9.96 9.96 0 0 0 2 12c0 1.65.4 3.21 1.11 4.6l2.38-2.92z"/>
-  </svg>
-  Leave a Google review
-</button>
+          <button type="button" class="google-btn-white" onclick="leaveGoogleReview()" style="margin-bottom:0.75rem;">
+            <img
+              src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+              alt="Google"
+              class="google-g-icon"
+            />
+            <span>Leave a Google review</span>
+          </button>
 
           <p style="margin-top:0.5rem; font-size:0.9rem;">
-            Or leave your email and we’ll send you the link later:
+            Or leave your email so we can send you the link later:
           </p>
 
           <input type="email" id="email" placeholder="you@example.com" style="margin-top:0.5rem;">
@@ -323,7 +368,7 @@
       params.append("message", message);
 
       navigator.sendBeacon(SCRIPT_URL, params.toString());
-      statusEl.innerText = "Thank you for your feedback!";
+      statusEl.textContent = "Thank you for your feedback!";
     }
 
     function submitFeedback() {
@@ -335,6 +380,5 @@
       sendToSheet();
     }
   </script>
-
 </body>
 </html>
