@@ -81,6 +81,7 @@
     /* ⭐ Star rating */
     .stars {
       display: flex;
+      flex-direction: row-reversed;
       gap: 8px;
       cursor: pointer;
       margin: 0.5rem 0 1rem;
@@ -169,23 +170,22 @@
         </div>
 
         <!-- ⭐ CUSTOM FEEDBACK FORM -->
-        <label>Rating:</label>
         <div class="stars">
-          <input type="radio" name="rating" id="r1" value="1">
-          <label for="r1">★</label>
+  <input type="radio" id="r5" name="rating" value="5">
+  <label for="r5">★</label>
 
-          <input type="radio" name="rating" id="r2" value="2">
-          <label for="r2">★</label>
+  <input type="radio" id="r4" name="rating" value="4">
+  <label for="r4">★</label>
 
-          <input type="radio" name="rating" id="r3" value="3">
-          <label for="r3">★</label>
+  <input type="radio" id="r3" name="rating" value="3">
+  <label for="r3">★</label>
 
-          <input type="radio" name="rating" id="r4" value="4">
-          <label for="r4">★</label>
+  <input type="radio" id="r2" name="rating" value="2">
+  <label for="r2">★</label>
 
-          <input type="radio" name="rating" id="r5" value="5">
-          <label for="r5">★</label>
-        </div>
+  <input type="radio" id="r1" name="rating" value="1">
+  <label for="r1">★</label>
+</div>
 
         <!-- shown only for 4–5 stars -->
 <div id="email-group" style="display:none; margin-top:1rem;">
@@ -321,8 +321,8 @@
 
   // === used when 4–5 stars: send to sheet + open Google review ===
   async function leaveGoogleReview() {
-    await sendToSheet(); // even if this fails, we still open Google for the user
     window.open(GOOGLE_REVIEW_URL, "_blank");
+    sendToSheet();
   }
 </script>
 
