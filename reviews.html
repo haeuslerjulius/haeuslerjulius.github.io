@@ -78,31 +78,37 @@
       box-shadow: 0 18px 40px rgba(15, 23, 42, 0.85);
     }
 
-    /* ⭐ Star rating */
-    .stars {
-      display: flex;
-      flex-direction: row-reversed;
-      gap: 8px;
-      cursor: pointer;
-      margin: 0.5rem 0 1rem;
-    }
+/* ⭐ Star rating */
+.stars {
+  display: flex;
+  flex-direction: row-reverse;       /* rightmost = 1, leftmost = 5 */
+  gap: 8px;
+  cursor: pointer;
+  margin: 0.5rem 0 1rem;
+}
 
-    .stars input {
-      display: none;
-    }
+.stars input {
+  display: none;
+}
 
-    .stars label {
-      font-size: 34px;
-      color: #444;
-      transition: 0.2s;
-    }
+.stars label {
+  font-size: 34px;
+  color: #444;
+  cursor: pointer;
+  transition: color 0.2s;
+}
 
-    .stars label:hover,
-    .stars label:hover ~ label,
-    .stars input:checked ~ label {
-      color: gold;
-    }
+/* Correct hover behavior (left → right visually) */
+.stars label:hover,
+.stars label:hover ~ label {
+  color: gold;
+}
 
+/* Correct checked behavior (left → right visually) */
+.stars input:checked ~ label {
+  color: gold;
+}
+    
     input,
     textarea {
       width: 100%;
