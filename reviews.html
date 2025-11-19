@@ -78,13 +78,14 @@
       box-shadow: 0 18px 40px rgba(15, 23, 42, 0.85);
     }
 
-/* ⭐ Star rating ⭐*/
+/* ⭐ Star rating */
 .stars {
   display: flex;
-  flex-direction: row-reverse;/* rightmost = 1, leftmost = 5 */
+  flex-direction: row-reverse;     /* keep left→right visual logic */
   gap: 8px;
   cursor: pointer;
-  margin: 0.5rem 0 1rem;
+  margin: 0.5rem auto 1rem;        /* ← auto left/right = center the block */
+  width: fit-content;              /* ← shrink container so it can be centered */
 }
 
 .stars input {
@@ -98,17 +99,15 @@
   transition: color 0.2s;
 }
 
-/* Correct hover behavior (left → right visually) */
+/* Hover + selected behavior */
 .stars label:hover,
 .stars label:hover ~ label {
   color: gold;
 }
 
-/* Correct checked behavior (left → right visually) */
 .stars input:checked ~ label {
   color: gold;
-}
-    
+}    
     input,
     textarea {
       width: 100%;
