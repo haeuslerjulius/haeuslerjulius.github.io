@@ -187,15 +187,36 @@
           <label for="r5">★</label>
         </div>
 
-        <label>Email (optional):</label>
-        <input type="email" id="email" placeholder="your@email.com" />
+        <!-- shown only for 4–5 stars -->
+<div id="email-group" style="display:none; margin-top:1rem;">
+  <p>Thank you! Would you support us with a Google review?</p>
+  <button type="button" onclick="leaveGoogleReview()">
+    Leave a Google review
+  </button>
 
-        <label>Message:</label>
-        <textarea id="message" rows="4" placeholder="Write your feedback..."></textarea>
+  <p style="margin-top:0.5rem; font-size:0.9rem;">
+    Or leave your email so we can send you the link later:
+  </p>
+  <input type="email" id="email" placeholder="your@email.com" />
+</div>
 
-        <button onclick="sendFeedback()">Send feedback</button>
+<!-- shown only for 1–3 stars -->
+<div id="message-group" style="display:none; margin-top:1rem;">
+  <label>We’re sorry. What could we improve?</label>
+  <textarea
+    id="message"
+    rows="4"
+    placeholder="Your feedback goes directly to the owner."
+  ></textarea>
+</div>
 
-        <p id="status"></p>
+<p id="status" style="margin-top:0.5rem;"></p>
+
+<!-- this button is used for 1–3 stars (and can still be used for 4–5 if you want) -->
+<button type="button" onclick="submitFeedback()" style="margin-top:0.5rem;">
+  Send feedback
+</button>
+        
       </div>
     </main>
 
@@ -204,10 +225,51 @@
     </footer>
   </div>
 
-  <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw0mBicjc0S-M0KGWhXa2R_RGabLDoaLjC98un2Cw9dXmTFiVyk1l3EzFdLAPCUlOJm/exec"; // web app /exec URL
+<script>
+  // 1) Backend endpoint (Apps Script Web App URL)
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw0mBicjc0S-M0KGWhXa2R_RGabLDoaLjC98un2Cw9dXmTFiVyk1l3EzFdLAPCUlOJm/exec";
 
-  async function sendFeedback() {
+  // 2) Google review URL for this bakery
+  //    Use the full "write a review" link from Google Business
+  const GOOGLE_REVIEW_URL = "https://search.google.com/local/writereview?placeid=ChIJ76rBOIgZdkcR5a5Y5D30Nxg";
+
+  // === Show/hide fields based on selected rating ===
+  function updateFieldVisibility() {
+    const ratingInput = document.querySelector('input[name="rating"]:checked');
+    const rating = ratingInput ? parseInt(ratingInput.value, 10) : 0;
+
+    const emailGroup = document.getElementById("email-group");
+    const messageGroup = document.getElementById("message-group");
+
+    if (!rating) {
+      // nothing selected yet → show nothing
+      emailGroup.style.display = "none";
+      messageGroup.style.display = "none";
+      return;
+    }
+
+    if (rating >= 4) {
+      // positive: show Google button + email, hide complaint
+      emailGroup.style.display = "block";
+      messageGroup.style.display = "none";
+    } else {
+      // 1–3: show complaint box, hide email + Google button
+      emailGroup.style.display = "none";
+      messageGroup.style.display = "block";
+    }
+  }
+
+  // attach listeners once DOM is ready
+  document.addEventListener("DOMContentLoaded", () => {
+    const ratingInputs = document.querySelectorAll('input[name="rating"]');
+    ratingInputs.forEach(input => {
+      input.addEventListener("change", updateFieldVisibility);
+    });
+    updateFieldVisibility(); // initial state = nothing shown
+  });
+
+  // === low-level: send data to Apps Script (used by both flows) ===
+  async function sendToSheet() {
     const ratingInput = document.querySelector('input[name="rating"]:checked');
     const rating = ratingInput ? ratingInput.value : null;
     const email = document.getElementById("email").value;
@@ -216,12 +278,17 @@
 
     if (!rating) {
       status.innerText = "Please select a rating.";
-      return;
+      return false;
+    }
+
+    // for 1–3 stars, require a short message
+    if (parseInt(rating, 10) <= 3 && !message.trim()) {
+      status.innerText = "Please tell us briefly what went wrong.";
+      return false;
     }
 
     status.innerText = "Sending...";
 
-    // send as form fields, not JSON
     const params = new URLSearchParams();
     params.append("rating", rating);
     params.append("email", email);
@@ -237,12 +304,25 @@
         body: params.toString()
       });
 
-      // we don't read the response in no-cors mode
       status.innerText = "Thank you for your feedback!";
+      return true;
     } catch (err) {
       console.error(err);
       status.innerText = "Network error – please try again.";
+      return false;
     }
+  }
+
+  // === used when 1–3 stars: just send feedback ===
+  async function submitFeedback() {
+    await sendToSheet();
+    // stays on page
+  }
+
+  // === used when 4–5 stars: send to sheet + open Google review ===
+  async function leaveGoogleReview() {
+    await sendToSheet(); // even if this fails, we still open Google for the user
+    window.open(GOOGLE_REVIEW_URL, "_blank");
   }
 </script>
 
