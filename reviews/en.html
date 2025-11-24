@@ -325,16 +325,15 @@
       block.innerHTML = `
         <h3 style="margin-bottom:0.75rem;">Thank you  —  your feedback helps us improve.</h3>
         <textarea id="message" rows="4" placeholder="What could we do better?" style="margin-top:0.5rem;"></textarea>
-        <button type="button" onclick="submitFeedback()" style="margin-top:0.75rem;">Send feedback</button>
 
-
-        <p style="margin-top:0.5rem; font-size:0.9rem;">
+  <p style="margin-top:0.5rem; font-size:0.9rem;">
           Want to see what we change on your behalf?
         </p>
 
-        <input type="email" id="email" placeholder="Leave Your Email Here:" style="margin-top:0.5rem;">
+          <input type="email" id="email" placeholder="Leave Your Email Here:" style="margin-top:0.25rem;">
         
-        
+        <button type="button" onclick="submitFeedback()" style="margin-top:0.75rem;">Send feedback</button>
+
       `;
     } else {
       // happy flow
