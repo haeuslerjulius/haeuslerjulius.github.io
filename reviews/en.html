@@ -323,7 +323,7 @@
     if (rating <= 3) {
       // unhappy flow
       block.innerHTML = `
-        <h3 style="margin-bottom:0.75rem;">Thank you  —  your feedback helps us improve.</h3>
+        <h3 style="margin-bottom:0.75rem; margin-top:1rem;">Thank you  —  your feedback helps us improve.</h3>
         <textarea id="message" rows="4" placeholder="What could we do better?" style="margin-top:0.5rem;"></textarea>
 
         <p style="margin-top:0.5rem; font-size:0.9rem;">Want to see what we change on your behalf?</p>
@@ -336,7 +336,7 @@
     } else {
       // happy flow
       block.innerHTML = `
-        <h3 style="margin-bottom:0.75rem;">Thank you  —  what is next?</h3>
+        <h3 style="margin-bottom:1rem; margin-top:1rem;">Thank you  —  what is next?</h3>
 
         <button type="button" class="google-btn-white" onclick="leaveGoogleReview()" style="margin-bottom:0.5rem;">
           <img
@@ -347,7 +347,7 @@
           <span>Leave a Google review</span>
         </button>
 
-        <button type="button" class="google-btn-white" onclick="submitFeedback()" style="margin-bottom:0.75rem;">Nothing more &#128512; </button>
+        <button type="button" class="google-btn-white" onclick="submitFeedback()" style="margin-bottom:0.75rem;">  &#128512  Nothing more...; </button>
 
         <p style="margin-bottom:0.75rem; font-size:0.9rem;">Want to get a link sent later?</p>
 
