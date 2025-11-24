@@ -4,8 +4,6 @@ tags: [home]
 title: "Deleting Instagram - second step to my freedom"
 ---
 
-Home Post — “Deleting Instagram (Properly This Time)”
-
 A week after I deleted Snapchat, I realised something important: deleting one app doesn’t fix the underlying behaviour. The habit just finds a new outlet. Mine moved straight into Instagram.
 
 So I took the next step.
