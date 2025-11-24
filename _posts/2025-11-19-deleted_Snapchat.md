@@ -1,7 +1,7 @@
 ---
 layout: post
 tags: [home]
-title: "Deleting Snapchat"
+title: "Deleting Snapchat - first step towards freedom"
 subtitle: "Eliminating distractions, minimizing low quality screentime"
 ---
 
