@@ -1,6 +1,8 @@
-
-
-Home Post — “1:1”
+---
+layout: post
+tags: [home]
+title: "1:1"
+---
 
 For the first time ever, my ratio between building and consuming hit 1:1.
 
