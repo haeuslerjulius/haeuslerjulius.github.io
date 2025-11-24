@@ -45,3 +45,5 @@ From the customer’s perspective, it’s extremely simple:
 That’s it.
 
 The whole thing takes less than 15 seconds, and people actually complete it because there’s no thinking involved — the page guides them.
+
+It's all under haeuslerjulius.github.io/reviews/en, please feel free to check it out and tell me what you think.
