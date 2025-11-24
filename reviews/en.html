@@ -326,11 +326,9 @@
         <h3 style="margin-bottom:0.75rem;">Thank you  —  your feedback helps us improve.</h3>
         <textarea id="message" rows="4" placeholder="What could we do better?" style="margin-top:0.5rem;"></textarea>
 
-  <p style="margin-top:0.5rem; font-size:0.9rem;">
-          Want to see what we change on your behalf?
-        </p>
+        <p style="margin-top:0.5rem; font-size:0.9rem;">Want to see what we change on your behalf?</p>
 
-          <input type="email" id="email" placeholder="Leave Your Email Here:" style="margin-top:0.25rem;">
+        <input type="email" id="email" placeholder="Leave Your Email Here:" style="margin-top:0.1rem;">
         
         <button type="button" onclick="submitFeedback()" style="margin-top:0.75rem;">Send feedback</button>
 
@@ -338,9 +336,9 @@
     } else {
       // happy flow
       block.innerHTML = `
-        <h3 style="margin-bottom:0.75rem;">Thank you  —  one last thing…</h3>
+        <h3 style="margin-bottom:0.75rem;">Thank you  —  what is next?h3>
 
-        <button type="button" class="google-btn-white" onclick="leaveGoogleReview()" style="margin-bottom:0.75rem;">
+        <button type="button" class="google-btn-white" onclick="leaveGoogleReview()" style="margin-bottom:0.5rem;">
           <img
             src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
             alt="Google"
@@ -349,13 +347,23 @@
           <span>Leave a Google review</span>
         </button>
 
-          // add sth here
 
-        <p style="margin-top:0.5rem; font-size:0.9rem;">
-          Want to get a link sent later?
-        </p>
 
-        <input type="email" id="email" placeholder="Leave Your Email Here:" style="margin-top:0.5rem;">
+
+        <button type="button" class="google-btn-white" onclick="leaveGoogleReview()" style="margin-bottom:0.5rem;">
+          <img
+            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+            alt="Google"
+            class="google-g-icon"
+          />
+          <span>testing</span>
+        </button>
+
+        
+
+        <p style="margin-top:0.5rem; font-size:0.9rem;">Want to get a link sent later?</p>
+
+        <input type="email" id="email" placeholder="Leave Your Email Here:" style="margin-top:0.25rem;">
 
         <button type="button" onclick="submitFeedback()" style="margin-top:0.75rem;">Send feedback</button>
       `;
