@@ -10,8 +10,6 @@ Right now I’m still in the simplest mode possible: printing objects directly f
 
 The next step is clear: I need to choose my first real 3D design workflow. Blender, Fusion 360, Shapr3D, Onshape — I haven’t decided yet. 
 
-</br>
-
 Once I decide, the plan is to start designing my own parts. Storage solutions, adapters, small functional items — the same way Phase 1 pushed me to build my first digital systems, this printer will push me to build my first physical ones.  ￼
 
 This is a good reminder of what I wrote in my Mission Sheet: “Creation over consumption. Proof over opinion. Iteration over perfection.”  ￼
