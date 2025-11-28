@@ -44,7 +44,7 @@
       margin-bottom: 1.5rem;
       border-bottom: 1px solid rgba(148, 163, 184, 0.3);
       display: flex;
-      justify-content: flex-start;
+      justify-content: flex-start;   /* logo + text grouped on left */
       align-items: center;
       gap: 0.75rem;
     }
@@ -62,7 +62,7 @@
       font-weight: 600;
     }
 
-    /* split brand */
+    /* NEW: split brand next to logo */
     .brand-split {
       display: flex;
       flex-direction: column;
@@ -338,9 +338,6 @@
   const block = document.getElementById("response-block");
   const statusEl = document.getElementById("status");
 
-  const STORAGE_KEY = "feedback_submitted_v1";
-  let hasSubmitted = false;
-
   function updateContent(rating) {
     if (!rating) {
       block.style.opacity = 0;
@@ -399,22 +396,9 @@
         updateContent(parseInt(input.value, 10));
       });
     });
-
-    // check if this browser has already submitted
-    if (localStorage.getItem(STORAGE_KEY) === "1") {
-      hasSubmitted = true;
-      statusEl.textContent = "You already submitted feedback. Thank you!";
-    }
   });
 
-  // sendToSheet now accepts a flag: fromGoogle = true/false
   function sendToSheet(fromGoogle) {
-    // prevent multiple submissions from same browser
-    if (hasSubmitted || localStorage.getItem(STORAGE_KEY) === "1") {
-      statusEl.textContent = "You already submitted feedback. Thank you!";
-      return;
-    }
-
     const ratingInput = document.querySelector('input[name="rating"]:checked');
     const rating = ratingInput ? ratingInput.value : null;
     const emailInput = document.getElementById("email");
@@ -439,10 +423,6 @@
       },
       body: params.toString()
     });
-
-    // mark as submitted in this browser
-    hasSubmitted = true;
-    localStorage.setItem(STORAGE_KEY, "1");
   }
 
   // Unhappy path → special success message
