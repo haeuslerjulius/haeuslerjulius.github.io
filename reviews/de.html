@@ -1,16 +1,23 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Kundenfeedback</title>
+  <title>Customer Feedback</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    /* Colours */
     :root {
       --bg: #0f172a;
       --card: #020617;
       --text: #e5e7eb;
       --muted: #9ca3af;
       --accent: #38bdf8;
+    }
+      /* Logo */
+      .logo {
+      height: 40px;
+      max-width: 40px;
+      width: auto;
     }
 
     * {
@@ -37,7 +44,7 @@
       margin-bottom: 1.5rem;
       border-bottom: 1px solid rgba(148, 163, 184, 0.3);
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
       gap: 0.75rem;
     }
@@ -53,6 +60,31 @@
     .brand span {
       color: var(--accent);
       font-weight: 600;
+    }
+
+    /* split brand */
+    .brand-split {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+      margin-left: 0.5rem;
+      text-align: left;
+    }
+
+    .brand-top {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .brand-bottom {
+      font-size: 0.85rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
     }
 
     .tagline {
@@ -94,6 +126,11 @@
     .form-title {
       font-size: 1rem;
       font-weight: 600;
+    }
+
+    .form-note {
+      font-size: 0.8rem;
+      color: var(--muted);
     }
 
     /* ⭐ Star rating */
@@ -166,6 +203,7 @@
       cursor: pointer;
       font-size: 0.9rem;
       letter-spacing: 0.03em;
+      text-transform: none;
       transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.05s ease;
     }
 
@@ -202,45 +240,58 @@
       align-items: center;
       gap: 10px;
       background: #ffffff;
-      color: #1a73e8;
-      border: 1px solid #dadce0;
+      color: #1a73e8;               /* Google Blue text */
+      border: 1px solid #dadce0;    /* light Google border */
       padding: 0.6rem 1.2rem;
       font-size: 0.9rem;
       font-weight: 500;
       border-radius: 4px;
       cursor: pointer;
+      transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+
+    .google-btn-white:hover {
+      background: #f8f9fa;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+      transform: translateY(-1px);
+    }
+
+    .google-btn-white:active {
+      background: #f1f3f4;
+      box-shadow: none;
+      transform: translateY(0);
     }
 
     .google-g-icon {
       width: 18px;
       height: 18px;
+      display: block;
     }
   </style>
 </head>
-
 <body>
   <div class="page">
     <header>
-      <div class="brand">
-        <span>Kunden</span> Feedback
-      </div>
-      <div class="tagline">
-        Danke, dass Sie sich kurz Zeit nehmen.
+      <img src="logo.png" alt="Logo" class="logo">
+      <div class="brand-split">
+        <span class="brand-top">CUSTOMER</span>
+        <span class="brand-bottom">FEEDBACK</span>
       </div>
     </header>
 
     <main>
-      <h1>Ihr Feedback macht uns besser</h1>
+      <h1>Your feedback helps us improve</h1>
       <p>
-        Beantworten Sie bitte die kurze Rückmeldung unten. Es dauert weniger als eine Minute
-        und zeigt uns, was gut läuft – und wo wir nachschärfen müssen.
+        Please answer the short survey below. It takes less than a minute and
+        helps us understand what works well and where we need to improve.
       </p>
 
       <div class="form-card">
         <div class="form-card-header">
-          <div class="form-title">Wie war Ihre Erfahrung bei uns?</div>
+          <div class="form-title">Rate your experience with us</div>
         </div>
 
+        <!-- ⭐ CUSTOM FEEDBACK FORM -->
         <div class="stars">
           <input type="radio" id="r5" name="rating" value="5">
           <label for="r5">★</label>
@@ -258,22 +309,28 @@
           <label for="r1">★</label>
         </div>
 
+        <!-- Unified response block (JS injects content) -->
         <div id="response-block"></div>
+
         <p id="status" style="margin-top:0.5rem;"></p>
       </div>
     </main>
 
     <footer>
-      <span style="color:#fff;">
-        Ihre Rückmeldungen bleiben anonym, sofern Sie keine E-Mail angeben.
-      </span>
-      <br />
-      <a href="/reviews/Impressium.html" style="color: inherit; text-decoration: none;">Impressum</a>
-      <br />
-      <a href="/reviews/Data_privacy.html" style="color: inherit; text-decoration: none;">Datenschutz</a>
+    <span style="color:#fff;">
+    Your responses are anonymous unless you provide your email voluntarily.
+    </span>
+    <br>
+    <a href="/reviews/Impressium.html" style="color: inherit; text-decoration: none;">
+        Impressum
+    </a>
+    <br>
+    <a href="/reviews/Data_privacy.html" style="color: inherit; text-decoration: none;">
+        Data privacy
     </footer>
+  
   </div>
-
+  
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbymmPDREDr_nUZxrtnDEd8NtWfT5hl_wr1bi5mn4IejgyHUvQ57HJNAB9Cu4nlNldyy/exec";
   const GOOGLE_REVIEW_URL = "https://search.google.com/local/writereview?placeid=ChIJ7bPmpTAadkcR3u2v5pcyBns";
@@ -281,98 +338,139 @@
   const block = document.getElementById("response-block");
   const statusEl = document.getElementById("status");
 
+  const STORAGE_KEY = "feedback_submitted_v1";
+  let hasSubmitted = false;
+
   function updateContent(rating) {
     if (!rating) {
       block.style.opacity = 0;
       block.style.maxHeight = "0px";
+      block.style.transform = "translateY(10px)";
       block.innerHTML = "";
       return;
     }
 
     block.style.opacity = 1;
     block.style.maxHeight = "600px";
+    block.style.transform = "translateY(0)";
 
     if (rating <= 3) {
+      // unhappy flow
       block.innerHTML = `
-        <h3 style="margin-bottom:0.75rem; margin-top:1rem;">Danke — Ihr Hinweis hilft uns, besser zu werden.</h3>
-        <textarea id="message" rows="4" placeholder="Was hätten wir besser machen können?" style="margin-top:0.5rem;"></textarea>
+        <h3 style="margin-bottom:0.75rem; margin-top:1rem;">Thank you — your feedback helps us improve.</h3>
+        <textarea id="message" rows="4" placeholder="What could we do better?" style="margin-top:0.5rem;"></textarea>
 
-        <p style="margin-top:0.5rem; font-size:0.9rem;">Wenn Sie möchten, informieren wir Sie über unsere Verbesserungen.</p>
+        <p style="margin-top:0.5rem; font-size:0.9rem;">Want to see what we change on your behalf?</p>
 
-        <input type="email" id="email" placeholder="Ihre E-Mail (optional)" style="margin-top:0.1rem;">
+        <input type="email" id="email" placeholder="Leave Your Email Here:" style="margin-top:0.1rem;">
         
-        <button type="button" onclick="submitUnhappyFeedback()" style="margin-top:0.25rem;">Feedback senden</button>
+        <button type="button" onclick="submitUnhappyFeedback()" style="margin-top:0.25rem;">Send feedback</button>
       `;
     } else {
+      // happy flow
       block.innerHTML = `
-        <h3 style="margin-bottom:1rem; margin-top:1rem;">Vielen Dank — wie möchten Sie fortfahren?</h3>
+        <h3 style="margin-bottom:1rem; margin-top:1rem;">Thank you — what is next?</h3>
 
         <button type="button" class="google-btn-white" onclick="leaveGoogleReview()" style="margin-bottom:0.5rem;">
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" class="google-g-icon" />
-          <span>Google Bewertung abgeben</span>
+          <img
+            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+            alt="Google"
+            class="google-g-icon"
+          />
+          <span>Leave a Google review</span>
         </button>
 
-        <button type="button" class="google-btn-white" onclick="submitHappyNothing()" style="margin-bottom:1.5rem;">&#128512; Nein danke, alles erledigt</button>
+        <button type="button" class="google-btn-white" onclick="submitHappyNothing()" style="margin-bottom:1.5rem;">&#128512; Nothing more, log me out</button>
 
-        <p style="margin-bottom:0.75rem; font-size:0.9rem;">Möchten Sie künftig Angebote oder Erinnerungen erhalten?</p>
+        <p style="margin-bottom:0.75rem; font-size:0.9rem;">Want a reminder or special offers?</p>
 
-        <input type="email" id="email" placeholder="Ihre E-Mail (optional)" style="margin-bottom:0.25rem;">
+        <input type="email" id="email" placeholder="Leave Your Email Here:" style="margin-bottom:0.25rem;">
 
-        <button type="button" onclick="submitHappyEmail()">Updates erhalten</button>
+        <button type="button" onclick="submitHappyEmail()">Send me Updates</button>
       `;
     }
   }
 
   document.addEventListener("DOMContentLoaded", () => {
     const ratingInputs = document.querySelectorAll('input[name="rating"]');
+
     ratingInputs.forEach(input => {
       input.addEventListener("change", () => {
         updateContent(parseInt(input.value, 10));
       });
     });
+
+    // check if this browser has already submitted
+    if (localStorage.getItem(STORAGE_KEY) === "1") {
+      hasSubmitted = true;
+      statusEl.textContent = "You already submitted feedback. Thank you!";
+    }
   });
 
+  // sendToSheet now accepts a flag: fromGoogle = true/false
   function sendToSheet(fromGoogle) {
+    // prevent multiple submissions from same browser
+    if (hasSubmitted || localStorage.getItem(STORAGE_KEY) === "1") {
+      statusEl.textContent = "You already submitted feedback. Thank you!";
+      return;
+    }
+
     const ratingInput = document.querySelector('input[name="rating"]:checked');
     const rating = ratingInput ? ratingInput.value : null;
-    const email = document.getElementById("email")?.value || "";
-    const message = document.getElementById("message")?.value || "";
+    const emailInput = document.getElementById("email");
+    const messageInput = document.getElementById("message");
+
+    const email = emailInput ? emailInput.value : "";
+    const message = messageInput ? messageInput.value : "";
 
     const params = new URLSearchParams();
     params.append("rating", rating);
     params.append("email", email);
     params.append("message", message);
-    params.append("googleReview", fromGoogle ? "yes" : "no");
+
+    const googleFlag = fromGoogle ? "yes" : "no";
+    params.append("googleReview", googleFlag);
 
     fetch(SCRIPT_URL, {
       method: "POST",
       mode: "no-cors",
-      headers: {"Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+      },
       body: params.toString()
     });
+
+    // mark as submitted in this browser
+    hasSubmitted = true;
+    localStorage.setItem(STORAGE_KEY, "1");
   }
 
+  // Unhappy path → special success message
   function submitUnhappyFeedback() {
     sendToSheet(false);
-    statusEl.textContent = "Danke — wir haben Ihre Rückmeldung erhalten und setzen Verbesserungen um.";
+    statusEl.textContent =
+      "Thank you — your message has been received. We’ll review it and improve immediately.";
   }
 
+  // Happy path → "Nothing more" button
   function submitHappyNothing() {
     sendToSheet(false);
-    statusEl.textContent = "Alles klar — vielen Dank!";
+    statusEl.textContent = "Thanks — you’re all set!";
   }
 
+  // Happy path → email opt-in success
   function submitHappyEmail() {
     sendToSheet(false);
-    statusEl.textContent = "Danke — wir halten Sie in Zukunft auf dem Laufenden.";
+    statusEl.textContent = "Thank you — your update request has been received!";
   }
 
+  // Happy path → Google review clicked
   function leaveGoogleReview() {
     window.open(GOOGLE_REVIEW_URL, "_blank");
     sendToSheet(true);
-    statusEl.textContent = "Danke — und danke, dass Sie uns auf Google unterstützen!";
+    statusEl.textContent = "Thank you — and thanks for supporting us on Google!";
   }
 </script>
-
+  
 </body>
 </html>
