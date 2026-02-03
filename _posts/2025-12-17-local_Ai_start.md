@@ -1,16 +1,14 @@
 ---
-tags: 
-
-
-
-
-Home Post — “The Original Idea Behind the Local AI”
+layout: post
+title: "“The Original Idea Behind the Local AI”"
+tags: [builds]
+---
 
 The original idea was actually much bigger than what exists today.
 
 From the start, I wanted a fully automated local system that tracks what I do, understands patterns over time, and then helps me in two ways:
-	1.	proactively, when intervention actually makes sense
-	2.	reactively, when I explicitly ask for help
+	1.	reactively, when I explicitly ask for help
+	2.	proactively, when intervention actually makes sense
 
 Not a chatbot. More like an operating layer.
 
