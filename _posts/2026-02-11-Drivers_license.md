@@ -1,7 +1,8 @@
-
-
-
-Home Post — “Driver’s License”
+---
+layout: post
+tags: [home]
+title: "I got my Driver's License"
+---
 
 Today I passed my driving test.
 
@@ -17,3 +18,8 @@ The license isn’t freedom by itself. It’s permission.
 Freedom depends on how I use it.
 
 Still — one more system understood. One more layer of independence unlocked.
+
+
+For nerds: In bavaria where I live you have to take a minimum of 12 driving lessons, 45 min and ~80€ each.
+Additianlly, you have to asnwer countless questions in an driver's app and take part in about 15 theory lessons with a teacher.
+The total was 2.440€.
