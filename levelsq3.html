@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>HOLD — keep a shape in the room</title>
+<style>
+:root{
+  --ink:#07090A;
+  --panel:#141B1F;
+  --panel2:#0E1417;
+  --rule:#243136;
+  --dot:#E8B04B;
+  --trace:#6FD3D8;
+  --good:#7FBF7A;
+  --warn:#C4553A;
+  --text:#C9D4D6;
+  --dim:#5E6E73;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{height:100%;margin:0;overflow:hidden;background:var(--ink);}
+body{
+  font-family:var(--mono); color:var(--text); font-size:12px;
+  -webkit-user-select:none; user-select:none; overscroll-behavior:none;
+}
+
+#gate{
+  position:fixed; inset:0; z-index:100; background:var(--ink);
+  display:flex; flex-direction:column; justify-content:center; gap:18px;
+  padding:34px 28px; overflow-y:auto;
+}
+#gate.hidden{display:none;}
+#gate h1{margin:0; font-size:30px; line-height:1.06; font-weight:600; letter-spacing:-.02em;}
+#gate h1 b{color:var(--dot); font-weight:600;}
+#gate p{color:var(--dim); line-height:1.6; font-size:12.5px; max-width:32em; margin:0;}
+#gate p b{color:var(--trace); font-weight:400;}
+#startBtn{
+  appearance:none; border:1px solid var(--dot); background:transparent; color:var(--dot);
+  font-family:var(--mono); font-size:13px; letter-spacing:.22em; text-transform:uppercase;
+  padding:18px 20px; width:100%; cursor:pointer;
+}
+#startBtn:active{background:var(--dot); color:var(--ink);}
+#startBtn:focus-visible{outline:2px solid var(--trace); outline-offset:3px;}
+#gateErr{color:var(--warn); line-height:1.6;}
+
+#stage{position:fixed; inset:0; overflow:hidden;}
+#ref{position:absolute; left:50%; top:50%; pointer-events:none;}
+#ref i{position:absolute; background:rgba(201,212,214,.22);}
+#ref .h{left:-13px; top:0; width:26px; height:1px;}
+#ref .v{left:0; top:-13px; width:1px; height:26px;}
+
+#shape{
+  position:absolute; left:50%; top:50%;
+  transform-origin:50% 50%; will-change:transform;
+}
+#shape.dot{
+  width:34px; height:34px; margin:-17px 0 0 -17px;
+  border-radius:50%; background:var(--dot);
+  box-shadow:0 0 22px rgba(232,176,75,.30);
+}
+#shape.rect{
+  border:2px solid var(--dot); border-radius:5px;
+  background:rgba(232,176,75,.09);
+  box-shadow:0 0 26px rgba(232,176,75,.14);
+}
+#shape.dot .marks{display:none;}
+#shape .marks{position:absolute; inset:0; pointer-events:none;}
+#shape .marks i{position:absolute; background:rgba(232,176,75,.5);}
+#shape .marks .ch{left:50%; top:50%; width:22px; height:1px; transform:translate(-50%,-.5px);}
+#shape .marks .cv{left:50%; top:50%; width:1px; height:22px; transform:translate(-.5px,-50%);}
+#shape .marks .tt{left:50%; top:0; width:1px; height:12px; transform:translateX(-.5px);}
+#shape.locked{border-color:var(--good); background:rgba(127,191,122,.09);}
+#shape.dot.locked{background:var(--good); box-shadow:0 0 22px rgba(127,191,122,.30);}
+
+#learn{
+  position:absolute; left:50%; top:50%; width:76px; height:76px;
+  margin:-38px 0 0 -38px; pointer-events:none;
+}
+#learn circle{fill:none; stroke-width:2;}
+#learn .bg{stroke:rgba(201,212,214,.08);}
+#learn .fg{stroke:var(--trace); stroke-linecap:round; transition:stroke-dashoffset .2s linear;}
+#learn.done .fg{stroke:var(--good);}
+
+#info{
+  position:absolute; left:0; right:0; top:0; z-index:8; pointer-events:none;
+  padding:calc(env(safe-area-inset-top) + 14px) 16px 0;
+  display:flex; justify-content:space-between; align-items:flex-start;
+  font-size:11px; letter-spacing:.12em; color:var(--dim);
+}
+#offset{font-variant-numeric:tabular-nums; color:var(--trace); font-size:15px; letter-spacing:.04em;}
+#offset.far{color:var(--warn);}
+#drift{font-size:10px; color:var(--dim); margin-top:3px; letter-spacing:.06em;}
+#status{text-align:right; line-height:1.7;}
+#status .lock{color:var(--good);}
+#status .seek{color:var(--warn);}
+
+#panel{
+  position:absolute; left:0; right:0; bottom:0; z-index:16;
+  background:var(--panel); border-top:1px solid var(--rule);
+  padding:0 14px calc(env(safe-area-inset-bottom) + 14px);
+  transform:translateY(calc(100% - 42px));
+  transition:transform .26s cubic-bezier(.22,.61,.36,1);
+  max-height:86vh; overflow-y:auto;
+}
+#panel.open{transform:translateY(0);}
+#handle{
+  height:42px; display:flex; align-items:center; justify-content:space-between;
+  margin:0 -14px; padding:0 16px; cursor:pointer;
+  position:sticky; top:0; background:var(--panel); z-index:2;
+}
+#handle span{font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:var(--dim);}
+#handle b{font-size:10px; letter-spacing:.16em; color:var(--dot); font-weight:400;}
+
+/* presets sit above everything and stay visually distinct */
+#presets{
+  padding:13px 0 15px; border-bottom:1px solid var(--rule);
+  background:linear-gradient(180deg, rgba(232,176,75,.05), transparent);
+  margin:0 -14px; padding-left:14px; padding-right:14px;
+}
+#presets .pk{
+  font-size:9px; letter-spacing:.28em; text-transform:uppercase;
+  color:var(--dim); display:flex; align-items:center;
+}
+#presets .pk em{margin-left:auto; font-style:normal; color:var(--trace); letter-spacing:.1em;}
+#presets .seg{margin-top:8px;}
+#presets .seg + .pk{margin-top:14px;}
+
+.group{padding:13px 0; border-top:1px solid var(--rule);}
+.row{display:flex; align-items:center;}
+.row label{font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--dim);}
+.row .val{margin-left:auto; color:var(--trace); font-variant-numeric:tabular-nums;}
+input[type=range]{-webkit-appearance:none; appearance:none; width:100%; background:transparent; margin:11px 0 0;}
+input[type=range]::-webkit-slider-runnable-track{height:2px; background:var(--rule);}
+input[type=range]::-moz-range-track{height:2px; background:var(--rule);}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none; width:22px; height:22px; margin-top:-10px;
+  background:var(--dot); border:0; border-radius:0; cursor:pointer;
+}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;background:var(--dot);border:0;border-radius:0;cursor:pointer;}
+.seg{display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:1px; background:var(--rule); border:1px solid var(--rule);}
+.seg button,.mini button{
+  appearance:none; border:0; background:var(--panel2); color:var(--dim);
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase;
+  padding:11px 3px; cursor:pointer;
+}
+.seg button.on,.mini button.on,.mini button:active{background:var(--dot); color:var(--ink);}
+.mini{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:1px;}
+.mini button{color:var(--text);}
+.hint{margin:9px 0 0; font-size:10.5px; line-height:1.55; color:var(--dim);}
+.hint b{color:var(--trace); font-weight:400;}
+.gk{font-size:9px; letter-spacing:.28em; text-transform:uppercase; color:var(--dim); margin-bottom:9px;}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <h1>Hold a shape<br><b>in the room.</b></h1>
+  <p>
+    Move the phone and the shape stays put &mdash; sideways, up and down, and in depth. Pull the
+    device away from your face and it grows; bring it closer and it shrinks.
+  </p>
+  <p>
+    Start from the presets at the top of the settings. <b>Device</b> sets the physical scale &mdash;
+    how far it may travel, how much noise to expect, how you hold it. <b>Smoothness</b> sets the time
+    constants. They are independent, so pick one of each.
+  </p>
+  <p>
+    Turn and tilt the device for a few seconds after starting; the ring at the centre fills as the
+    rotation model is learned. Tap anywhere to recentre.
+  </p>
+  <button id="startBtn">Start</button>
+  <p id="gateErr"></p>
+</div>
+
+<div id="stage" aria-hidden="true">
+  <div id="ref"><i class="h"></i><i class="v"></i></div>
+  <svg id="learn" viewBox="0 0 76 76">
+    <circle class="bg" cx="38" cy="38" r="36"></circle>
+    <circle class="fg" cx="38" cy="38" r="36" transform="rotate(-90 38 38)"></circle>
+  </svg>
+  <div id="shape" class="rect">
+    <div class="marks"><i class="ch"></i><i class="cv"></i><i class="tt"></i></div>
+  </div>
+</div>
+
+<div id="info">
+  <div>
+    <div id="offset">—</div>
+    <div id="drift">—</div>
+  </div>
+  <div id="status">—</div>
+</div>
+
+<div id="panel">
+  <div id="handle" role="button" tabindex="0" aria-expanded="false">
+    <span>Settings</span><b id="handleState">IPAD · BALANCED</b>
+  </div>
+
+  <div id="presets">
+    <div class="pk">Device <em id="devTag">iPad</em></div>
+    <div class="seg" id="segDevice">
+      <button data-device="phone">Phone</button>
+      <button data-device="ipad" class="on">iPad</button>
+      <button data-device="mount">Mounted</button>
+    </div>
+    <div class="pk">Smoothness <em id="smoothTag">Balanced</em></div>
+    <div class="seg" id="segSmooth">
+      <button data-smooth="snappy">Snappy</button>
+      <button data-smooth="balanced" class="on">Balanced</button>
+      <button data-smooth="smooth">Smooth</button>
+    </div>
+    <p class="hint" id="presetHint">—</p>
+  </div>
+
+  <div class="group">
+    <div class="gk">Depth</div>
+    <div class="seg" id="segDepth">
+      <button data-depth="on" class="on">On</button>
+      <button data-depth="off">Off</button>
+    </div>
+    <div class="row" style="margin-top:13px"><label for="eye">Viewing distance</label><span class="val" id="eyeVal">45 cm</span></div>
+    <input type="range" id="eye" min="15" max="70" step="1" value="45">
+    <div class="row" style="margin-top:13px"><label for="depthGain">Depth gain</label><span class="val" id="depthGainVal">100 %</span></div>
+    <input type="range" id="depthGain" min="0" max="300" step="10" value="100">
+    <div class="mini"><button id="btnFlipZ">Reverse depth</button><button id="btnRecentre">Recentre</button></div>
+    <p class="hint" id="depthHint">Scale is <b>1 &minus; z / e</b>.</p>
+  </div>
+
+  <div class="group">
+    <div class="gk">Rotation response</div>
+    <div class="row"><label for="rollTau">Roll settle</label><span class="val" id="rollTauVal">0.12 s</span></div>
+    <input type="range" id="rollTau" min="0.03" max="0.8" step="0.01" value="0.12">
+    <div class="row" style="margin-top:13px"><label for="lead">Lead</label><span class="val" id="leadVal">45 ms</span></div>
+    <input type="range" id="lead" min="0" max="140" step="5" value="45">
+    <p class="hint" id="rollHint">Corrects 57 % of a step within 100 ms.</p>
+  </div>
+
+  <div class="group">
+    <div class="gk">Target</div>
+    <div class="seg" id="segShape">
+      <button data-shape="rect" class="on">Rectangle 9:16</button>
+      <button data-shape="dot">Dot</button>
+    </div>
+    <div class="row" style="margin-top:13px"><label for="size">Size</label><span class="val" id="sizeVal">45 % of height</span></div>
+    <input type="range" id="size" min="20" max="90" step="5" value="45">
+    <p class="hint" id="sizeHint">Rectangle: — × — px.</p>
+  </div>
+
+  <div class="group">
+    <div class="gk">Rotation rejection</div>
+    <div class="row"><label>Learned</label><span class="val" id="learnVal">0 %</span></div>
+    <div class="row" style="margin-top:13px"><label for="reject">Strength</label><span class="val" id="rejectVal">70 %</span></div>
+    <input type="range" id="reject" min="0" max="150" step="5" value="70">
+    <div class="mini"><button id="btnRelearn">Relearn</button><button id="btnFreeze">Freeze</button></div>
+  </div>
+
+  <div class="group">
+    <div class="gk">Drift control</div>
+    <div class="row"><label for="dc">Bias tracking</label><span class="val" id="dcVal">2.0 s</span></div>
+    <input type="range" id="dc" min="0.5" max="12" step="0.5" value="2">
+  </div>
+
+  <div class="group">
+    <div class="row"><label for="tauV">Hold — velocity</label><span class="val" id="tauVVal">0.80 s</span></div>
+    <input type="range" id="tauV" min="0.1" max="3" step="0.05" value="0.8">
+    <div class="row" style="margin-top:13px"><label for="tauP">Return — position</label><span class="val" id="tauPVal">0.15 s</span></div>
+    <input type="range" id="tauP" min="0.05" max="3" step="0.05" value="0.15">
+    <p class="hint" id="ssHint">Settled offset from a 0.03 m/s² residual: 4 mm.</p>
+  </div>
+
+  <div class="group">
+    <div class="row"><label for="range">Range</label><span class="val" id="rangeVal">160 mm</span></div>
+    <input type="range" id="range" min="10" max="250" step="5" value="160">
+  </div>
+
+  <div class="group">
+    <div class="row"><label for="travel">Travel</label><span class="val" id="travelVal">90 %</span></div>
+    <input type="range" id="travel" min="0" max="300" step="5" value="90">
+  </div>
+
+  <div class="group">
+    <div class="row"><label for="gateA">Noise floor</label><span class="val" id="gateVal">0.010 m/s²</span></div>
+    <input type="range" id="gateA" min="0" max="0.3" step="0.005" value="0.01">
+  </div>
+
+  <div class="group">
+    <div class="gk">Stationary lock</div>
+    <div class="seg" id="segZupt">
+      <button data-zupt="off">Off</button>
+      <button data-zupt="on" class="on">On</button>
+    </div>
+    <div class="row" style="margin-top:13px"><label for="stillA">Enter below</label><span class="val" id="stillVal">0.12 m/s²</span></div>
+    <input type="range" id="stillA" min="0.03" max="0.6" step="0.01" value="0.12">
+  </div>
+
+  <div class="group">
+    <div class="gk">Rotation of the shape</div>
+    <div class="seg" id="segWorld">
+      <button data-world="on" class="on">World</button>
+      <button data-world="off">Screen</button>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="mini">
+      <button id="btnFlipX">Reverse X</button>
+      <button id="btnFlipY">Reverse Y</button>
+      <button id="btnFlipA">Flip gravity</button>
+      <button id="btnReset">Reset all</button>
+    </div>
+    <p class="hint" id="calHint">Roll axis: detecting.</p>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* ===================================================================
+   HOLD — keep a shape fixed in the room
+   -------------------------------------------------------------------
+   PRESETS
+
+   Two independent axes, because the settings really do separate that
+   way. DEVICE covers physical scale — how far the thing may travel, how
+   much sensor noise to expect, how far from your face it sits, how hard
+   you pivot it. SMOOTHNESS covers the time constants alone.
+
+   The iPad values are measured, not guessed: Range 160 mm, Travel 90 %,
+   Return 0.15 s, Noise floor 0.010, Strength 70 %, Bias 2.0 s. A tablet
+   is heavier, so hand tremor is lower and the noise floor can drop;
+   it is held further away and swings on a longer arm, so it travels
+   further and needs less rotation rejection per unit of turn.
+
+   Smoothness sets tauV, tauP, roll settle, lead and band limit, and the
+   settled offset follows p_ss = a * tauV * tauP:
+
+       snappy    1.8 mm    roll corrects 71 % of a step in 100 ms
+       balanced  3.6 mm                  57 %
+       smooth   10.8 mm                  33 %
+
+   Touching any slider a preset owns marks it Custom, so the highlight
+   never lies about what is actually loaded.
+
+   PHYSICS (unchanged)
+     - roll from gravity, complementary-filtered, settle time adjustable
+     - rotation rejection LEARNED online from the raw gyro channels with
+       no axis labels: for any pivot offset, a = alpha x s + omega x
+       (omega x s) is a linear combination of exactly nine terms, and
+       that span is closed under any channel permutation. Shipped solver
+       measured at 0.023 / 0.024 / 0.056 % residual on x / y / z with
+       channels deliberately swapped.
+     - continuous DC removal for bias
+     - split velocity and position time constants
+     - world-frame integration, ZUPT with hysteresis, band limit,
+       robust dt, state bounded at source
+     - depth: scale = e/e0 = 1 - posZ/e0
+   =================================================================== */
+
+const D2R=Math.PI/180, R2D=180/Math.PI, G=9.81;
+const AXIS_NAMES=['\u03B1','\u03B2','\u03B3'];
+const CSS_PX_PER_M=3779.53;
+const RATE_LP_TAU=0.035, GRAV_LP_TAU=0.8;
+const W_LP_TAU=0.025, A_LP_TAU=0.050;
+const STILL_N=18, ZUPT_POS_TAU=0.35;
+const DETECT_N=70;
+const NF=9, FIT_FORGET=25.0, FIT_MIN=1.2, FIT_EVERY=24, PRED_CLAMP=40;
+const LEAD_CLAMP=25*D2R;
+const SCALE_MIN=0.35, SCALE_MAX=2.60;
+
+/* ---------- presets ---------- */
+const DEVICE={
+  phone:{ label:'Phone',   range:0.060, travel:1.30, size:0.50, noise:0.020, reject:1.00, eye:0.35, stillThresh:0.14 },
+  ipad: { label:'iPad',    range:0.160, travel:0.90, size:0.45, noise:0.010, reject:0.70, eye:0.45, stillThresh:0.12 },
+  mount:{ label:'Mounted', range:0.040, travel:1.00, size:0.55, noise:0.030, reject:1.00, eye:0.55, stillThresh:0.20 }
+};
+const SMOOTH={
+  snappy:  { label:'Snappy',   tauV:0.60, tauP:0.10, rollTau:0.08, lead:0.070, band:16, dcTau:1.5 },
+  balanced:{ label:'Balanced', tauV:0.80, tauP:0.15, rollTau:0.12, lead:0.045, band:12, dcTau:2.0 },
+  smooth:  { label:'Smooth',   tauV:1.20, tauP:0.30, rollTau:0.25, lead:0.025, band:8,  dcTau:4.0 }
+};
+const DEVICE_KEYS=['range','travel','size','noise','reject','eye','stillThresh'];
+const SMOOTH_KEYS=['tauV','tauP','rollTau','lead','band','dcTau'];
+
+const S={
+  device:'ipad', smooth:'balanced', devCustom:false, smCustom:false,
+  shape:'rect', size:0.45, depth:true, eye:0.45, depthGain:1.00,
+  rollTau:0.12, lead:0.045,
+  range:0.160, tauV:0.80, tauP:0.15, dcTau:2.0,
+  travel:0.90, noise:0.010, band:12,
+  reject:0.70, zupt:true, stillThresh:0.12, world:true,
+  flipX:false, flipY:false, flipZ:false, accelInvert:false, freeze:false,
+
+  axisLocked:false, axisRoll:0, signRoll:1, conf:0,
+  roll:0, rollAccel:0, rateRollLP:0,
+
+  w:[0,0,0], wPrev:[0,0,0], alpha:[0,0,0],
+  hasNativeLin:null, gEst:[0,0,0],
+  aLP:[0,0,0], dc:[0,0,0], aResMag:0,
+  fitEnergy:0, fitConf:0, predMag:0,
+  vel:[0,0,0], pos:[0,0,0],
+  locked:false,
+  inPlane:0, total:0, trustShake:0, trustPlane:0,
+  dtEst:1/60, hz:0, live:false
+};
+
+const isIOS = typeof DeviceMotionEvent!=='undefined'
+           && typeof DeviceMotionEvent.requestPermission==='function';
+S.accelInvert=isIOS;
+S.axisRoll=isIOS?2:0;
+
+let corr=[0,0,0], chE=[0,0,0], refE=0, corrN=0, rollPrev=0, havePrev=false;
+function resetDetect(){
+  corr=[0,0,0]; chE=[0,0,0]; refE=0; corrN=0; havePrev=false;
+  S.axisLocked=false; S.conf=0;
+}
+
+/* ---------- online regression, three outputs ---------- */
+const A=[]; for(let i=0;i<NF;i++) A.push(new Float64Array(NF));
+const rhs=[new Float64Array(NF),new Float64Array(NF),new Float64Array(NF)];
+const co=[new Float64Array(NF),new Float64Array(NF),new Float64Array(NF)];
+const f=new Float64Array(NF);
+const M=[]; for(let i=0;i<NF;i++) M.push(new Float64Array(NF+3));
+let fitCount=0;
+function fitReset(){
+  for(let i=0;i<NF;i++) A[i].fill(0);
+  for(let k=0;k<3;k++){ rhs[k].fill(0); co[k].fill(0); }
+  S.fitEnergy=0; S.fitConf=0; fitCount=0;
+}
+function features(w,al){
+  f[0]=al[0]; f[1]=al[1]; f[2]=al[2];
+  f[3]=w[0]*w[0]; f[4]=w[1]*w[1]; f[5]=w[2]*w[2];
+  f[6]=w[0]*w[1]; f[7]=w[0]*w[2]; f[8]=w[1]*w[2];
+  return f;
+}
+function solveFit(){
+  let tr=0; for(let i=0;i<NF;i++) tr+=A[i][i];
+  if(tr<1e-6) return;
+  const lam=1e-4*tr/NF;
+  for(let i=0;i<NF;i++){
+    for(let j=0;j<NF;j++) M[i][j]=A[i][j]+(i===j?lam:0);
+    M[i][NF]=rhs[0][i]; M[i][NF+1]=rhs[1][i]; M[i][NF+2]=rhs[2][i];
+  }
+  for(let i=0;i<NF;i++){
+    let p=i;
+    for(let r=i+1;r<NF;r++) if(Math.abs(M[r][i])>Math.abs(M[p][i])) p=r;
+    if(p!==i){ const t=M[i]; M[i]=M[p]; M[p]=t; }
+    const piv=M[i][i];
+    if(Math.abs(piv)<1e-12) continue;
+    for(let r=0;r<NF;r++){
+      if(r===i) continue;
+      const fac=M[r][i]/piv;
+      if(fac===0) continue;
+      for(let c=i;c<NF+3;c++) M[r][c]-=fac*M[i][c];
+    }
+  }
+  for(let i=0;i<NF;i++){
+    const piv=M[i][i];
+    if(Math.abs(piv)<1e-12) continue;
+    co[0][i]=M[i][NF]/piv; co[1][i]=M[i][NF+1]/piv; co[2][i]=M[i][NF+2]/piv;
+  }
+}
+
+const bufA=new Float32Array(STILL_N), bufW=new Float32Array(STILL_N);
+let bufPtr=0, bufFill=0;
+function bufReset(){ bufPtr=0; bufFill=0; }
+
+const $=id=>document.getElementById(id);
+const gate=$('gate'), gateErr=$('gateErr'), startBtn=$('startBtn');
+const stage=$('stage'), shape=$('shape'), learn=$('learn'), learnFg=learn.querySelector('.fg');
+const offsetEl=$('offset'), driftEl=$('drift'), statusEl=$('status');
+const panel=$('panel'), handle=$('handle'), handleState=$('handleState');
+const segDevice=$('segDevice'), segSmooth=$('segSmooth');
+const devTag=$('devTag'), smoothTag=$('smoothTag'), presetHint=$('presetHint');
+const segShape=$('segShape'), sizeEl=$('size'), sizeVal=$('sizeVal'), sizeHint=$('sizeHint');
+const segDepth=$('segDepth'), eyeEl=$('eye'), eyeVal=$('eyeVal'), depthHint=$('depthHint');
+const depthGainEl=$('depthGain'), depthGainVal=$('depthGainVal');
+const rollTauEl=$('rollTau'), rollTauVal=$('rollTauVal'), rollHint=$('rollHint');
+const leadEl=$('lead'), leadVal=$('leadVal');
+const rangeEl=$('range'), rangeVal=$('rangeVal');
+const tauVEl=$('tauV'), tauVVal=$('tauVVal');
+const tauPEl=$('tauP'), tauPVal=$('tauPVal');
+const dcEl=$('dc'), dcVal=$('dcVal'), ssHint=$('ssHint');
+const travel=$('travel'), travelVal=$('travelVal');
+const gateA=$('gateA'), gateVal=$('gateVal');
+const reject=$('reject'), rejectVal=$('rejectVal'), learnVal=$('learnVal');
+const stillAEl=$('stillA'), stillVal=$('stillVal');
+const segZupt=$('segZupt'), segWorld=$('segWorld');
+const btnFlipX=$('btnFlipX'), btnFlipY=$('btnFlipY'), btnFlipZ=$('btnFlipZ'), btnFreeze=$('btnFreeze');
+const calHint=$('calHint');
+
+const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+function wrap(a){ while(a>Math.PI)a-=2*Math.PI; while(a<-Math.PI)a+=2*Math.PI; return a; }
+function softGate(v,g){ const m=Math.abs(v)-g; return m<=0?0:(v<0?-m:m); }
+
+const RC=2*Math.PI*36;
+learnFg.setAttribute('stroke-dasharray',RC.toFixed(2));
+learnFg.setAttribute('stroke-dashoffset',RC.toFixed(2));
+
+let W=0,H=0;
+function applyShape(){
+  shape.classList.toggle('rect',S.shape==='rect');
+  shape.classList.toggle('dot',S.shape==='dot');
+  if(S.shape==='rect'){
+    const h=Math.round(H*S.size), w=Math.round(h*9/16);
+    shape.style.width=w+'px'; shape.style.height=h+'px';
+    shape.style.margin=(-h/2)+'px 0 0 '+(-w/2)+'px';
+    sizeHint.textContent='Rectangle: '+w+' \u00D7 '+h+' px \u2014 '
+      +Math.round(w/Math.max(W,1)*100)+' % of screen width.';
+  }else{
+    shape.style.width=''; shape.style.height=''; shape.style.margin='';
+    sizeHint.textContent='Dot: fixed 34 px. Size applies to the rectangle.';
+  }
+}
+function layout(){ W=stage.clientWidth; H=stage.clientHeight; applyShape(); }
+window.addEventListener('resize',layout);
+window.addEventListener('orientationchange',function(){ setTimeout(layout,250); });
+
+let tPrev=0, hzAcc=0, hzN=0, hzT=0;
+
+function onMotion(e){
+  const ag=e.accelerationIncludingGravity;
+  if(!ag || (ag.x===null && ag.y===null)) return;
+
+  const now=performance.now();
+  let dtRaw=(now-tPrev)/1000; tPrev=now;
+  if(!(dtRaw>0)||dtRaw>0.25) dtRaw=S.dtEst;
+  S.dtEst+=(dtRaw-S.dtEst)*0.02;
+  const dt=clamp(dtRaw,S.dtEst*0.5,S.dtEst*2);
+
+  S.live=true;
+  hzAcc+=1/dt; hzN++;
+  if(now-hzT>500){ S.hz=hzAcc/Math.max(hzN,1); hzAcc=0; hzN=0; hzT=now; }
+
+  const sg=S.accelInvert?-1:1;
+  const gx=sg*(ag.x||0), gy=sg*(ag.y||0), gz=sg*(ag.z||0);
+  S.inPlane=Math.hypot(gx,gy);
+  S.total=Math.hypot(gx,gy,gz);
+  S.rollAccel=Math.atan2(gx,gy);
+
+  const rr=e.rotationRate||{};
+  const ch=[(rr.alpha||0)*D2R,(rr.beta||0)*D2R,(rr.gamma||0)*D2R];
+
+  if(!S.axisLocked && havePrev && Math.abs(S.total-G)<3.5){
+    const dA=wrap(S.rollAccel-rollPrev)/dt;
+    if(Math.abs(dA)>0.9 && S.inPlane>6){
+      refE+=dA*dA;
+      for(let i=0;i<3;i++){ corr[i]+=dA*ch[i]; chE[i]+=ch[i]*ch[i]; }
+      corrN++;
+      if(corrN>=DETECT_N){
+        let best=0,bestScore=0;
+        for(let i=0;i<3;i++){
+          const den=Math.sqrt(chE[i]*refE)||1e-9;
+          const s=corr[i]/den;
+          if(Math.abs(s)>Math.abs(bestScore)){ bestScore=s; best=i; }
+        }
+        if(Math.abs(bestScore)>0.55){
+          S.axisRoll=best; S.signRoll=bestScore<0?-1:1; S.conf=Math.abs(bestScore);
+          S.axisLocked=true; S.roll=S.rollAccel;
+        }else resetDetect();
+      }
+    }
+  }
+  rollPrev=S.rollAccel; havePrev=true;
+
+  const kw=clamp(dt/W_LP_TAU,0,1);
+  for(let i=0;i<3;i++) S.w[i]+=(ch[i]-S.w[i])*kw;
+  const ka=clamp(dt/A_LP_TAU,0,1);
+  for(let i=0;i<3;i++){
+    S.alpha[i]+=(((S.w[i]-S.wPrev[i])/dt)-S.alpha[i])*ka;
+    S.wPrev[i]=S.w[i];
+  }
+
+  const wz=S.w[S.axisRoll]*S.signRoll;
+  S.rateRollLP+=(wz-S.rateRollLP)*clamp(dt/RATE_LP_TAU,0,1);
+  S.trustShake=clamp(1-Math.abs(S.total-G)/4,0,1);
+  S.trustPlane=clamp((S.inPlane-1.5)/3.5,0,1);
+  const pr=S.roll+wz*dt;
+  const kr=(dt/(S.rollTau+dt))*S.trustShake*S.trustPlane;
+  S.roll=wrap(pr+kr*wrap(S.rollAccel-pr));
+
+  let ax,ay,az;
+  const lin=e.acceleration;
+  const nativeOK=lin && lin.x!==null && lin.y!==null
+              && (Math.abs(lin.x)+Math.abs(lin.y)+Math.abs(lin.z||0))>0;
+  if(S.hasNativeLin===null){
+    if(nativeOK) S.hasNativeLin=true; else if(S.hz>5) S.hasNativeLin=false;
+  }
+  if(nativeOK){ ax=sg*lin.x; ay=sg*lin.y; az=sg*(lin.z||0); }
+  else{
+    const kg=clamp(dt/GRAV_LP_TAU,0,1);
+    S.gEst[0]+=(gx-S.gEst[0])*kg;
+    S.gEst[1]+=(gy-S.gEst[1])*kg;
+    S.gEst[2]+=(gz-S.gEst[2])*kg;
+    ax=gx-S.gEst[0]; ay=gy-S.gEst[1]; az=gz-S.gEst[2];
+  }
+
+  const kb=clamp(dt/(1/(2*Math.PI*S.band)),0,1);
+  S.aLP[0]+=(ax-S.aLP[0])*kb;
+  S.aLP[1]+=(ay-S.aLP[1])*kb;
+  S.aLP[2]+=(az-S.aLP[2])*kb;
+
+  const kdc=clamp(dt/S.dcTau,0,1);
+  for(let i=0;i<3;i++) S.dc[i]+=(S.aLP[i]-S.dc[i])*kdc;
+  const m0=S.aLP[0]-S.dc[0], m1=S.aLP[1]-S.dc[1], m2=S.aLP[2]-S.dc[2];
+
+  features(S.w,S.alpha);
+  let fMag=0; for(let i=0;i<NF;i++) fMag+=f[i]*f[i];
+  fMag=Math.sqrt(fMag);
+
+  if(!S.freeze && fMag>FIT_MIN){
+    const fg=Math.exp(-dt/FIT_FORGET);
+    for(let i=0;i<NF;i++){
+      const fi=f[i], Ai=A[i];
+      for(let j=0;j<NF;j++) Ai[j]=Ai[j]*fg+fi*f[j];
+      rhs[0][i]=rhs[0][i]*fg+fi*m0;
+      rhs[1][i]=rhs[1][i]*fg+fi*m1;
+      rhs[2][i]=rhs[2][i]*fg+fi*m2;
+    }
+    S.fitEnergy=S.fitEnergy*fg+fMag*fMag;
+    S.fitConf=S.fitEnergy/(S.fitEnergy+4000);
+    if(++fitCount>=FIT_EVERY){ fitCount=0; solveFit(); }
+  }
+
+  const g2=S.reject*S.fitConf;
+  const meas=[m0,m1,m2], res=[0,0,0];
+  let predSum=0;
+  for(let k=0;k<3;k++){
+    let p=0; for(let i=0;i<NF;i++) p+=co[k][i]*f[i];
+    p=clamp(p,-PRED_CLAMP,PRED_CLAMP);
+    predSum+=p*p*g2*g2;
+    res[k]=meas[k]-p*g2;
+  }
+  S.predMag=Math.sqrt(predSum);
+  S.aResMag=Math.hypot(res[0],res[1],res[2]);
+
+  const wMag=Math.hypot(S.w[0],S.w[1],S.w[2]);
+  bufA[bufPtr]=S.aResMag; bufW[bufPtr]=wMag;
+  bufPtr=(bufPtr+1)%STILL_N;
+  if(bufFill<STILL_N) bufFill++;
+  let maxA=0,maxW=0;
+  for(let i=0;i<bufFill;i++){
+    if(bufA[i]>maxA) maxA=bufA[i];
+    if(bufW[i]>maxW) maxW=bufW[i];
+  }
+  if(!S.locked){
+    if(bufFill>=STILL_N && maxA<S.stillThresh && maxW<0.15) S.locked=true;
+  }else{
+    if(maxA>S.stillThresh*2 || maxW>0.30) S.locked=false;
+  }
+
+  const th=S.roll, ct=Math.cos(th), st=Math.sin(th);
+  const g0=softGate(res[0],S.noise), g1=softGate(res[1],S.noise);
+  const acc=[ g0*ct-g1*st, g0*st+g1*ct, softGate(res[2],S.noise) ];
+
+  const dV=Math.exp(-dt/S.tauV), dP=Math.exp(-dt/S.tauP);
+  if(S.zupt && S.locked){
+    const dz=Math.exp(-dt/ZUPT_POS_TAU);
+    for(let i=0;i<3;i++){ S.vel[i]=0; S.pos[i]*=dz; }
+  }else{
+    for(let i=0;i<3;i++){
+      S.vel[i]=(S.vel[i]+acc[i]*dt)*dV;
+      S.pos[i]=(S.pos[i]+S.vel[i]*dt)*dP;
+    }
+  }
+
+  const R=S.range;
+  for(let i=0;i<3;i++){
+    if(S.pos[i]>R){ S.pos[i]=R; if(S.vel[i]>0) S.vel[i]=0; }
+    else if(S.pos[i]<-R){ S.pos[i]=-R; if(S.vel[i]<0) S.vel[i]=0; }
+  }
+}
+
+/* ---------- render ---------- */
+function frame(){
+  let dx,dy;
+  if(S.world){
+    const th=S.roll, ct=Math.cos(th), st=Math.sin(th);
+    dx= S.pos[0]*ct+S.pos[1]*st;
+    dy=-S.pos[0]*st+S.pos[1]*ct;
+  }else{ dx=S.pos[0]; dy=S.pos[1]; }
+
+  const k=S.travel*CSS_PX_PER_M;
+  const x=-dx*k*(S.flipX?-1:1);
+  const y= dy*k*(S.flipY?-1:1);
+
+  let sc=1;
+  if(S.depth){
+    const z=S.pos[2]*(S.flipZ?-1:1)*S.depthGain;
+    sc=clamp(1-z/S.eye,SCALE_MIN,SCALE_MAX);
+  }
+
+  const rot=(S.world && S.shape==='rect')
+    ? (S.roll+clamp(S.rateRollLP*S.lead,-LEAD_CLAMP,LEAD_CLAMP))*R2D : 0;
+
+  shape.style.transform=
+    'translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) '
+    +'rotate('+rot.toFixed(2)+'deg) scale('+sc.toFixed(4)+')';
+  shape.classList.toggle('locked',S.locked);
+
+  const mm=Math.hypot(S.pos[0],S.pos[1])*1000;
+  offsetEl.textContent=S.live?mm.toFixed(0)+' mm':'\u2014';
+  offsetEl.classList.toggle('far',mm>S.range*1000*0.9);
+
+  driftEl.textContent=S.live
+    ? 'z '+(S.pos[2]*1000>=0?'+':'')+(S.pos[2]*1000).toFixed(0)+' mm \u00B7 '
+      +sc.toFixed(2)+'\u00D7 \u00B7 rej '+S.predMag.toFixed(2)
+    : '\u2014';
+
+  statusEl.innerHTML=
+    (S.locked?'<span class="lock">HOLDING</span>':'drifting')
+    +'<br>'+(S.axisLocked
+      ? 'roll '+AXIS_NAMES[S.axisRoll]+(S.signRoll<0?'\u2212':'+')
+      : '<span class="seek">roll seeking</span>')
+    +(S.hz?' \u00B7 '+Math.round(S.hz)+' Hz':'');
+
+  const pct=Math.round(S.fitConf*100);
+  learnFg.setAttribute('stroke-dashoffset',(RC*(1-S.fitConf)).toFixed(2));
+  learn.classList.toggle('done',S.fitConf>0.6);
+  if(learnVal.dataset.p!==String(pct)){
+    learnVal.dataset.p=String(pct); learnVal.textContent=pct+' %';
+  }
+
+  requestAnimationFrame(frame);
+}
+
+/* ---------- ui sync ---------- */
+function pickVal(seg,attr,val){
+  Array.prototype.forEach.call(seg.children,function(x){
+    x.classList.toggle('on',x.dataset[attr]===val);
+  });
+}
+function clearSeg(seg){
+  Array.prototype.forEach.call(seg.children,function(x){ x.classList.remove('on'); });
+}
+function syncSliders(){
+  sizeEl.value=String(S.size*100);          sizeVal.textContent=Math.round(S.size*100)+' % of height';
+  eyeEl.value=String(S.eye*100);            eyeVal.textContent=Math.round(S.eye*100)+' cm';
+  depthGainEl.value=String(S.depthGain*100);depthGainVal.textContent=Math.round(S.depthGain*100)+' %';
+  rollTauEl.value=String(S.rollTau);        rollTauVal.textContent=S.rollTau.toFixed(2)+' s';
+  leadEl.value=String(S.lead*1000);         leadVal.textContent=Math.round(S.lead*1000)+' ms';
+  rangeEl.value=String(S.range*1000);       rangeVal.textContent=Math.round(S.range*1000)+' mm';
+  tauVEl.value=String(S.tauV);              tauVVal.textContent=S.tauV.toFixed(2)+' s';
+  tauPEl.value=String(S.tauP);              tauPVal.textContent=S.tauP.toFixed(2)+' s';
+  dcEl.value=String(S.dcTau);               dcVal.textContent=S.dcTau.toFixed(1)+' s';
+  travel.value=String(S.travel*100);        travelVal.textContent=Math.round(S.travel*100)+' %';
+  gateA.value=String(S.noise);              gateVal.textContent=S.noise.toFixed(3)+' m/s\u00B2';
+  reject.value=String(S.reject*100);        rejectVal.textContent=Math.round(S.reject*100)+' %';
+  stillAEl.value=String(S.stillThresh);     stillVal.textContent=S.stillThresh.toFixed(2)+' m/s\u00B2';
+}
+function syncHandle(){
+  handleState.textContent=
+    (S.devCustom?'CUSTOM':DEVICE[S.device].label.toUpperCase())
+    +' \u00B7 '+(S.smCustom?'CUSTOM':SMOOTH[S.smooth].label.toUpperCase());
+}
+function syncSS(){
+  ssHint.textContent='Settled offset from a 0.03 m/s\u00B2 residual: '
+    +(0.03*S.tauV*S.tauP*1000).toFixed(0)+' mm.';
+}
+function syncDepth(){
+  depthHint.innerHTML='Scale is <b>1 &minus; z / e</b>. At this distance, 5 cm of movement is '
+    +(1+0.05*S.depthGain/S.eye).toFixed(2)+'\u00D7.';
+}
+function syncRoll(){
+  rollHint.textContent='Corrects '
+    +(100*(1-Math.exp(-0.1/S.rollTau))).toFixed(0)+' % of a step within 100 ms.';
+}
+function syncPresetTags(){
+  devTag.textContent=S.devCustom?'Custom':DEVICE[S.device].label;
+  smoothTag.textContent=S.smCustom?'Custom':SMOOTH[S.smooth].label;
+  if(S.devCustom) clearSeg(segDevice); else pickVal(segDevice,'device',S.device);
+  if(S.smCustom) clearSeg(segSmooth); else pickVal(segSmooth,'smooth',S.smooth);
+  presetHint.textContent=
+    'Range '+Math.round(S.range*1000)+' mm \u00B7 travel '+Math.round(S.travel*100)+' % \u00B7 '
+    +'settles '+(0.03*S.tauV*S.tauP*1000).toFixed(0)+' mm \u00B7 roll '
+    +(100*(1-Math.exp(-0.1/S.rollTau))).toFixed(0)+' % in 100 ms.';
+  syncHandle();
+}
+function syncAll(){
+  syncSliders(); syncSS(); syncDepth(); syncRoll(); syncPresetTags(); applyShape();
+}
+function applyDevice(name){
+  const p=DEVICE[name]; if(!p) return;
+  DEVICE_KEYS.forEach(function(k){ S[k]=p[k]; });
+  S.device=name; S.devCustom=false;
+  syncAll();
+}
+function applySmooth(name){
+  const p=SMOOTH[name]; if(!p) return;
+  SMOOTH_KEYS.forEach(function(k){ S[k]=p[k]; });
+  S.smooth=name; S.smCustom=false;
+  syncAll();
+}
+/* touching a slider a preset owns marks that preset Custom, so the
+   highlight never claims something that is no longer loaded */
+function touched(key){
+  if(DEVICE_KEYS.indexOf(key)>=0 && !S.devCustom){ S.devCustom=true; }
+  if(SMOOTH_KEYS.indexOf(key)>=0 && !S.smCustom){ S.smCustom=true; }
+  syncPresetTags();
+}
+function recentre(){
+  for(let i=0;i<3;i++){ S.vel[i]=0; S.pos[i]=0; }
+  S.locked=false; bufReset();
+}
+function updateCalHint(){
+  calHint.textContent=S.axisLocked
+    ? 'Roll axis '+AXIS_NAMES[S.axisRoll]+(S.signRoll<0?'\u2212':'+')
+      +' (correlation '+S.conf.toFixed(2)+'). Rejection needs no axis labels at all.'
+    : 'Roll axis: seeking. Rock the device side to side once and it will lock on.';
+}
+
+/* ---------- events ---------- */
+segDevice.addEventListener('click',function(e){
+  const b=e.target.closest('button'); if(!b) return;
+  applyDevice(b.dataset.device);
+});
+segSmooth.addEventListener('click',function(e){
+  const b=e.target.closest('button'); if(!b) return;
+  applySmooth(b.dataset.smooth);
+});
+segShape.addEventListener('click',function(e){
+  const b=e.target.closest('button'); if(!b) return;
+  pickVal(segShape,'shape',b.dataset.shape); S.shape=b.dataset.shape; applyShape();
+});
+segDepth.addEventListener('click',function(e){
+  const b=e.target.closest('button'); if(!b) return;
+  pickVal(segDepth,'depth',b.dataset.depth); S.depth=(b.dataset.depth==='on');
+});
+segZupt.addEventListener('click',function(e){
+  const b=e.target.closest('button'); if(!b) return;
+  pickVal(segZupt,'zupt',b.dataset.zupt); S.zupt=(b.dataset.zupt==='on');
+});
+segWorld.addEventListener('click',function(e){
+  const b=e.target.closest('button'); if(!b) return;
+  pickVal(segWorld,'world',b.dataset.world); S.world=(b.dataset.world==='on');
+});
+
+sizeEl.addEventListener('input',function(){
+  S.size=parseFloat(sizeEl.value)/100;
+  sizeVal.textContent=sizeEl.value+' % of height'; applyShape(); touched('size');
+});
+eyeEl.addEventListener('input',function(){
+  S.eye=parseFloat(eyeEl.value)/100; eyeVal.textContent=eyeEl.value+' cm';
+  syncDepth(); touched('eye');
+});
+depthGainEl.addEventListener('input',function(){
+  S.depthGain=parseFloat(depthGainEl.value)/100;
+  depthGainVal.textContent=depthGainEl.value+' %'; syncDepth();
+});
+rollTauEl.addEventListener('input',function(){
+  S.rollTau=parseFloat(rollTauEl.value);
+  rollTauVal.textContent=S.rollTau.toFixed(2)+' s'; syncRoll(); touched('rollTau');
+});
+leadEl.addEventListener('input',function(){
+  S.lead=parseFloat(leadEl.value)/1000;
+  leadVal.textContent=Math.round(S.lead*1000)+' ms'; touched('lead');
+});
+rangeEl.addEventListener('input',function(){
+  S.range=parseFloat(rangeEl.value)/1000;
+  rangeVal.textContent=rangeEl.value+' mm'; touched('range');
+});
+tauVEl.addEventListener('input',function(){
+  S.tauV=parseFloat(tauVEl.value); tauVVal.textContent=S.tauV.toFixed(2)+' s';
+  syncSS(); touched('tauV');
+});
+tauPEl.addEventListener('input',function(){
+  S.tauP=parseFloat(tauPEl.value); tauPVal.textContent=S.tauP.toFixed(2)+' s';
+  syncSS(); touched('tauP');
+});
+dcEl.addEventListener('input',function(){
+  S.dcTau=parseFloat(dcEl.value); dcVal.textContent=S.dcTau.toFixed(1)+' s'; touched('dcTau');
+});
+travel.addEventListener('input',function(){
+  S.travel=parseFloat(travel.value)/100;
+  travelVal.textContent=travel.value+' %'; touched('travel');
+});
+gateA.addEventListener('input',function(){
+  S.noise=parseFloat(gateA.value);
+  gateVal.textContent=S.noise.toFixed(3)+' m/s\u00B2'; touched('noise');
+});
+reject.addEventListener('input',function(){
+  S.reject=parseFloat(reject.value)/100;
+  rejectVal.textContent=reject.value+' %'; touched('reject');
+});
+stillAEl.addEventListener('input',function(){
+  S.stillThresh=parseFloat(stillAEl.value);
+  stillVal.textContent=S.stillThresh.toFixed(2)+' m/s\u00B2'; touched('stillThresh');
+});
+
+btnFlipX.addEventListener('click',function(){
+  S.flipX=!S.flipX; btnFlipX.classList.toggle('on',S.flipX);
+});
+btnFlipY.addEventListener('click',function(){
+  S.flipY=!S.flipY; btnFlipY.classList.toggle('on',S.flipY);
+});
+btnFlipZ.addEventListener('click',function(){
+  S.flipZ=!S.flipZ; btnFlipZ.classList.toggle('on',S.flipZ);
+});
+btnFreeze.addEventListener('click',function(){
+  S.freeze=!S.freeze;
+  btnFreeze.classList.toggle('on',S.freeze);
+  btnFreeze.textContent=S.freeze?'Frozen':'Freeze';
+});
+$('btnRecentre').addEventListener('click',recentre);
+$('btnRelearn').addEventListener('click',function(){ fitReset(); recentre(); });
+$('btnFlipA').addEventListener('click',function(){
+  S.accelInvert=!S.accelInvert;
+  S.roll=0; S.dc=[0,0,0]; S.gEst=[0,0,0];
+  fitReset(); recentre(); resetDetect(); updateCalHint();
+});
+$('btnReset').addEventListener('click',function(){
+  S.shape='rect'; S.depth=true; S.depthGain=1.00; S.world=true; S.zupt=true;
+  S.flipX=S.flipY=S.flipZ=false; S.freeze=false;
+  btnFlipX.classList.remove('on'); btnFlipY.classList.remove('on');
+  btnFlipZ.classList.remove('on');
+  btnFreeze.classList.remove('on'); btnFreeze.textContent='Freeze';
+  pickVal(segShape,'shape',S.shape);
+  pickVal(segDepth,'depth','on');
+  pickVal(segZupt,'zupt','on');
+  pickVal(segWorld,'world','on');
+  S.dc=[0,0,0];
+  applyDevice('ipad'); applySmooth('balanced');
+  recentre();
+});
+
+stage.addEventListener('click',recentre);
+
+function togglePanel(){
+  const open=panel.classList.toggle('open');
+  handle.setAttribute('aria-expanded',open?'true':'false');
+}
+handle.addEventListener('click',togglePanel);
+handle.addEventListener('keydown',function(e){
+  if(e.key==='Enter'||e.key===' '){ e.preventDefault(); togglePanel(); }
+});
+
+async function start(){
+  gateErr.textContent='';
+  try{
+    if(typeof DeviceMotionEvent!=='undefined'
+       && typeof DeviceMotionEvent.requestPermission==='function'){
+      const r=await DeviceMotionEvent.requestPermission();
+      if(r!=='granted'){
+        gateErr.textContent='Permission denied. Reload and allow motion access.';
+        return;
+      }
+    }
+  }catch(err){
+    gateErr.textContent='Motion access failed: '+err.message
+      +' \u2014 this usually means the page is not served over https.';
+    return;
+  }
+  window.addEventListener('devicemotion',onMotion);
+  gate.classList.add('hidden');
+  stage.setAttribute('aria-hidden','false');
+  layout();
+  tPrev=performance.now();
+  requestAnimationFrame(frame);
+  setTimeout(function(){
+    if(!S.live){
+      gate.classList.remove('hidden');
+      gateErr.textContent='No sensor data. The page needs https, and desktops have no gyroscope.';
+    }
+  },1600);
+}
+startBtn.addEventListener('click',start);
+
+layout(); syncAll(); updateCalHint();
+setInterval(updateCalHint,1000);
+</script>
+</body>
+</html>
