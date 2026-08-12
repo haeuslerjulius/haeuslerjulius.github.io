@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>LEVEL — world-locked window</title>
+<style>
+:root{
+  --ink:#0B1013;
+  --panel:#151D21;
+  --panel2:#101619;
+  --rule:#26343A;
+  --phos:#E8B04B;
+  --trace:#6FD3D8;
+  --warn:#C4553A;
+  --good:#7FBF7A;
+  --text:#C9D4D6;
+  --dim:#6E8085;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{height:100%;margin:0;overflow:hidden;background:var(--ink);}
+body{
+  font-family:var(--mono); color:var(--text); font-size:13px;
+  -webkit-user-select:none; user-select:none; overscroll-behavior:none;
+}
+
+#gate{
+  position:fixed; inset:0; z-index:100;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:32px 26px; gap:20px; background:var(--ink); overflow-y:auto;
+}
+#gate.hidden{display:none;}
+.eyebrow{font-size:10px; letter-spacing:.34em; text-transform:uppercase; color:var(--dim);}
+#gate h1{margin:0; font-size:32px; line-height:1.04; font-weight:600; letter-spacing:-.02em;}
+#gate h1 b{color:var(--phos); font-weight:600;}
+.gate-note{color:var(--dim); line-height:1.6; font-size:12.5px; max-width:34em;}
+.gate-note code{color:var(--trace);}
+#startBtn{
+  appearance:none; border:1px solid var(--phos); background:transparent;
+  color:var(--phos); font-family:var(--mono); font-size:13px;
+  letter-spacing:.22em; text-transform:uppercase;
+  padding:18px 20px; width:100%; cursor:pointer;
+  transition:background .15s ease, color .15s ease;
+}
+#startBtn:active{background:var(--phos); color:var(--ink);}
+#startBtn:focus-visible{outline:2px solid var(--trace); outline-offset:3px;}
+#gateErr{color:var(--warn); line-height:1.6; font-size:12.5px;}
+
+#stage{position:fixed; inset:0; overflow:hidden; background:#05090A;}
+#plate{position:absolute; left:0; top:0; transform-origin:50% 50%; will-change:transform;}
+#plate img{width:100%;height:100%;object-fit:cover;display:none;}
+#plate svg{display:block;}
+#plate.hasImg svg{display:none;}
+#plate.hasImg img{display:block;}
+
+#reticle{position:absolute; inset:0; pointer-events:none;}
+#reticle .edge{position:absolute; inset:10px; border:1px solid rgba(232,176,75,.28);}
+#reticle .tick{position:absolute; background:var(--phos); opacity:.8;}
+#reticle .t-top{left:50%; top:10px; width:1px; height:16px; transform:translateX(-.5px);}
+#reticle .t-bot{left:50%; bottom:10px; width:1px; height:16px; transform:translateX(-.5px);}
+#reticle .t-l{top:50%; left:10px; height:1px; width:16px;}
+#reticle .t-r{top:50%; right:10px; height:1px; width:16px;}
+#reticle .cross-h,#reticle .cross-v{position:absolute; background:rgba(232,176,75,.55);}
+#reticle .cross-h{left:50%; top:50%; width:44px; height:1px; transform:translate(-50%,-.5px);}
+#reticle .cross-v{left:50%; top:50%; height:44px; width:1px; transform:translate(-.5px,-50%);}
+#reticle .lbl{
+  position:absolute; left:50%; top:32px; transform:translateX(-50%);
+  font-size:9px; letter-spacing:.3em; color:rgba(232,176,75,.55);
+}
+
+#calib{
+  position:absolute; left:50%; bottom:96px; transform:translateX(-50%);
+  z-index:14; pointer-events:none;
+  background:rgba(11,16,19,.93); border:1px solid var(--warn);
+  padding:12px 16px; text-align:center; max-width:86vw;
+}
+#calib.hidden{display:none;}
+#calib .c-k{font-size:9px; letter-spacing:.3em; text-transform:uppercase; color:var(--warn);}
+#calib .c-t{margin-top:7px; font-size:12px; line-height:1.5; color:var(--text);}
+#calib .c-p{margin-top:9px; height:2px; background:#0A0E10;}
+#calib .c-p i{display:block; height:100%; background:var(--warn); width:0%;}
+
+#hud{
+  position:absolute; left:0; right:0; top:0; z-index:10;
+  padding:calc(env(safe-area-inset-top) + 12px) 14px 12px;
+  background:linear-gradient(180deg, rgba(11,16,19,.94) 0%, rgba(11,16,19,.78) 70%, transparent 100%);
+  pointer-events:none;
+}
+.readout{display:flex; align-items:baseline; gap:12px;}
+#angleBig{
+  font-size:40px; font-weight:600; letter-spacing:-.03em; color:var(--phos);
+  font-variant-numeric:tabular-nums; line-height:1;
+}
+#angleBig.stale{color:var(--warn);}
+.readout .unit{font-size:11px; letter-spacing:.28em; color:var(--dim); text-transform:uppercase;}
+.readout .axis{margin-left:auto; font-size:10px; letter-spacing:.14em; color:var(--trace); text-transform:uppercase; text-align:right; line-height:1.5;}
+#bars{margin-top:11px; display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--rule);}
+.cell{background:var(--panel2); padding:6px 8px;}
+.cell .k{font-size:8.5px; letter-spacing:.2em; color:var(--dim); text-transform:uppercase; white-space:nowrap;}
+.cell .v{font-size:14px; color:var(--text); font-variant-numeric:tabular-nums; margin-top:3px;}
+.cell .v.cy{color:var(--trace);}
+.cell .v.wr{color:var(--warn);}
+.cell .v.gd{color:var(--good);}
+
+/* live signal trace */
+#scopeWrap{margin-top:1px; background:var(--panel2); padding:6px 8px 4px; display:block;}
+#scopeWrap.hidden{display:none;}
+#scopeKey{display:flex; gap:14px; font-size:8.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--dim);}
+#scopeKey i{font-style:normal;}
+#scopeKey .kx{color:var(--trace);}
+#scopeKey .ky{color:var(--phos);}
+#scopeKey .kz{color:var(--good);}
+#scope{display:block; width:100%; height:70px; margin-top:4px;}
+
+#panel{
+  position:absolute; left:0; right:0; bottom:0; z-index:16;
+  background:var(--panel); border-top:1px solid var(--rule);
+  padding:0 14px calc(env(safe-area-inset-bottom) + 14px);
+  transform:translateY(calc(100% - 46px));
+  transition:transform .28s cubic-bezier(.22,.61,.36,1);
+  max-height:88vh; overflow-y:auto;
+}
+#panel.open{transform:translateY(0);}
+#handle{
+  height:46px; display:flex; align-items:center; justify-content:space-between;
+  cursor:pointer; margin:0 -14px; padding:0 14px;
+  position:sticky; top:0; background:var(--panel); z-index:2;
+}
+#handle .h-l{font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:var(--dim);}
+#handle .h-r{font-size:10px; letter-spacing:.2em; color:var(--phos);}
+.group{padding:14px 0; border-top:1px solid var(--rule);}
+.group .g-k{font-size:9px; letter-spacing:.28em; text-transform:uppercase; color:var(--dim); margin-bottom:10px;}
+.seg{display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:1px; background:var(--rule); border:1px solid var(--rule);}
+.seg button{
+  appearance:none; border:0; background:var(--panel2); color:var(--dim);
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase;
+  padding:11px 3px; cursor:pointer;
+}
+.seg button.on{background:var(--phos); color:var(--ink);}
+.seg button:focus-visible{outline:2px solid var(--trace); outline-offset:-2px;}
+.row{display:flex; align-items:center; gap:12px;}
+.row label{font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); flex:0 0 auto;}
+.row .val{margin-left:auto; color:var(--trace); font-variant-numeric:tabular-nums; font-size:12px;}
+input[type=range]{-webkit-appearance:none; appearance:none; width:100%; background:transparent; margin:12px 0 0;}
+input[type=range]::-webkit-slider-runnable-track{height:2px; background:var(--rule);}
+input[type=range]::-moz-range-track{height:2px; background:var(--rule);}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none; width:22px; height:22px; margin-top:-10px;
+  background:var(--phos); border:0; border-radius:0; cursor:pointer;
+}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;background:var(--phos);border:0;border-radius:0;cursor:pointer;}
+.mini{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:1px;}
+.mini button{
+  appearance:none;border:0;background:var(--panel2);color:var(--text);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  padding:11px 3px;cursor:pointer;
+}
+.mini button:active,.mini button.on{background:var(--phos);color:var(--ink);}
+.hint{margin-top:10px; font-size:11px; line-height:1.55; color:var(--dim);}
+.hint b{color:var(--trace); font-weight:400;}
+@media (prefers-reduced-motion:reduce){ #panel{transition:none;} }
+</style>
+</head>
+<body>
+
+<!-- ============ PERMISSION GATE ============ -->
+<div id="gate">
+  <div class="eyebrow">Stage 2c · fixed overscan, locked stationarity</div>
+  <h1>Move the phone right,<br><b>the window goes left.</b></h1>
+  <p class="gate-note">
+    Zoom is now constant. The previous build rescaled the content by how far it had shifted, so
+    every movement pulsed the image &mdash; a 60&nbsp;px shift meant a 1.31&times; zoom. That was
+    most of the glitching, and it had nothing to do with the sensors.
+  </p>
+  <p class="gate-note">
+    There is a live trace under the readouts. If something still jumps, it will jump there too,
+    and you can tell me which signal does it.
+  </p>
+  <p class="gate-note">
+    Calibration runs first: rock the phone side to side, then tilt it forward and back.
+  </p>
+  <button id="startBtn">Enable motion sensors</button>
+  <p id="gateErr"></p>
+</div>
+
+<!-- ============ STAGE ============ -->
+<div id="stage" aria-hidden="true">
+  <div id="plate">
+    <img id="userImg" alt="">
+    <svg id="pattern" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+  <div id="reticle">
+    <div class="edge"></div>
+    <div class="tick t-top"></div><div class="tick t-bot"></div>
+    <div class="tick t-l"></div><div class="tick t-r"></div>
+    <div class="cross-h"></div><div class="cross-v"></div>
+    <div class="lbl">PHONE FRAME</div>
+  </div>
+
+  <div id="calib">
+    <div class="c-k" id="calibKey">Step 1 of 2 — roll channel</div>
+    <div class="c-t" id="calibText">Hold the phone upright and rock it side to side, like turning a steering wheel.</div>
+    <div class="c-p"><i id="calibBar"></i></div>
+  </div>
+</div>
+
+<!-- ============ HUD ============ -->
+<div id="hud">
+  <div class="readout">
+    <div id="angleBig">—</div>
+    <div class="unit">deg roll</div>
+    <div class="axis" id="axisTag">axis —</div>
+  </div>
+  <div id="bars">
+    <div class="cell"><div class="k">Shift X</div><div class="v cy" id="vShiftX">—</div></div>
+    <div class="cell"><div class="k">Shift Y</div><div class="v cy" id="vShiftY">—</div></div>
+    <div class="cell"><div class="k">Still</div><div class="v" id="vStill">—</div></div>
+    <div class="cell"><div class="k">Pivot</div><div class="v" id="vPivot">—</div></div>
+  </div>
+  <div id="scopeWrap">
+    <div id="scopeKey">
+      <i class="kx">— shift x</i><i class="ky">— shift y</i><i class="kz">— locked</i>
+    </div>
+    <canvas id="scope"></canvas>
+  </div>
+</div>
+
+<!-- ============ PANEL ============ -->
+<div id="panel">
+  <div id="handle" role="button" tabindex="0" aria-expanded="false">
+    <span class="h-l">Controls</span>
+    <span class="h-r" id="handleState">ROLL + SHIFT</span>
+  </div>
+
+  <div class="group">
+    <div class="g-k">Displacement</div>
+    <div class="seg" id="segTrans">
+      <button data-trans="off">Off</button>
+      <button data-trans="on" class="on">On</button>
+    </div>
+    <div class="mini">
+      <button id="btnFlipX">Reverse left / right</button>
+      <button id="btnFlipY">Reverse up / down</button>
+    </div>
+    <p class="hint" id="accSrcHint">Linear acceleration source: detecting&hellip;</p>
+  </div>
+
+  <div class="group">
+    <div class="g-k">Framing</div>
+    <div class="seg" id="segFit">
+      <button data-fit="fixed" class="on">Fixed zoom</button>
+      <button data-fit="cover">Adaptive</button>
+      <button data-fit="none">None</button>
+    </div>
+    <div class="row" style="margin-top:14px"><label for="over">Overscan</label><span class="val" id="overVal">1.35×</span></div>
+    <input type="range" id="over" min="1" max="2.5" step="0.05" value="1.35">
+    <p class="hint">
+      Fixed keeps the zoom constant no matter what &mdash; movement is limited to the margin instead.
+      Adaptive rescales to always cover, which is what made the image pulse. Compare them and you
+      will see immediately which one you were fighting.
+    </p>
+  </div>
+
+  <div class="group">
+    <div class="row"><label for="range">Range</label><span class="val" id="rangeVal">50 mm</span></div>
+    <input type="range" id="range" min="5" max="150" step="5" value="50">
+    <p class="hint">
+      Hard limit on how far the window can travel from centre. The integrator is bounded to this
+      too, so it can never wind up past the edge and then lag on the way back.
+    </p>
+  </div>
+
+  <div class="group">
+    <div class="g-k">Rotation rejection</div>
+    <div class="seg" id="segPivot">
+      <button data-pivot="auto">Auto fit</button>
+      <button data-pivot="manual" class="on">Manual</button>
+    </div>
+    <div class="row" style="margin-top:14px"><label for="pivot">Pivot distance</label><span class="val" id="pivotVal">20 cm</span></div>
+    <input type="range" id="pivot" min="0" max="60" step="1" value="20">
+    <div class="row" style="margin-top:14px"><label for="reject">Strength</label><span class="val" id="rejectVal">100 %</span></div>
+    <input type="range" id="reject" min="0" max="150" step="5" value="100">
+    <p class="hint">
+      The gyroscope predicts the acceleration your rotation must have caused,
+      <b>a = &alpha;&times;s + &omega;&times;(&omega;&times;s)</b>, and only the remainder counts as
+      movement. Manual by default now, because a twitchy auto fit modulates the rejection and that
+      itself looks like glitching. Auto is worth a try once the rest feels solid.
+    </p>
+  </div>
+
+  <div class="group">
+    <div class="g-k">Stationary lock</div>
+    <div class="seg" id="segZupt">
+      <button data-zupt="off">Off</button>
+      <button data-zupt="on" class="on">On</button>
+    </div>
+    <div class="row" style="margin-top:14px"><label for="stillA">Enter below</label><span class="val" id="stillVal">0.12 m/s²</span></div>
+    <input type="range" id="stillA" min="0.03" max="0.6" step="0.01" value="0.12">
+    <p class="hint">
+      Velocity is forced to zero when the phone is genuinely still. Exit threshold is twice this,
+      so it cannot chatter at the boundary &mdash; chattering was flipping the position decay
+      several times a second.
+    </p>
+  </div>
+
+  <div class="group">
+    <div class="row"><label for="hold">Hold</label><span class="val" id="holdVal">1.60 s</span></div>
+    <input type="range" id="hold" min="0.2" max="6" step="0.05" value="1.6">
+  </div>
+
+  <div class="group">
+    <div class="row"><label for="travel">Travel</label><span class="val" id="travelVal">130 %</span></div>
+    <input type="range" id="travel" min="0" max="300" step="5" value="130">
+  </div>
+
+  <div class="group">
+    <div class="row"><label for="gateA">Noise floor</label><span class="val" id="gateVal">0.030 m/s²</span></div>
+    <input type="range" id="gateA" min="0" max="0.3" step="0.005" value="0.03">
+  </div>
+
+  <div class="group">
+    <div class="row"><label for="band">Band limit</label><span class="val" id="bandVal">12 Hz</span></div>
+    <input type="range" id="band" min="3" max="30" step="1" value="12">
+  </div>
+
+  <div class="group">
+    <div class="g-k">Response</div>
+    <div class="seg" id="segSpeed">
+      <button data-speed="calm">Calm</button>
+      <button data-speed="quick" class="on">Quick</button>
+      <button data-speed="instant">Instant</button>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="row"><label for="tau">Settle time</label><span class="val" id="tauVal">0.25 s</span></div>
+    <input type="range" id="tau" min="0.04" max="3" step="0.01" value="0.25">
+  </div>
+
+  <div class="group">
+    <div class="row"><label for="lead">Lead</label><span class="val" id="leadVal">45 ms</span></div>
+    <input type="range" id="lead" min="0" max="140" step="5" value="45">
+  </div>
+
+  <div class="group">
+    <div class="g-k">Rotation source</div>
+    <div class="seg" id="segSrc">
+      <button data-src="off">Off</button>
+      <button data-src="accel">Accel</button>
+      <button data-src="gyro">Gyro</button>
+      <button data-src="fused" class="on">Fused</button>
+    </div>
+    <p class="hint" id="srcHint">Accelerometer anchors the angle, gyroscope smooths it. This is the one you ship.</p>
+  </div>
+
+  <div class="group">
+    <div class="g-k">Sensor axes</div>
+    <p class="hint" id="calHint">Detecting&hellip;</p>
+    <div class="mini">
+      <button id="btnFlipG">Reverse roll</button>
+      <button id="btnRedetect">Calibrate again</button>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="g-k">Diagnostics &amp; content</div>
+    <div class="mini">
+      <button id="btnScope" class="on">Trace on</button>
+      <button id="btnZero">Recentre now</button>
+      <button id="btnFlipA">Flip 180°</button>
+      <button id="btnImg">Load photo</button>
+    </div>
+    <div class="mini">
+      <button id="btnPattern">Test pattern</button>
+      <button id="btnReset">Reset all</button>
+    </div>
+    <p class="hint" id="gravHint">Gravity sign: normal.</p>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* ===================================================================
+   LEVEL — Stage 2c
+   -------------------------------------------------------------------
+   WHAT WAS ACTUALLY GLITCHING
+
+   1. BREATHING ZOOM. Adaptive cover scale was a function of translation:
+        scale = (W*|cos| + H*|sin| + 2|tx|) / W
+      A 60 px shift meant 1.31x zoom, so every movement rescaled the
+      content. Most of the visible glitching was this, not the sensors.
+      Fixed overscan is now the default: constant zoom, movement bounded
+      to the available margin instead.
+
+   2. ZUPT RING BUFFER. The stationarity window length was recomputed
+      from dt on every event — 18 slots at 60 Hz, 17 at 58 Hz — while
+      indexing with stillIdx % nWin. Changing the modulus makes old
+      entries appear at wrong slots, so the lock engaged and released at
+      random. Fixed-size buffer with an explicit fill count now.
+
+   3. NO HYSTERESIS. The lock toggled at a single threshold, switching
+      the position decay several times a second. Separate enter and exit
+      thresholds (exit = 2x enter) now.
+
+   4. LAYOUT THRASH. The pivot auto-fit wrote pivot.value and
+      textContent from inside the sensor handler at 60 Hz. All DOM
+      writes moved to the render pass.
+
+   5. TWITCHY AUTO FIT. pivotL moved 2% per sample toward a noisy
+      regression, continuously modulating rejection strength. Now
+      heavily damped, gated on confidence, and manual by default.
+
+   6. UNBOUNDED STATE. Position was clamped only at render, so the
+      integrator could wind far past the limit, stick, then lag coming
+      back. Bounded at the source.
+
+   The underlying physics is unchanged from 2b:
+     - roll from gravity, complementary-filtered, drift-free
+     - rotation-induced acceleration predicted by the gyro and removed,
+       a = alpha x s + omega x (omega x s), gated on |b| not on |omega|
+     - integration in a gravity-aligned world frame
+     - zero-velocity updates when genuinely still
+   =================================================================== */
+
+const D2R=Math.PI/180, R2D=180/Math.PI, G=9.81;
+const AXIS_NAMES=['\u03B1','\u03B2','\u03B3'];
+const LEAD_CLAMP=25*D2R;
+const RATE_LP_TAU=0.035;
+const CSS_PX_PER_M=3779.53;
+const GRAV_LP_TAU=0.8;
+const BIAS_TAU=3.0;
+const W_LP_TAU=0.025;
+const A_LP_TAU=0.050;      /* 0.09 doubles flick residual; 0.05 measured best */
+const FIT_FORGET=8.0;
+const STILL_N=18;          /* FIXED window length, never recomputed */
+const ZUPT_POS_TAU=0.35;
+const SCOPE_N=240;
+
+/* ---------- defaults, kept in one place so Reset all works ---------- */
+const DEFAULTS={
+  fit:'fixed', over:1.35, range:0.050,
+  trans:true, hold:1.60, travel:1.30, noise:0.030, band:12,
+  pivotMode:'manual', pivotL:0.20, reject:1.00,
+  zupt:true, stillThresh:0.12,
+  src:'fused', tau:0.25, lead:0.045, speed:'quick'
+};
+
+const S={
+  src:'fused', fit:'fixed', over:1.35, range:0.050, tau:0.25, lead:0.045,
+  trans:true, hold:1.60, travel:1.30, noise:0.030, band:12,
+  flipX:false, flipY:false, accelInvert:false,
+  pivotMode:'manual', pivotL:0.20, reject:1.00,
+  zupt:true, stillThresh:0.12, scope:true,
+
+  phase:'roll',
+  axisRoll:0,  signRoll:1,  confRoll:0,
+  axisPitch:1, signPitch:1, confPitch:0,
+  axisYaw:2,   signYaw:1,
+
+  roll:0, rollAccel:0, rollGyro:0, pitchAccel:0, rateRollLP:0,
+
+  w:[0,0,0], wPrev:[0,0,0], alpha:[0,0,0],
+  hasNativeLin:null, gEst:[0,0,0],
+  aLP:[0,0], bias:[0,0],
+  aResMag:0, rejMag:0, rejGate:0,
+  fitAb:0, fitBb:0, fitConf:0, fitL:0,
+
+  vel:[0,0], pos:[0,0],
+  locked:false, still:0,
+
+  inPlane:0, total:0, trustShake:0, trustPlane:0,
+  dtEst:1/60, hz:0, live:false, lastEvent:0,
+  needPivotUI:false
+};
+
+const SPEED_PRESETS={
+  calm:{tau:0.90,lead:0.020},
+  quick:{tau:0.25,lead:0.045},
+  instant:{tau:0.08,lead:0.075}
+};
+
+const isIOS = typeof DeviceMotionEvent!=='undefined'
+           && typeof DeviceMotionEvent.requestPermission==='function';
+S.accelInvert=isIOS;
+if(isIOS){ S.axisRoll=2; S.axisPitch=0; S.axisYaw=1; }
+
+/* ---------- calibration ---------- */
+const DETECT_N=70;
+let corr=[0,0,0], chE=[0,0,0], refE=0, corrN=0;
+let rollPrev=0, pitchPrev=0, havePrev=false;
+function resetAccum(){ corr=[0,0,0]; chE=[0,0,0]; refE=0; corrN=0; havePrev=false; }
+function restartCalibration(){ S.phase='roll'; resetAccum(); }
+
+function permParity(a,b,c){
+  let s=0; if(a>b)s++; if(a>c)s++; if(b>c)s++;
+  return (s%2===0)?1:-1;
+}
+function resolveYaw(){
+  for(let i=0;i<3;i++){
+    if(i!==S.axisRoll && i!==S.axisPitch){ S.axisYaw=i; break; }
+  }
+  S.signYaw=S.signPitch*S.signRoll*permParity(S.axisPitch,S.axisYaw,S.axisRoll);
+}
+
+/* ---------- FIXED-SIZE stationarity buffer ---------- */
+const stillA_=new Float32Array(STILL_N);
+const stillW_=new Float32Array(STILL_N);
+let stillPtr=0, stillFill=0;
+function stillReset(){ stillPtr=0; stillFill=0; }
+
+/* ---------- scope ring ---------- */
+const scX=new Float32Array(SCOPE_N), scY=new Float32Array(SCOPE_N), scL=new Uint8Array(SCOPE_N);
+let scPtr=0;
+
+/* ---------- dom ---------- */
+const $=id=>document.getElementById(id);
+const gate=$('gate'), gateErr=$('gateErr'), startBtn=$('startBtn');
+const stage=$('stage'), plate=$('plate'), pattern=$('pattern'), userImg=$('userImg');
+const angleBig=$('angleBig'), axisTag=$('axisTag');
+const vShiftX=$('vShiftX'), vShiftY=$('vShiftY'), vStill=$('vStill'), vPivot=$('vPivot');
+const scopeWrap=$('scopeWrap'), scope=$('scope');
+const panel=$('panel'), handle=$('handle'), handleState=$('handleState');
+const segSrc=$('segSrc'), segFit=$('segFit'), segSpeed=$('segSpeed'),
+      segTrans=$('segTrans'), segPivot=$('segPivot'), segZupt=$('segZupt');
+const srcHint=$('srcHint'), calHint=$('calHint'), gravHint=$('gravHint'), accSrcHint=$('accSrcHint');
+const tau=$('tau'), tauVal=$('tauVal'), lead=$('lead'), leadVal=$('leadVal');
+const hold=$('hold'), holdVal=$('holdVal'), travel=$('travel'), travelVal=$('travelVal');
+const gateA=$('gateA'), gateVal=$('gateVal'), band=$('band'), bandVal=$('bandVal');
+const pivot=$('pivot'), pivotVal=$('pivotVal'), reject=$('reject'), rejectVal=$('rejectVal');
+const stillAEl=$('stillA'), stillVal=$('stillVal');
+const over=$('over'), overVal=$('overVal'), rangeEl=$('range'), rangeVal=$('rangeVal');
+const btnFlipX=$('btnFlipX'), btnFlipY=$('btnFlipY'), btnScope=$('btnScope');
+const calib=$('calib'), calibKey=$('calibKey'), calibText=$('calibText'), calibBar=$('calibBar');
+
+/* ---------- helpers ---------- */
+const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+function wrap(a){ while(a>Math.PI)a-=2*Math.PI; while(a<-Math.PI)a+=2*Math.PI; return a; }
+function softGate(v,g){ const m=Math.abs(v)-g; return m<=0?0:(v<0?-m:m); }
+function smoothstep(x,a,b){ const t=clamp((x-a)/(b-a),0,1); return t*t*(3-2*t); }
+
+/* ---------- test pattern ---------- */
+function buildPattern(w,h){
+  const cx=w/2, cy=h/2, R=Math.hypot(w,h)/2;
+  let ladder='';
+  for(let i=-10;i<=10;i++){
+    if(i===0) continue;
+    const y=cy+i*(h/22), long=(i%2===0), len=long?w*0.16:w*0.08;
+    ladder+='<line x1="'+(cx-len)+'" y1="'+y+'" x2="'+(cx+len)+'" y2="'+y+'" stroke="#3D5058" stroke-width="1.5"/>';
+    if(long) ladder+='<text x="'+(cx-len-10)+'" y="'+(y+4)+'" fill="#4E6670" font-size="12"'
+      +' font-family="ui-monospace,monospace" text-anchor="end">'+Math.abs(i*10)+'</text>';
+  }
+  let dial='';
+  for(let d=0; d<360; d+=10){
+    const a=(d-90)*D2R, r0=R*0.80, r1=(d%30===0)?R*0.72:R*0.765;
+    dial+='<line x1="'+(cx+Math.cos(a)*r0)+'" y1="'+(cy+Math.sin(a)*r0)+'"'
+        +' x2="'+(cx+Math.cos(a)*r1)+'" y2="'+(cy+Math.sin(a)*r1)+'"'
+        +' stroke="#33454C" stroke-width="'+(d%30===0?2:1)+'"/>';
+  }
+  pattern.setAttribute('width',w);
+  pattern.setAttribute('height',h);
+  pattern.setAttribute('viewBox','0 0 '+w+' '+h);
+  pattern.innerHTML=
+    '<defs>'
+    +'<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">'
+    +'<stop offset="0%" stop-color="#16262C"/><stop offset="100%" stop-color="#0E1A1F"/></linearGradient>'
+    +'<linearGradient id="gnd" x1="0" y1="0" x2="0" y2="1">'
+    +'<stop offset="0%" stop-color="#2A1C14"/><stop offset="100%" stop-color="#150E0A"/></linearGradient>'
+    +'<pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">'
+    +'<path d="M44 0H0V44" fill="none" stroke="#1F2C31" stroke-width="1"/></pattern>'
+    +'</defs>'
+    +'<rect x="0" y="0" width="'+w+'" height="'+cy+'" fill="url(#sky)"/>'
+    +'<rect x="0" y="'+cy+'" width="'+w+'" height="'+cy+'" fill="url(#gnd)"/>'
+    +'<rect x="0" y="0" width="'+w+'" height="'+h+'" fill="url(#grid)"/>'
+    +dial+ladder
+    +'<line x1="0" y1="'+cy+'" x2="'+w+'" y2="'+cy+'" stroke="#E8B04B" stroke-width="2.5"/>'
+    +'<g fill="#E8B04B"><path d="M'+cx+' '+(cy-R*0.52)+' l16 30 h-10 v34 h-12 v-34 h-10 z"/></g>'
+    +'<text x="'+cx+'" y="'+(cy-R*0.52-16)+'" fill="#E8B04B" font-size="13" letter-spacing="6"'
+    +' font-family="ui-monospace,monospace" text-anchor="middle">WORLD UP</text>'
+    +'<text x="'+cx+'" y="'+(cy+40)+'" fill="#6E8085" font-size="11" letter-spacing="5"'
+    +' font-family="ui-monospace,monospace" text-anchor="middle">HORIZON</text>';
+}
+
+/* ---------- layout ---------- */
+let W=0,H=0,scW=0,scH=0,scDpr=1;
+function layout(){
+  W=stage.clientWidth; H=stage.clientHeight;
+  plate.style.width=W+'px'; plate.style.height=H+'px';
+  buildPattern(W,H);
+  scDpr=Math.min(2,window.devicePixelRatio||1);
+  scW=scope.clientWidth; scH=scope.clientHeight;
+  scope.width=Math.max(1,Math.round(scW*scDpr));
+  scope.height=Math.max(1,Math.round(scH*scDpr));
+}
+window.addEventListener('resize',layout);
+window.addEventListener('orientationchange',function(){ setTimeout(layout,250); });
+
+/* ---------- sensor loop ---------- */
+let tPrev=0, hzAcc=0, hzN=0, hzT=0;
+
+function onMotion(e){
+  const ag=e.accelerationIncludingGravity;
+  if(!ag || (ag.x===null && ag.y===null)) return;
+
+  const now=performance.now();
+  let dtRaw=(now-tPrev)/1000; tPrev=now;
+  if(!(dtRaw>0)||dtRaw>0.25) dtRaw=S.dtEst;
+  S.dtEst+=(dtRaw-S.dtEst)*0.02;
+  const dt=clamp(dtRaw,S.dtEst*0.5,S.dtEst*2);
+
+  S.live=true; S.lastEvent=now;
+  hzAcc+=1/dt; hzN++;
+  if(now-hzT>400){ S.hz=hzAcc/Math.max(hzN,1); hzAcc=0; hzN=0; hzT=now; }
+
+  const sg=S.accelInvert?-1:1;
+  const gx=sg*(ag.x||0), gy=sg*(ag.y||0), gz=sg*(ag.z||0);
+  S.inPlane=Math.hypot(gx,gy);
+  S.total=Math.hypot(gx,gy,gz);
+  S.rollAccel=Math.atan2(gx,gy);
+  S.pitchAccel=Math.atan2(gz,S.inPlane);
+
+  const rr=e.rotationRate||{};
+  const ch=[(rr.alpha||0)*D2R,(rr.beta||0)*D2R,(rr.gamma||0)*D2R];
+  const clean=Math.abs(S.total-G)<3.5;
+
+  /* ---- two-stage axis calibration ---- */
+  if(S.phase!=='done' && havePrev && clean){
+    const isRoll=(S.phase==='roll');
+    const ref=isRoll ? wrap(S.rollAccel-rollPrev)/dt
+                     : wrap(S.pitchAccel-pitchPrev)/dt;
+    const usable=isRoll ? (S.inPlane>6) : (Math.abs(S.pitchAccel)<70*D2R);
+    if(Math.abs(ref)>0.9 && usable){
+      refE+=ref*ref;
+      for(let i=0;i<3;i++){ corr[i]+=ref*ch[i]; chE[i]+=ch[i]*ch[i]; }
+      corrN++;
+      if(corrN>=DETECT_N){
+        let best=-1,bestScore=0;
+        for(let i=0;i<3;i++){
+          if(!isRoll && i===S.axisRoll) continue;
+          const den=Math.sqrt(chE[i]*refE)||1e-9;
+          const sc=corr[i]/den;
+          if(Math.abs(sc)>Math.abs(bestScore)){ bestScore=sc; best=i; }
+        }
+        if(best>=0 && Math.abs(bestScore)>0.55){
+          if(isRoll){
+            S.axisRoll=best; S.signRoll=bestScore<0?-1:1; S.confRoll=Math.abs(bestScore);
+            S.phase='pitch'; resetAccum(); S.roll=S.rollGyro=S.rollAccel;
+          }else{
+            S.axisPitch=best; S.signPitch=bestScore<0?-1:1; S.confPitch=Math.abs(bestScore);
+            resolveYaw(); S.phase='done'; resetAccum();
+          }
+        }else{ resetAccum(); }
+      }
+    }
+  }
+  rollPrev=S.rollAccel; pitchPrev=S.pitchAccel; havePrev=true;
+
+  /* ---- angular velocity and its derivative ---- */
+  const wx=ch[S.axisPitch]*S.signPitch;
+  const wy=ch[S.axisYaw  ]*S.signYaw;
+  const wz=ch[S.axisRoll ]*S.signRoll;
+  const kw=clamp(dt/W_LP_TAU,0,1);
+  S.w[0]+=(wx-S.w[0])*kw; S.w[1]+=(wy-S.w[1])*kw; S.w[2]+=(wz-S.w[2])*kw;
+  const ka=clamp(dt/A_LP_TAU,0,1);
+  for(let i=0;i<3;i++){
+    const raw=(S.w[i]-S.wPrev[i])/dt;
+    S.alpha[i]+=(raw-S.alpha[i])*ka;
+    S.wPrev[i]=S.w[i];
+  }
+
+  /* ---- rotation fusion ---- */
+  S.rateRollLP+=(wz-S.rateRollLP)*clamp(dt/RATE_LP_TAU,0,1);
+  S.rollGyro=wrap(S.rollGyro+wz*dt);
+  S.trustShake=clamp(1-Math.abs(S.total-G)/4,0,1);
+  S.trustPlane=clamp((S.inPlane-1.5)/3.5,0,1);
+  const tauEff=(S.phase==='done')?S.tau:0.06;
+  const pr=S.roll+wz*dt;
+  const kr=(dt/(tauEff+dt))*S.trustShake*S.trustPlane;
+  S.roll=wrap(pr+kr*wrap(S.rollAccel-pr));
+
+  /* ================= LINEAR DISPLACEMENT ================= */
+
+  let ax,ay;
+  const lin=e.acceleration;
+  const nativeOK=lin && lin.x!==null && lin.y!==null
+              && (Math.abs(lin.x)+Math.abs(lin.y)+Math.abs(lin.z||0))>0;
+  if(S.hasNativeLin===null){
+    if(nativeOK) S.hasNativeLin=true;
+    else if(S.hz>5) S.hasNativeLin=false;
+  }
+  if(nativeOK){ ax=sg*lin.x; ay=sg*lin.y; }
+  else{
+    const kg=clamp(dt/GRAV_LP_TAU,0,1);
+    S.gEst[0]+=(gx-S.gEst[0])*kg;
+    S.gEst[1]+=(gy-S.gEst[1])*kg;
+    S.gEst[2]+=(gz-S.gEst[2])*kg;
+    ax=gx-S.gEst[0]; ay=gy-S.gEst[1];
+  }
+
+  /* band limit before integrating */
+  const kb=clamp(dt/(1/(2*Math.PI*S.band)),0,1);
+  S.aLP[0]+=(ax-S.aLP[0])*kb;
+  S.aLP[1]+=(ay-S.aLP[1])*kb;
+
+  /* rotation rejection. Gate on |b|, never on |omega|: the tangential
+     term peaks exactly where omega is zero, so an omega gate is
+     anti-correlated with the signal it should cancel. */
+  const bx=S.alpha[1]+S.w[2]*S.w[0];
+  const by=-S.alpha[0]+S.w[2]*S.w[1];
+  const bMag=Math.hypot(bx,by);
+  const wMag=Math.hypot(S.w[0],S.w[1],S.w[2]);
+  S.rejGate=smoothstep(bMag,0.20,0.80);
+
+  const px=S.aLP[0]-S.bias[0], py=S.aLP[1]-S.bias[1];
+  const sc=S.reject*S.rejGate*S.pivotL;
+  const rx=px-bx*sc, ry=py-by*sc;
+  S.rejMag=bMag*sc;
+
+  /* pivot auto-fit: heavily damped, and it only takes over once the
+     regression is actually confident. */
+  if(S.pivotMode==='auto'){
+    const bb=bx*bx+by*by;
+    if(bb>4 && S.rejGate>0.6){
+      const f=Math.exp(-dt/FIT_FORGET);
+      S.fitAb=S.fitAb*f+(px*bx+py*by);
+      S.fitBb=S.fitBb*f+bb;
+      S.fitConf=clamp(S.fitBb/3000,0,1);
+      if(S.fitConf>0.35){
+        S.fitL=clamp(S.fitAb/S.fitBb,0,0.60);
+        const prevL=S.pivotL;
+        S.pivotL+=(S.fitL-S.pivotL)*0.004;
+        if(Math.abs(S.pivotL-prevL)>1e-4) S.needPivotUI=true;
+      }
+    }
+  }
+
+  S.aResMag=Math.hypot(rx,ry);
+
+  /* stationarity, fixed-size window, with hysteresis */
+  stillA_[stillPtr]=S.aResMag;
+  stillW_[stillPtr]=wMag;
+  stillPtr=(stillPtr+1)%STILL_N;
+  if(stillFill<STILL_N) stillFill++;
+  let maxA=0,maxW=0;
+  for(let i=0;i<stillFill;i++){
+    if(stillA_[i]>maxA) maxA=stillA_[i];
+    if(stillW_[i]>maxW) maxW=stillW_[i];
+  }
+  const full=(stillFill>=STILL_N);
+  if(!S.locked){
+    if(full && maxA<S.stillThresh && maxW<0.15) S.locked=true;
+  }else{
+    if(maxA>S.stillThresh*2 || maxW>0.30) S.locked=false;
+  }
+  S.still=S.locked?Math.min(1,S.still+dt/0.15):Math.max(0,S.still-dt/0.15);
+
+  if(S.locked){
+    const kbi=dt/BIAS_TAU;
+    S.bias[0]+=(S.aLP[0]-S.bias[0])*kbi;
+    S.bias[1]+=(S.aLP[1]-S.bias[1])*kbi;
+  }
+
+  /* world frame: up u=(sin th, cos th), right h=(cos th, -sin th) */
+  const th=S.roll, ct=Math.cos(th), st=Math.sin(th);
+  const gnx=softGate(rx,S.noise), gny=softGate(ry,S.noise);
+  const aH=gnx*ct-gny*st;
+  const aU=gnx*st+gny*ct;
+
+  const decay=Math.exp(-dt/S.hold);
+  if(S.zupt && S.locked){
+    S.vel[0]=0; S.vel[1]=0;
+    const dz=Math.exp(-dt/ZUPT_POS_TAU);
+    S.pos[0]*=dz; S.pos[1]*=dz;
+  }else{
+    S.vel[0]=(S.vel[0]+aH*dt)*decay;
+    S.vel[1]=(S.vel[1]+aU*dt)*decay;
+    S.pos[0]=(S.pos[0]+S.vel[0]*dt)*decay;
+    S.pos[1]=(S.pos[1]+S.vel[1]*dt)*decay;
+  }
+
+  /* bound the state itself, not just the rendered result, so it can
+     never wind past the limit and then lag on the way back */
+  const R=S.range;
+  for(let i=0;i<2;i++){
+    if(S.pos[i]>R){ S.pos[i]=R; if(S.vel[i]>0) S.vel[i]=0; }
+    else if(S.pos[i]<-R){ S.pos[i]=-R; if(S.vel[i]<0) S.vel[i]=0; }
+  }
+}
+
+/* ---------- render ---------- */
+function rotationAngle(){
+  if(S.src==='off') return 0;
+  if(S.src==='accel') return S.rollAccel;
+  const base=(S.src==='gyro')?S.rollGyro:S.roll;
+  return wrap(base+clamp(S.rateRollLP*S.lead,-LEAD_CLAMP,LEAD_CLAMP));
+}
+
+function translation(){
+  if(!S.trans || S.src==='off') return {x:0,y:0};
+  const th=S.roll, ct=Math.cos(th), st=Math.sin(th);
+  const dx= S.pos[0]*ct+S.pos[1]*st;
+  const dy=-S.pos[0]*st+S.pos[1]*ct;
+  const k=S.travel*CSS_PX_PER_M;
+  let x=-dx*k*(S.flipX?-1:1);
+  let y= dy*k*(S.flipY?-1:1);
+  /* in fixed-zoom mode the margin is what the overscan bought us */
+  if(S.fit==='fixed'){
+    const mx=W*(S.over-1)/2, my=H*(S.over-1)/2;
+    x=clamp(x,-mx,mx); y=clamp(y,-my,my);
+  }else{
+    x=clamp(x,-W*0.45,W*0.45); y=clamp(y,-H*0.45,H*0.45);
+  }
+  return {x:x,y:y};
+}
+
+function drawScope(){
+  if(!S.scope || !scW) return;
+  const g=scope.getContext('2d');
+  g.setTransform(scDpr,0,0,scDpr,0,0);
+  g.clearRect(0,0,scW,scH);
+  g.fillStyle='#0A0E10'; g.fillRect(0,0,scW,scH);
+
+  /* locked bands first, behind the traces */
+  g.fillStyle='rgba(127,191,122,.16)';
+  for(let i=0;i<SCOPE_N;i++){
+    const idx=(scPtr+i)%SCOPE_N;
+    if(scL[idx]){ g.fillRect(i/SCOPE_N*scW,0,scW/SCOPE_N+0.6,scH); }
+  }
+  g.strokeStyle='#1F2C31'; g.lineWidth=1;
+  g.beginPath(); g.moveTo(0,scH/2); g.lineTo(scW,scH/2); g.stroke();
+
+  const R=Math.max(S.range,1e-4);
+  const plot=(buf,col)=>{
+    g.strokeStyle=col; g.lineWidth=1.5; g.beginPath();
+    for(let i=0;i<SCOPE_N;i++){
+      const idx=(scPtr+i)%SCOPE_N;
+      const y=scH/2-clamp(buf[idx]/R,-1,1)*(scH/2-2);
+      const x=i/SCOPE_N*scW;
+      if(i===0) g.moveTo(x,y); else g.lineTo(x,y);
+    }
+    g.stroke();
+  };
+  plot(scX,'#6FD3D8');
+  plot(scY,'#E8B04B');
+}
+
+function frame(){
+  const th=rotationAngle();
+  const deg=th*R2D;
+  const t=translation();
+
+  let scale=1;
+  if(S.fit==='fixed'){
+    scale=S.over;                       /* CONSTANT — no breathing */
+  }else if(S.fit==='cover' && W && H){
+    const c=Math.abs(Math.cos(th)), s=Math.abs(Math.sin(th));
+    scale=Math.max((W*c+H*s+2*Math.abs(t.x))/W,(W*s+H*c+2*Math.abs(t.y))/H);
+  }
+
+  plate.style.transform=
+    'translate('+t.x.toFixed(2)+'px,'+t.y.toFixed(2)+'px) '
+    +'rotate('+deg.toFixed(3)+'deg) '
+    +'scale('+scale.toFixed(4)+')';
+
+  const stale=S.live && (performance.now()-S.lastEvent>1200);
+  angleBig.textContent=S.live?(deg>=0?'+':'')+deg.toFixed(1):'\u2014';
+  angleBig.classList.toggle('stale',stale);
+
+  const done=(S.phase==='done');
+  axisTag.innerHTML=(done
+      ? 'r'+AXIS_NAMES[S.axisRoll]+(S.signRoll<0?'\u2212':'+')
+        +' p'+AXIS_NAMES[S.axisPitch]+(S.signPitch<0?'\u2212':'+')
+        +' y'+AXIS_NAMES[S.axisYaw]+(S.signYaw<0?'\u2212':'+')
+      : 'calibrating')
+    +(S.hz?'<br>'+Math.round(S.hz)+' Hz \u00B7 '+scale.toFixed(2)+'\u00D7':'');
+
+  vShiftX.textContent=(S.pos[0]>=0?'+':'')+(S.pos[0]*1000).toFixed(0)+' mm';
+  vShiftY.textContent=(S.pos[1]>=0?'+':'')+(S.pos[1]*1000).toFixed(0)+' mm';
+
+  vStill.textContent=S.locked?'LOCK':'\u2014';
+  vStill.className='v'+(S.locked?' gd':' wr');
+
+  vPivot.textContent=Math.round(S.pivotL*100)+' cm';
+  vPivot.className='v'+(S.pivotMode==='auto'?(S.fitConf>0.35?' gd':' wr'):' cy');
+
+  /* all DOM writes for the auto fit happen here, never in onMotion */
+  if(S.needPivotUI){
+    S.needPivotUI=false;
+    pivot.value=String(Math.round(S.pivotL*100));
+    pivotVal.textContent=Math.round(S.pivotL*100)+' cm';
+  }
+
+  scX[scPtr]=S.pos[0]; scY[scPtr]=S.pos[1]; scL[scPtr]=S.locked?1:0;
+  scPtr=(scPtr+1)%SCOPE_N;
+  drawScope();
+
+  const showCal=S.live && !done;
+  calib.classList.toggle('hidden',!showCal);
+  if(showCal){
+    calibBar.style.width=Math.min(100,corrN/DETECT_N*100).toFixed(0)+'%';
+    if(S.phase==='roll'){
+      calibKey.textContent='Step 1 of 2 \u2014 roll channel';
+      calibText.textContent=S.inPlane>6
+        ? 'Keep rocking it side to side \u2014 sampling.'
+        : 'Hold the phone upright first, then rock it side to side like a steering wheel.';
+    }else{
+      calibKey.textContent='Step 2 of 2 \u2014 pitch channel';
+      calibText.textContent=Math.abs(S.pitchAccel)<70*D2R
+        ? 'Now tilt it forward and back \u2014 sampling.'
+        : 'Bring it back up off flat, then tilt forward and back.';
+    }
+  }else if(done && calHint.dataset.stale!=='0'){
+    calHint.dataset.stale='0'; updateCalHint();
+  }
+  if(accSrcHint.dataset.set!=='1' && S.hasNativeLin!==null){
+    accSrcHint.dataset.set='1'; updateAccSrcHint();
+  }
+
+  requestAnimationFrame(frame);
+}
+
+/* ---------- controls ---------- */
+const HINTS={
+  off:'Everything off. The reference for the rest \u2014 this is what your eye is used to.',
+  accel:'Gravity alone. Rock steady when still, unusable the moment you shake it.',
+  gyro:'Integration alone. Smooth, and slowly, inevitably wrong.',
+  fused:'Accelerometer anchors the angle, gyroscope smooths it. This is the one you ship.'
+};
+function syncHandle(){
+  handleState.textContent=(S.src==='off'?'OFF':'ROLL')+(S.trans&&S.src!=='off'?' + SHIFT':'');
+}
+function updateCalHint(){
+  calHint.textContent=(S.phase!=='done')
+    ? 'Calibrating \u2014 follow the prompt on screen.'
+    : 'Roll '+AXIS_NAMES[S.axisRoll]+(S.signRoll<0?'\u2212':'+')+' ('+S.confRoll.toFixed(2)+')  \u00B7  '
+     +'Pitch '+AXIS_NAMES[S.axisPitch]+(S.signPitch<0?'\u2212':'+')+' ('+S.confPitch.toFixed(2)+')  \u00B7  '
+     +'Yaw '+AXIS_NAMES[S.axisYaw]+(S.signYaw<0?'\u2212':'+')+' (handedness)';
+}
+function updateAccSrcHint(){
+  accSrcHint.textContent=S.hasNativeLin===null
+    ? 'Linear acceleration source: detecting\u2026'
+    : (S.hasNativeLin
+       ? 'Linear acceleration from OS sensor fusion \u2014 gravity already removed. Best case.'
+       : 'No OS linear channel; gravity estimated by low-pass and subtracted. Expect more creep.');
+}
+function applySpeed(name){
+  const p=SPEED_PRESETS[name]; if(!p) return;
+  S.tau=p.tau; S.lead=p.lead;
+  tau.value=String(p.tau); tauVal.textContent=p.tau.toFixed(2)+' s';
+  lead.value=String(Math.round(p.lead*1000));
+  leadVal.textContent=Math.round(p.lead*1000)+' ms';
+}
+function clearSpeedPreset(){
+  Array.prototype.forEach.call(segSpeed.children,function(x){ x.classList.remove('on'); });
+}
+function pick(seg,b){
+  Array.prototype.forEach.call(seg.children,function(x){ x.classList.toggle('on',x===b); });
+}
+function pickVal(seg,attr,val){
+  Array.prototype.forEach.call(seg.children,function(x){
+    x.classList.toggle('on',x.dataset[attr]===val);
+  });
+}
+function recentre(){
+  S.vel[0]=S.vel[1]=0; S.pos[0]=S.pos[1]=0;
+  S.rollGyro=S.roll; stillReset(); S.locked=false;
+  scX.fill(0); scY.fill(0); scL.fill(0);
+}
+
+segSpeed.addEventListener('click',function(e){
+  const b=e.target.closest('button'); if(!b) return;
+  pick(segSpeed,b); applySpeed(b.dataset.speed);
+});
+segTrans.addEventListener('click',function(e){
+  const b=e.target.closest('button'); if(!b) return;
+  pick(segTrans,b); S.trans=(b.dataset.trans==='on');
+  if(!S.trans) recentre();
+  syncHandle();
+});
+segPivot.addEventListener('click',function(e){
+  const b=e.target.closest('button'); if(!b) return;
+  pick(segPivot,b); S.pivotMode=b.dataset.pivot;
+  if(S.pivotMode==='auto'){ S.fitAb=0; S.fitBb=0; S.fitConf=0; }
+});
+segZupt.addEventListener('click',function(e){
+  const b=e.target.closest('button'); if(!b) return;
+  pick(segZupt,b); S.zupt=(b.dataset.zupt==='on');
+});
+segSrc.addEventListener('click',function(e){
+  const b=e.target.closest('button'); if(!b) return;
+  pick(segSrc,b); S.src=b.dataset.src;
+  srcHint.textContent=HINTS[S.src]; syncHandle();
+});
+segFit.addEventListener('click',function(e){
+  const b=e.target.closest('button'); if(!b) return;
+  pick(segFit,b); S.fit=b.dataset.fit;
+});
+tau.addEventListener('input',function(){
+  S.tau=parseFloat(tau.value); tauVal.textContent=S.tau.toFixed(2)+' s'; clearSpeedPreset();
+});
+lead.addEventListener('input',function(){
+  S.lead=parseFloat(lead.value)/1000;
+  leadVal.textContent=Math.round(S.lead*1000)+' ms'; clearSpeedPreset();
+});
+hold.addEventListener('input',function(){
+  S.hold=parseFloat(hold.value); holdVal.textContent=S.hold.toFixed(2)+' s';
+});
+travel.addEventListener('input',function(){
+  S.travel=parseFloat(travel.value)/100; travelVal.textContent=travel.value+' %';
+});
+gateA.addEventListener('input',function(){
+  S.noise=parseFloat(gateA.value); gateVal.textContent=S.noise.toFixed(3)+' m/s\u00B2';
+});
+band.addEventListener('input',function(){
+  S.band=parseFloat(band.value); bandVal.textContent=S.band+' Hz';
+});
+over.addEventListener('input',function(){
+  S.over=parseFloat(over.value); overVal.textContent=S.over.toFixed(2)+'\u00D7';
+});
+rangeEl.addEventListener('input',function(){
+  S.range=parseFloat(rangeEl.value)/1000;
+  rangeVal.textContent=rangeEl.value+' mm';
+});
+pivot.addEventListener('input',function(){
+  S.pivotL=parseFloat(pivot.value)/100;
+  pivotVal.textContent=pivot.value+' cm';
+  S.pivotMode='manual';
+  pickVal(segPivot,'pivot','manual');
+});
+reject.addEventListener('input',function(){
+  S.reject=parseFloat(reject.value)/100; rejectVal.textContent=reject.value+' %';
+});
+stillAEl.addEventListener('input',function(){
+  S.stillThresh=parseFloat(stillAEl.value);
+  stillVal.textContent=S.stillThresh.toFixed(2)+' m/s\u00B2';
+});
+btnFlipX.addEventListener('click',function(){
+  S.flipX=!S.flipX; btnFlipX.classList.toggle('on',S.flipX);
+});
+btnFlipY.addEventListener('click',function(){
+  S.flipY=!S.flipY; btnFlipY.classList.toggle('on',S.flipY);
+});
+btnScope.addEventListener('click',function(){
+  S.scope=!S.scope;
+  btnScope.classList.toggle('on',S.scope);
+  btnScope.textContent=S.scope?'Trace on':'Trace off';
+  scopeWrap.classList.toggle('hidden',!S.scope);
+  if(S.scope) setTimeout(layout,0);
+});
+$('btnFlipG').addEventListener('click',function(){
+  S.signRoll*=-1; S.roll=S.rollGyro=S.rollAccel; S.rateRollLP=0;
+  if(S.phase==='done'){ resolveYaw(); updateCalHint(); }
+});
+$('btnRedetect').addEventListener('click',function(){
+  restartCalibration(); calHint.dataset.stale='1'; updateCalHint();
+});
+$('btnFlipA').addEventListener('click',function(){
+  S.accelInvert=!S.accelInvert;
+  S.roll=S.rollGyro=0; S.rateRollLP=0;
+  S.bias[0]=S.bias[1]=0; S.gEst=[0,0,0];
+  S.fitAb=0; S.fitBb=0; S.fitConf=0;
+  recentre(); restartCalibration();
+  gravHint.textContent='Gravity sign: '+(S.accelInvert?'inverted':'normal')+'.';
+  calHint.dataset.stale='1'; updateCalHint();
+});
+$('btnZero').addEventListener('click',recentre);
+$('btnPattern').addEventListener('click',function(){ plate.classList.remove('hasImg'); });
+$('btnReset').addEventListener('click',function(){
+  Object.keys(DEFAULTS).forEach(function(k){ if(k!=='speed') S[k]=DEFAULTS[k]; });
+  S.flipX=S.flipY=false;
+  btnFlipX.classList.remove('on'); btnFlipY.classList.remove('on');
+  over.value=String(S.over);            overVal.textContent=S.over.toFixed(2)+'\u00D7';
+  rangeEl.value=String(S.range*1000);   rangeVal.textContent=Math.round(S.range*1000)+' mm';
+  hold.value=String(S.hold);            holdVal.textContent=S.hold.toFixed(2)+' s';
+  travel.value=String(S.travel*100);    travelVal.textContent=Math.round(S.travel*100)+' %';
+  gateA.value=String(S.noise);          gateVal.textContent=S.noise.toFixed(3)+' m/s\u00B2';
+  band.value=String(S.band);            bandVal.textContent=S.band+' Hz';
+  pivot.value=String(S.pivotL*100);     pivotVal.textContent=Math.round(S.pivotL*100)+' cm';
+  reject.value=String(S.reject*100);    rejectVal.textContent=Math.round(S.reject*100)+' %';
+  stillAEl.value=String(S.stillThresh); stillVal.textContent=S.stillThresh.toFixed(2)+' m/s\u00B2';
+  pickVal(segFit,'fit',S.fit);
+  pickVal(segPivot,'pivot',S.pivotMode);
+  pickVal(segZupt,'zupt',S.zupt?'on':'off');
+  pickVal(segTrans,'trans',S.trans?'on':'off');
+  pickVal(segSrc,'src',S.src);
+  pickVal(segSpeed,'speed','quick'); applySpeed('quick');
+  srcHint.textContent=HINTS[S.src];
+  recentre(); syncHandle();
+});
+
+const fileIn=document.createElement('input');
+fileIn.type='file'; fileIn.accept='image/*'; fileIn.style.display='none';
+document.body.appendChild(fileIn);
+$('btnImg').addEventListener('click',function(){ fileIn.click(); });
+fileIn.addEventListener('change',function(e){
+  const f=e.target.files && e.target.files[0]; if(!f) return;
+  userImg.src=URL.createObjectURL(f);
+  plate.classList.add('hasImg');
+});
+
+function togglePanel(){
+  const open=panel.classList.toggle('open');
+  handle.setAttribute('aria-expanded',open?'true':'false');
+}
+handle.addEventListener('click',togglePanel);
+handle.addEventListener('keydown',function(e){
+  if(e.key==='Enter'||e.key===' '){ e.preventDefault(); togglePanel(); }
+});
+
+/* ---------- start ---------- */
+async function start(){
+  gateErr.textContent='';
+  try{
+    if(typeof DeviceMotionEvent!=='undefined'
+       && typeof DeviceMotionEvent.requestPermission==='function'){
+      const r=await DeviceMotionEvent.requestPermission();
+      if(r!=='granted'){
+        gateErr.textContent='Permission denied. Reload the page and allow motion access to continue.';
+        return;
+      }
+    }
+  }catch(err){
+    gateErr.textContent='Motion access failed: '+err.message
+      +' \u2014 this usually means the page is not served over https.';
+    return;
+  }
+
+  window.addEventListener('devicemotion',onMotion);
+  gate.classList.add('hidden');
+  stage.setAttribute('aria-hidden','false');
+  layout();
+  tPrev=performance.now();
+  requestAnimationFrame(frame);
+
+  setTimeout(function(){
+    if(!S.live){
+      gate.classList.remove('hidden');
+      gateErr.textContent='No sensor data arriving. The page needs https, and on desktop there is no gyroscope to read.';
+    }
+  },1600);
+}
+startBtn.addEventListener('click',start);
+
+layout();
+syncHandle();
+applySpeed('quick');
+resolveYaw();
+calHint.dataset.stale='1';
+updateCalHint();
+updateAccSrcHint();
+gravHint.textContent='Gravity sign: '+(S.accelInvert?'inverted (iOS)':'normal')+'.';
+</script>
+</body>
+</html>
