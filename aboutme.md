@@ -1,6 +1,7 @@
 ---
 layout: page
 title: What this is all about.
+permalink: /aboutme/
 subtitle:
 ---
 

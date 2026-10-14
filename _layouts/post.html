@@ -1,0 +1,60 @@
+---
+layout: default
+---
+{% assign is_build = false %}{% if page.tags contains "builds" %}{% assign is_build = true %}{% endif %}
+{% assign body = content | strip_html | strip %}
+<article class="wrap post{% if is_build %} post-build{% endif %}">
+  <header class="page-head">
+    <p class="kicker">
+      {% if is_build %}<a href="{{ '/builds/' | relative_url }}">Builds</a>{% else %}<a href="{{ '/log/' | relative_url }}">Log</a>{% endif %}
+      <span>·</span> <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%-d %b %Y" }}</time>
+      {% if page.status %}<span class="chip chip-{{ page.status }}">{{ page.status }}</span>{% endif %}
+    </p>
+    <h1>{{ page.title }}</h1>
+    {% if page.subtitle %}<p class="sub">{{ page.subtitle }}</p>{% endif %}
+    {% if page.summary %}<p class="lede">{{ page.summary }}</p>{% endif %}
+  </header>
+
+  {% if page.cover %}
+  <figure class="cover"><img src="{{ page.cover | relative_url }}" alt="{{ page.title }}"></figure>
+  {% elsif is_build %}
+  <div class="slot slot-photo"><b>Photo</b> Put a cover photo in assets/projects/ and add <code>cover:</code> to this post.</div>
+  {% endif %}
+
+  {% if page.specs %}
+  <section class="specs" aria-label="Specs">
+    <h2 class="label">Specs</h2>
+    <dl>
+      {% for s in page.specs %}<div><dt>{{ s.k }}</dt><dd>{{ s.v }}</dd></div>{% endfor %}
+    </dl>
+  </section>
+  {% endif %}
+
+  {% if is_build %}<h2 class="label">In my words</h2>{% endif %}
+  {% if body == "" %}
+  <div class="slot"><b>Your text</b> What is it, why did you build it, what went wrong, what would you change? A few honest sentences are enough.</div>
+  {% else %}
+  <div class="prose">
+    {{ content }}
+  </div>
+  {% endif %}
+
+  {% if page.gallery %}
+  <section class="gallery" aria-label="Photos">
+    {% for g in page.gallery %}
+    <figure><img src="{{ g.src | relative_url }}" alt="{{ g.caption | default: page.title }}" loading="lazy">{% if g.caption %}<figcaption>{{ g.caption }}</figcaption>{% endif %}</figure>
+    {% endfor %}
+  </section>
+  {% elsif is_build %}
+  <div class="slot slot-photo"><b>Photos</b> 2–4 real photos: the workbench, a failed version, the finished thing. List them under <code>gallery:</code>.</div>
+  {% endif %}
+
+  {% if page.links %}
+  <p class="links">{% for l in page.links %}<a class="btn" href="{{ l.url | relative_url }}">{{ l.label }}</a>{% endfor %}</p>
+  {% endif %}
+
+  <nav class="pager" aria-label="More posts">
+    {% if page.previous %}<a href="{{ page.previous.url | relative_url }}"><span class="label">Older</span>{{ page.previous.title }}</a>{% else %}<span></span>{% endif %}
+    {% if page.next %}<a class="next" href="{{ page.next.url | relative_url }}"><span class="label">Newer</span>{{ page.next.title }}</a>{% endif %}
+  </nav>
+</article>

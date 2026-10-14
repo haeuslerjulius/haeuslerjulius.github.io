@@ -3,6 +3,8 @@ layout: post
 title: "Pre-lesson push notification with last-lesson recap"
 tags: [builds]
 result: "On time nudges before class; faster context recall"
+status: done
+glyph: "↻"
 ---
 
 **Problem:**

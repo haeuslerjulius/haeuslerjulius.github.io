@@ -1,0 +1,19 @@
+---
+layout: default
+title: Log
+permalink: /log/
+---
+<section class="sec">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="label">Log</p>
+      <h1>Notes along the way</h1>
+      <p class="sub">Wins, failures and everything in between, since October 2025.</p>
+    </header>
+    <ul class="log-list log-full">
+      {% for p in site.posts %}{% unless p.tags contains "builds" %}
+      <li><a href="{{ p.url | relative_url }}"><time datetime="{{ p.date | date: '%Y-%m-%d' }}">{{ p.date | date: "%-d %b %Y" }}</time><span>{{ p.title }}<small>{{ p.excerpt | strip_html | truncatewords: 24 }}</small></span></a></li>
+      {% endunless %}{% endfor %}
+    </ul>
+  </div>
+</section>

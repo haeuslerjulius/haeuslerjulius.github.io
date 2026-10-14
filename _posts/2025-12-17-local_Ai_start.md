@@ -2,6 +2,7 @@
 layout: post
 title: "“The Original Idea Behind the Local AI”"
 tags: [builds]
+glyph: "AI"
 ---
 
 The original idea was actually much bigger than what exists today.
