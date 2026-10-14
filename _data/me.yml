@@ -1,0 +1,29 @@
+# About you. Anything left empty ("") shows a fill-in box while show_slots is on.
+
+name: Julius Häusler
+place: Stephanskirchen, Bavaria
+coords: "47.85°N 12.18°E"
+
+# One line under your name. Write it yourself.
+tagline: ""
+
+# Turnaround photos: put them in assets/me/turn/ named 01.jpg, 02.jpg, ...
+# and set the number here. 0 = show the single photo below instead.
+turn_frames: 0
+turn_fallback: /selfie.upscaled.jpg
+
+# 3 to 5 sentences about you. Separate paragraphs with an empty line.
+about: ""
+
+# Things you're into. Edit freely.
+interests:
+  - FPV flying
+  - 3D printing
+  - ESP32 electronics
+  - Photography
+  - Road cycling
+  - Gym
+  - Tennis
+
+# What you're aiming at, in your own words (next 1–3 years).
+next: ""
