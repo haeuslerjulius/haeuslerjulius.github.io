@@ -33,14 +33,12 @@ title: Julius Häusler
       {% if me.tagline != "" %}<p class="tagline">{{ me.tagline }}</p>
       {% else %}<div class="slot"><b>Tagline</b> One line about you, in your own words. Your old one was “I build small AI automations for real problems”.</div>{% endif %}
 
-      {% if me.about != "" %}<div class="prose">{{ me.about | markdownify }}</div>
+      {% if me.about != "" %}<div class="panel"><span class="tab">About</span><div class="prose">{{ me.about | markdownify }}</div></div>
       {% else %}<div class="slot"><b>About</b> 3–5 sentences: who you are, what you spend your time on, what you care about.</div>{% endif %}
 
-      <p class="label label-sm">Into</p>
-      <ul class="tags">{% for i in me.interests %}<li>{{ i }}</li>{% endfor %}</ul>
+      <div class="panel"><span class="tab">Into</span><ul class="tags">{% for i in me.interests %}<li>{{ i }}</li>{% endfor %}</ul></div>
 
-      <p class="label label-sm">Next</p>
-      {% if me.next != "" %}<div class="prose">{{ me.next | markdownify }}</div>
+      {% if me.next != "" %}<div class="panel panel-next"><span class="tab">Next</span><div class="prose">{{ me.next | markdownify }}</div></div>
       {% else %}<div class="slot"><b>Next</b> Where you're heading: the work or gap year after school, the drone business, the next thing you want to build.</div>{% endif %}
 
       <p class="me-links"><a href="{{ '/aboutme/' | relative_url }}">My story</a> · <a href="{{ '/philosophy/' | relative_url }}">How I think</a> · <a href="{{ '/log/' | relative_url }}">Log</a></p>
@@ -57,30 +55,25 @@ title: Julius Häusler
       <p class="sub">{{ school.level }}</p>
     </header>
 
-    {% if school.intro != "" %}<div class="prose">{{ school.intro | markdownify }}</div>
+    {% if school.intro != "" %}<div class="panel panel-intro"><span class="tab">Where I stand</span><div class="prose">{{ school.intro | markdownify }}</div></div>
     {% else %}<div class="slot"><b>Intro</b> A sentence or two on school: how it's going, what you enjoy, what you're aiming for in the Abitur.</div>{% endif %}
 
     <div class="school-grid">
       <div class="col">
-        <h3 class="label">Courses</h3>
-        {% if school.courses.size > 0 %}<ul class="tags">{% for c in school.courses %}<li>{{ c }}</li>{% endfor %}</ul>
+        {% if school.courses.size > 0 %}<div class="panel"><span class="tab">Courses</span><ul class="tags">{% for c in school.courses %}<li>{{ c }}</li>{% endfor %}</ul>{% if school.grades != "" %}<p class="grade"><span class="label">Grades</span> {{ school.grades }}</p>{% endif %}</div>
         {% else %}<div class="slot"><b>Courses</b> List your Q12 courses in _data/school.yml.</div>{% endif %}
-        {% if school.grades != "" %}<p class="grade"><span class="label">Grades</span> {{ school.grades }}</p>
-        {% else %}<div class="slot"><b>Grades</b> Optional: your average, if you want to show it.</div>{% endif %}
 
-        <h3 class="label">Competitions</h3>
-        {% if school.competitions.size > 0 %}
-        <ul class="rows">{% for c in school.competitions %}<li><span class="yr">{{ c.year }}</span><span><b>{{ c.title }}</b>{% if c.result %}<br>{{ c.result }}{% endif %}</span></li>{% endfor %}</ul>
+        {% if school.competitions.size > 0 %}<div class="panel"><span class="tab">Competitions</span>
+        <ul class="rows">{% for c in school.competitions %}<li><span class="yr">{{ c.year | default: c.years }}</span><span><b>{{ c.title }}</b>{% if c.result %}<br>{{ c.result }}{% endif %}</span></li>{% endfor %}</ul></div>
         {% else %}<div class="slot"><b>Competitions</b> School competitions and championships: year, name, result.</div>{% endif %}
 
-        <h3 class="label">Languages</h3>
-        <ul class="tags">{% for l in school.languages %}<li>{{ l }}</li>{% endfor %}</ul>
+        <div class="panel"><span class="tab">Languages</span><ul class="tags">{% for l in school.languages %}<li>{{ l }}</li>{% endfor %}</ul></div>
       </div>
       <div class="col">
-        <h3 class="label">Roles</h3>
-        <ul class="rows">{% for r in school.roles %}<li><span class="yr">{{ r.years }}</span><span>{{ r.title }}</span></li>{% endfor %}</ul>
-        <h3 class="label">Work and internships</h3>
-        <ul class="rows">{% for e in school.experience %}<li><span class="yr">{{ e.years }}</span><span><b>{{ e.title }}</b><br>{{ e.detail }}</span></li>{% endfor %}</ul>
+        <div class="panel"><span class="tab">Roles</span>
+        <ul class="rows">{% for r in school.roles %}<li><span class="yr">{{ r.years }}</span><span>{{ r.title }}</span></li>{% endfor %}</ul></div>
+        <div class="panel"><span class="tab">Work and internships</span>
+        <ul class="rows">{% for e in school.experience %}<li><span class="yr">{{ e.years }}</span><span><b>{{ e.title }}</b><br>{{ e.detail }}</span></li>{% endfor %}</ul></div>
       </div>
     </div>
   </div>
@@ -124,22 +117,21 @@ title: Julius Häusler
 
     <div class="drone-grid">
       <div class="col">
-        <h3 class="label">What I offer</h3>
-        <ul class="rows rows-plain">{% for o in d.offer %}<li><span><b>{{ o.title }}</b><br>{{ o.detail }}</span></li>{% endfor %}</ul>
-        <h3 class="label">For</h3>
+        <div class="panel"><span class="tab">What I offer</span>
+        <ul class="rows rows-plain">{% for o in d.offer %}<li><span><b>{{ o.title }}</b><br>{{ o.detail }}</span></li>{% endfor %}</ul></div>
+        <div class="panel"><span class="tab">For</span>
         <ul class="tags">{% for w in d.for_whom %}<li>{{ w }}</li>{% endfor %}</ul>
-        <dl class="facts">{% for f in d.facts %}<div><dt>{{ f.label }}</dt><dd>{{ f.value }}</dd></div>{% endfor %}</dl>
+        <dl class="facts">{% for f in d.facts %}<div><dt>{{ f.label }}</dt><dd>{{ f.value }}</dd></div>{% endfor %}</dl></div>
       </div>
       <div class="col">
-        <h3 class="label">How I got into it</h3>
-        {% if d.story != "" %}<div class="prose">{{ d.story | markdownify }}</div>
+        {% if d.story != "" %}<div class="panel"><span class="tab">How I got into it</span><div class="prose">{{ d.story | markdownify }}</div></div>
         {% else %}<div class="slot"><b>Story</b> How FPV started for you: first drone, first crash, the moment it turned into more than a hobby.</div>{% endif %}
-        <h3 class="label">Work</h3>
-        <ul class="rows">{% for w in d.work %}<li><span class="yr">{{ w.year }}</span><span><b>{{ w.title }}</b><br>{{ w.detail }}</span></li>{% endfor %}</ul>
+        <div class="panel"><span class="tab">Work</span>
+        <ul class="rows">{% for w in d.work %}<li><span class="yr">{{ w.year }}</span><span><b>{{ w.title }}</b><br>{{ w.detail }}</span></li>{% endfor %}</ul></div>
       </div>
     </div>
 
-    <h3 class="label">Fleet</h3>
+    <div class="panel panel-flush"><span class="tab">Fleet</span>
     <div class="table-scroll">
       <table class="fleet">
         <thead><tr><th>Drone</th><th>Class</th><th>Used for</th><th>Status</th></tr></thead>
@@ -147,6 +139,7 @@ title: Julius Häusler
           {% for q in d.fleet %}<tr><td><b>{{ q.name }}</b></td><td class="mono">{{ q.type }}</td><td>{{ q.use }}</td><td><span class="chip chip-{{ q.status | replace: ' ', '-' }}">{{ q.status }}</span></td></tr>{% endfor %}
         </tbody>
       </table>
+    </div>
     </div>
     <p class="kit"><span class="label">Also in the bag</span> {{ d.kit | join: " · " }}</p>
 
