@@ -16,7 +16,13 @@ grades: ""
 # - year: 2025
 #   title: Name of the competition
 #   result: What you achieved
-competitions: []
+competitions: 
+  - years: 2022/2023/2024/2025
+    title: Country-wide mathematics dompetition
+    result: third national round solos
+  - years: 2023/2023/2024
+    title: Bavarian Robotics Competition
+    result: third place in microcontroller competiton
 
 roles:
   - years: "2025/26"
@@ -44,3 +50,4 @@ languages:
   - German (native)
   - English (fluent, B2)
   - French (basics)
+  - Latin (Latin proficiency certificate)
