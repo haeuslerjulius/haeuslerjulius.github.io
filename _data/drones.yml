@@ -4,7 +4,7 @@
 pitch: ""
 
 # How you got into FPV. A short story in your words.
-story: ""
+story: "Speed has always fascinated me. The pure focus and risk management brings calm to my mind. Around the age of five I came into contact with drones. My dad had a Dji Phantom 3 Pro for his company. Shortly before my 15th birthday I watched the first and second Topgun films and I whished for a small analog fpv drone. My dad then giftet me a BetaFPV Cetus X Kit. That was my start."
 
 offer:
   - title: Indoor FPV flythroughs
@@ -34,21 +34,18 @@ fleet:
   - name: Flywoo Flytimes 85 HD O4 Pro
     type: 85 mm ducted whoop, 2S
     use: Indoor flythroughs, close to people
-    status: in repair
-  - name: GEPRC CineLog35 V3
-    type: 3.5" cinewhoop, 6S
-    use: Outdoor cinematic shots
     status: flying
-  - name: iFlight Chimera7 Pro V2
+  - name: Long Range Fpv Drone
     type: 7" long range, 6S2P Li-ion
     use: Long-range mountain flights
-    status: building
+    status: planning
 
 kit:
   - DJI Goggles N3
   - RadioMaster Pocket (ELRS 2.4 GHz)
   - DJI Osmo Nano as payload camera
   - DaVinci Resolve for editing
+  - Macbook Pro M5
 
 # Jobs and shoots you've done.
 work:
