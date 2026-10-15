@@ -4,10 +4,10 @@ school: Sebastian-Finsterwalder-Gymnasium Rosenheim
 level: "Year 12 (Q12), Bavarian Gymnasium"
 
 # A sentence on how school is going and what you'd like people to know.
-intro: ""
+intro: "Last years end grade was 1.8 (german grades), and that is what my Abitur goal is. Sub 2 is the optimal."
 
 # Your Q12 courses, e.g. "Mathematics", "Physics", ...
-courses: []
+courses: [Mathematics, German, Advanced placement PE, Physics, English, French, Politics, History, Art]
 
 # Optional. e.g. "1.6 average" or leave empty to not show grades.
 grades: ""
