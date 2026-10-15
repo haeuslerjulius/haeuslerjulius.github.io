@@ -39,6 +39,9 @@ fleet:
     type: 7" long range, 6S2P Li-ion
     use: Long-range mountain flights
     status: planning
+  - name: Dji Mini 5 Pro
+    type: Camera drone, Long-range, Video and Photos
+    status: flying
 
 kit:
   - DJI Goggles N3
