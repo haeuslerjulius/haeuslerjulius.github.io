@@ -9,7 +9,10 @@ tagline: ""
 
 # Turnaround photos: put them in assets/me/turn/ named 01.jpg, 02.jpg, ...
 # and set the number here. 0 = show the single photo below instead.
-turn_frames: 0
+# Right now the folder holds 24 frames of a 3D stand-in figure.
+turn_frames: 24
+# true = the frames are the stand-in. Set to false once they're your photos.
+turn_placeholder: true
 turn_fallback: /selfie.upscaled.jpg
 
 # 3 to 5 sentences about you. Separate paragraphs with an empty line.

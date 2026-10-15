@@ -18,13 +18,13 @@ title: Julius Häusler
   <div class="wrap me-grid">
     <div class="me-photo">
     <figure class="turn" data-frames="{{ me.turn_frames }}" data-path="{{ '/assets/me/turn/' | relative_url }}">
-      <img class="turn-img" src="{% if me.turn_frames > 0 %}{{ '/assets/me/turn/01.jpg' | relative_url }}{% else %}{{ me.turn_fallback | relative_url }}{% endif %}" alt="Julius Häusler" width="1292" height="1956">
+      <img class="turn-img" src="{% if me.turn_frames > 0 %}{{ '/assets/me/turn/01.jpg' | relative_url }}{% else %}{{ me.turn_fallback | relative_url }}{% endif %}" alt="{% if me.turn_placeholder %}Placeholder figure turning{% else %}Julius Häusler{% endif %}" width="800" height="1200">
       <figcaption class="turn-osd" aria-hidden="true">
         <span class="osd-tl">{{ me.coords }}</span>
         <span class="osd-br turn-readout">{% if me.turn_frames > 0 %}drag to turn{% else %}1 / 1{% endif %}</span>
       </figcaption>
     </figure>
-    {% if me.turn_frames == 0 %}<div class="slot slot-turn"><b>Turnaround</b> Phone on a tripod, stand on one spot, turn about 15° per photo, 24 photos in the same light. Save as 01.jpg … 24.jpg in assets/me/turn/ and set <code>turn_frames: 24</code> in _data/me.yml.</div>{% endif %}
+    {% if me.turn_frames == 0 or me.turn_placeholder %}<div class="slot slot-turn"><b>Turnaround</b> {% if me.turn_placeholder %}This is a stand-in figure. Replace 01.jpg … 24.jpg in assets/me/turn/ with your own photos and set <code>turn_placeholder: false</code>. {% endif %}Phone on a tripod, stand on one spot, turn about 15° per photo, 24 photos in the same light. Save as 01.jpg … 24.jpg in assets/me/turn/ and set <code>turn_frames: 24</code> in _data/me.yml.</div>{% endif %}
     </div>
 
     <div class="me-text">

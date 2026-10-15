@@ -57,9 +57,14 @@ Anything not tagged `builds` shows up in the Log.
 
 Phone on a tripod at chest height, stand on one marked spot, turn about 15°
 between shots: 24 photos for a full turn, same light (overcast or indoors).
-Crop them all to the same 2:3 frame, name them `01.jpg` … `24.jpg`, put them in
-`assets/me/turn/`, and set `turn_frames: 24` in `_data/me.yml`.
-Visitors can drag across the photo to turn you; it also turns once on load.
+Crop them all to the same 2:3 frame (e.g. 800 × 1200), name them `01.jpg` … `24.jpg`
+and copy them over the stand-in frames in `assets/me/turn/`. Then set
+`turn_placeholder: false` in `_data/me.yml`. If you shoot a different number of
+photos, change `turn_frames` to match.
+
+It loops like a GIF. Visitors can drag across it (or use the arrow keys) to turn
+it by hand, and it starts looping again 2.5 s after they let go. To change the
+speed, edit `FRAME_MS` in `assets/js/site.js` (lower is faster).
 
 ## What stays where it was
 
