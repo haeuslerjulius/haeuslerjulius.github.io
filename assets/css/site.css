@@ -266,3 +266,23 @@ code { font-family: var(--font-mono); font-size: 0.85em; }
 .mail { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-family: var(--font-display); font-stretch: 112%; font-weight: 800; font-size: clamp(1.4rem, 5vw, 2.4rem); line-height: 1.1; word-break: break-all; }
 .copy { font-family: var(--font-mono); font-size: 12px; font-weight: 600; background: var(--signal); color: var(--on-signal); border: 0; border-radius: 4px; padding: 6px 10px; cursor: pointer; }
 .foot-meta { font-family: var(--font-mono); font-size: var(--step--1); color: color-mix(in srgb, var(--on-band) 60%, transparent); }
+
+/* Panels: every filled-in block gets a frame with a tab on its top edge,
+   like a label on a flight case. Tabs are ink; only "Next" gets the signal colour. */
+.panel { position: relative; min-width: 0; margin-top: 10px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 26px 18px 18px; }
+.panel > .tab { position: absolute; top: 0; left: 14px; transform: translateY(-50%); font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1; padding: 5px 9px; border-radius: 3px; background: var(--ink); color: var(--sheet); white-space: nowrap; }
+.panel-next > .tab { background: var(--signal); color: var(--on-signal); }
+.panel-intro { max-width: 46rem; }
+.panel .prose { max-width: none; }
+.panel .prose ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.panel .prose ul li { position: relative; padding-left: 1.5em; }
+.panel .prose ul li::before { content: "→"; position: absolute; left: 0; color: var(--muted); font-family: var(--font-mono); }
+.panel .rows li:first-child { border-top: 0; padding-top: 0; }
+.panel .rows li:last-child { border-bottom: 0; padding-bottom: 0; }
+.panel .facts { margin-top: 16px; }
+.panel .facts div:first-child { border-top: 1px solid var(--rule); }
+.panel .grade { margin-top: 14px; }
+.panel-flush { padding: 18px 0 0; margin-top: 44px; }
+.panel-flush .table-scroll { margin-top: 0; border: 0; border-radius: 0 0 6px 6px; border-top: 1px solid var(--rule); }
+.col { gap: 26px; }
+.me-text .panel + .panel, .me-text .panel + .slot, .me-text .slot + .panel { margin-top: 18px; }
