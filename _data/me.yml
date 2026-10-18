@@ -12,7 +12,7 @@ tagline: "student, enterpreneur, technical engineer and sport person"
 # Right now the folder holds 24 frames of a 3D stand-in figure.
 turn_frames: 24
 # true = the frames are the stand-in. Set to false once they're your photos.
-turn_placeholder: true
+turn_placeholder: false
 turn_fallback: /selfie.upscaled.jpg
 
 # 3 to 5 sentences about you. Separate paragraphs with an empty line.
