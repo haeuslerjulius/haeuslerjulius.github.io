@@ -19,8 +19,12 @@ specs:
     v: Snap-fit shell and 30° stand, modelled in CadQuery, printed on an A1 Mini
   - k: Status
     v: Works on the bench. Selling is on hold.
-# cover: /assets/projects/feedback-terminal/cover.jpg
-# gallery:
-#   - src: /assets/projects/feedback-terminal/bench.jpg
-#     caption: First working version
+cover: /assets/projects/feedback-terminal/cover.jpg
+gallery:
+  - src: /assets/projects/feedback-terminal/parts.jpg
+    caption: The two printed parts, snap-fit case and 30° stand
+  - src: /assets/projects/feedback-terminal/side.jpg
+    caption: Case out of the stand, rating screen on
+  - src: /assets/projects/feedback-terminal/top.jpg
+    caption: The four faces guests tap
 ---
