@@ -12,7 +12,7 @@ baseurl: ""
 
 # While true, every empty spot shows a yellow "fill in" box with a hint.
 # Set to false before you share the site.
-show_slots: true
+show_slots: false
 
 # Keeps the old post addresses working.
 permalink: /:year-:month-:day-:title/
