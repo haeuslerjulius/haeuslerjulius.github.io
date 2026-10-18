@@ -1,0 +1,53 @@
+# School section.
+
+school: Sebastian-Finsterwalder-Gymnasium Rosenheim
+level: "Year 12 (Q12), Bavarian Gymnasium"
+
+# A sentence on how school is going and what you'd like people to know.
+intro: "Last years end grade was 1.8 (german grades), and that is what my Abitur goal is. Sub 2 is the optimal."
+
+# Your Q12 courses, e.g. "Mathematics", "Physics", ...
+courses: [Mathematics, German, Advanced placement PE, Physics, English, French, Politics, History, Art]
+
+# Optional. e.g. "1.6 average" or leave empty to not show grades.
+grades: ""
+
+# Competitions and championships. One entry each.
+# - year: 2025
+#   title: Name of the competition
+#   result: What you achieved
+competitions: 
+  - years: 2022/2023/2024/2025
+    title: Country-wide mathematics dompetition
+    result: third national round solos
+  - years: 2023/2023/2024
+    title: Bavarian Robotics Competition
+    result: third place in microcontroller competiton
+
+roles:
+  - years: "2025/26"
+    title: Project lead, P-Seminar on energy management
+  - years: "22/23 · 23/24 · 25/26"
+    title: Class representative, elected several times
+  - years: "since 2021"
+    title: Member of the student council (SMV)
+
+experience:
+  - years: "2026"
+    title: SOCCACUP Regensburg and SOCCACUP Rovinj
+    detail: On-site organisation and social media team
+  - years: "2025–2026"
+    title: Minijob, Bäckerei Bauer, Rosenheim
+    detail: Sales and customer service
+  - years: "2023"
+    title: Internship, SOCCATOURS GmbH, Rosenheim
+    detail: One week. Travel organisation, marketing, event planning
+  - years: "2023"
+    title: Internship, AOK Rosenheim
+    detail: Three days. Administration and customer service
+
+languages:
+  - German (native)
+  - English (fluent, B2)
+  - French (basics)
+  - Latin (Latin proficiency certificate)

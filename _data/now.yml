@@ -1,0 +1,9 @@
+# "Right now" strip at the top of the home page. Newest first, keep 3–5.
+# Update this whenever something changes, it's what makes the site feel alive.
+
+- date: 2026-10-14
+  text: Rebuilding this site
+- date: 2026-10-12
+  text: Feedback terminal v2.5 running on the bench
+- date: 2026-09-26
+  text: First LoRa node online, messaging over MeshCore

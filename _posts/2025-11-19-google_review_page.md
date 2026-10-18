@@ -3,6 +3,8 @@ layout: post
 title: "Google review page"
 tags: [builds]
 result: "Businesses can now collect positive Google reviews more efficently and cheaper."
+status: done
+glyph: "★"
 ---
 
 I built a small system that solves a surprisingly big problem: getting customers to actually leave Google Reviews without chasing them manually.

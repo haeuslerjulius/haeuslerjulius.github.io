@@ -1,0 +1,60 @@
+# Drone business section.
+
+# One line on what you offer. Write it yourself.
+pitch: ""
+
+# How you got into FPV. A short story in your words.
+story: "Speed has always fascinated me. The pure focus and risk management brings calm to my mind. Around the age of five I came into contact with drones. My dad had a Dji Phantom 3 Pro for his company. Shortly before my 15th birthday I watched the first and second Topgun films and I whished for a small analog fpv drone. My dad then giftet me a BetaFPV Cetus X Kit. That was my start."
+
+offer:
+  - title: Indoor FPV flythroughs
+    detail: One continuous flight through a building. 16:9 for the website, 9:16 cut for social.
+  - title: Event content
+    detail: Tournament and event footage from the ground and the air.
+
+for_whom:
+  - Real estate agents
+  - Hotels
+  - Fitness studios
+  - Car dealerships
+
+facts:
+  - label: Business
+    value: Kleingewerbe, registered 2026
+  - label: Licence
+    value: EU A1/A3
+  - label: Based in
+    value: Rosenheim area
+
+# Link to your showreel (YouTube / Vimeo). Poster image optional.
+reel_url: ""
+reel_poster: ""
+
+fleet:
+  - name: Flywoo Flytimes 85 HD O4 Pro
+    type: 85 mm ducted whoop, 2S
+    use: Indoor flythroughs, close to people
+    status: flying
+  - name: Long Range Fpv Drone
+    type: 7" long range, 6S2P Li-ion
+    use: Long-range mountain flights
+    status: planning
+  - name: Dji Mini 5 Pro
+    type: Camera drone, Long-range, Video and Photos
+    status: flying
+
+kit:
+  - DJI Goggles N3
+  - RadioMaster Pocket (ELRS 2.4 GHz)
+  - DJI Osmo Nano as payload camera
+  - DaVinci Resolve for editing
+  - Macbook Pro M5
+
+# Jobs and shoots you've done.
+work:
+  - year: 2026
+    title: SOCCACUP tournaments
+    detail: Content production at SOCCACUP Regensburg, national youth tournament
+  - year: 2026
+    title: SOCCACUP tournaments
+    detail: Content production at SOCCACUP Rovinj, international youth tournament

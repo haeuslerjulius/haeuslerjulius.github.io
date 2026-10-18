@@ -3,6 +3,8 @@ layout: post
 title: "daily 17:00 file for tomorrow's classes"
 tags: [builds]
 result: "Breefing file updated daily at 5pm."
+status: done
+glyph: "17h"
 ---
 
 **Problem:** <br>

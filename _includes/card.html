@@ -1,0 +1,14 @@
+{% assign p = include.post %}
+<li class="card">
+  <a href="{% if p.external %}{{ p.external | relative_url }}{% else %}{{ p.url | relative_url }}{% endif %}">
+    <div class="card-img">
+      {% if p.cover %}<img src="{{ p.cover | relative_url }}" alt="" loading="lazy">
+      {% else %}{% assign glyph = p.glyph %}{% unless glyph %}{% assign glyph = p.title | slice: 0, 2 %}{% endunless %}<span class="card-glyph" aria-hidden="true">{{ glyph }}</span>{% endif %}
+    </div>
+    <div class="card-body">
+      <p class="card-meta"><time datetime="{{ p.date | date: '%Y-%m-%d' }}">{{ p.date | date: "%b %Y" }}</time>{% if p.status %}<span class="chip chip-{{ p.status }}">{{ p.status }}</span>{% endif %}</p>
+      <h3>{{ p.title }}</h3>
+      <p>{% if p.summary %}{{ p.summary }}{% elsif p.result %}{{ p.result }}{% else %}{{ p.excerpt | strip_html | truncatewords: 22 }}{% endif %}</p>
+    </div>
+  </a>
+</li>

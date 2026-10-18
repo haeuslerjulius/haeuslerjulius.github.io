@@ -3,6 +3,7 @@ layout: post
 tags: [builds]
 title: "My First Post In The Builds Section"
 subtitle: "Beginner Struggles"
+glyph: "#1"
 ---
 
 I finally added a “Builds” section to my website — this is where the most exciting stuff will happen!

@@ -1,70 +1,169 @@
 ---
-layout: home
-title: Julius H.
-subtitle: I build small AI automations for real problems and share wins and failures along my journey.
+layout: default
+title: Julius Häusler
 ---
+{% assign me = site.data.me %}{% assign school = site.data.school %}{% assign d = site.data.drones %}
 
-<hr>
-<div style="height: 20px;"></div>
+<section class="now" aria-label="Right now">
+  <div class="now-in">
+    <span class="label">Right now</span>
+    <ul>
+      {% for n in site.data.now limit: 3 %}<li><time datetime="{{ n.date }}">{{ n.date | date: "%-d %b" }}</time> {{ n.text }}</li>{% endfor %}
+    </ul>
+  </div>
+</section>
 
-<div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin: 2rem 0;">
-  <span style="font-size: 1.75rem; font-weight: 600;">
-    Shoot me a quick email → 
-  </span>
-  <a href="mailto:haeuslerjulius@icloud.com" class="btn btn-dark btn-lg">
-    Let’s build something
-  </a>
-</div>
+<!-- ME -->
+<section id="me" class="sec sec-me">
+  <div class="wrap me-grid">
+    <div class="me-photo">
+    <figure class="turn" data-frames="{{ me.turn_frames }}" data-path="{{ '/assets/me/turn/' | relative_url }}">
+      <img class="turn-img" src="{% if me.turn_frames > 0 %}{{ '/assets/me/turn/01.jpg' | relative_url }}{% else %}{{ me.turn_fallback | relative_url }}{% endif %}" alt="{% if me.turn_placeholder %}Placeholder figure turning{% else %}Julius Häusler{% endif %}" width="800" height="1200">
+      <figcaption class="turn-osd" aria-hidden="true">
+        <span class="osd-tl">{{ me.coords }}</span>
+        <span class="osd-br turn-readout">{% if me.turn_frames > 0 %}drag to turn{% else %}1 / 1{% endif %}</span>
+      </figcaption>
+    </figure>
+    {% if me.turn_frames == 0 or me.turn_placeholder %}<div class="slot slot-turn"><b>Turnaround</b> {% if me.turn_placeholder %}This is a stand-in figure. Replace 01.jpg … 24.jpg in assets/me/turn/ with your own photos and set <code>turn_placeholder: false</code>. {% endif %}Phone on a tripod, stand on one spot, turn about 15° per photo, 24 photos in the same light. Save as 01.jpg … 24.jpg in assets/me/turn/ and set <code>turn_frames: 24</code> in _data/me.yml.</div>{% endif %}
+    </div>
 
-<div style="height: 20px;"></div>
-<hr>
+    <div class="me-text">
+      <p class="label">Me <span class="dim">· {{ me.place }}</span></p>
+      <h1 class="name">Julius<br>Häusler</h1>
+      {% if me.tagline != "" %}<p class="tagline">{{ me.tagline }}</p>
+      {% else %}<div class="slot"><b>Tagline</b> One line about you, in your own words. Your old one was “I build small AI automations for real problems”.</div>{% endif %}
 
-<ul class="posts-list list-unstyled" role="list">
-  {% for post in site.posts %}
-    {% if post.tags contains "home" %}
-      <li class="post-preview">
-        <article>
-          {% assign thumbnail = "" %}
-          {% if post.thumbnail-img %}
-            {% assign thumbnail = post.thumbnail-img %}
-          {% elsif post.cover-img %}
-            {% if post.cover-img.first %}
-              {% assign thumbnail = post.cover-img[0].first.first %}
-            {% else %}
-              {% assign thumbnail = post.cover-img %}
-            {% endif %}
-          {% endif %}
+      {% if me.about != "" %}<div class="panel"><span class="tab">About</span><div class="prose">{{ me.about | markdownify }}</div></div>
+      {% else %}<div class="slot"><b>About</b> 3–5 sentences: who you are, what you spend your time on, what you care about.</div>{% endif %}
 
-          {% if thumbnail != "" %}
-          <div class="post-image post-image-normal">
-            <a href="{{ post.url | relative_url }}" aria-label="Thumbnail">
-              <img src="{{ thumbnail | relative_url }}" alt="Post thumbnail">
-            </a>
-          </div>
-          {% endif %}
+      <div class="panel"><span class="tab">Into</span><ul class="tags">{% for i in me.interests %}<li>{{ i }}</li>{% endfor %}</ul></div>
 
-          <a href="{{ post.url | relative_url }}">
-            <h2 class="post-title">{{ post.title | strip_html }}</h2>
-            {% if post.subtitle %}
-              <h3 class="post-subtitle">{{ post.subtitle | strip_html }}</h3>
-            {% endif %}
-          </a>
+      {% if me.next != "" %}<div class="panel panel-next"><span class="tab">Next</span><div class="prose">{{ me.next | markdownify }}</div></div>
+      {% else %}<div class="slot"><b>Next</b> Where you're heading: the work or gap year after school, the drone business, the next thing you want to build.</div>{% endif %}
 
-          {% if post.author %}
-            <span>By <strong>{{ post.author | strip_html }}</strong></span>
-          {% endif %}
-          <p class="post-meta">Posted on {{ post.date | date: "%B %-d, %Y" }}</p>
+      <p class="me-links"><a href="{{ '/aboutme/' | relative_url }}">My story</a> · <a href="{{ '/philosophy/' | relative_url }}">How I think</a> · <a href="{{ '/log/' | relative_url }}">Log</a></p>
+    </div>
+  </div>
+</section>
 
-          <div class="post-entry">
-            {% assign excerpt_length = 50 %}
-            {{ post.excerpt | strip_html | truncatewords: excerpt_length }}
-            {% assign excerpt_word_count = post.excerpt | number_of_words %}
-            {% if post.content != post.excerpt or excerpt_word_count > excerpt_length %}
-              <a href="{{ post.url | relative_url }}" class="post-read-more">[Read More]</a>
-            {% endif %}
-          </div>
-        </article>
-      </li>
-    {% endif %}
-  {% endfor %}
-</ul>
+<!-- SCHOOL -->
+<section id="school" class="sec sec-school">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="label">School</p>
+      <h2>{{ school.school }}</h2>
+      <p class="sub">{{ school.level }}</p>
+    </header>
+
+    {% if school.intro != "" %}<div class="panel panel-intro"><span class="tab">Where I stand</span><div class="prose">{{ school.intro | markdownify }}</div></div>
+    {% else %}<div class="slot"><b>Intro</b> A sentence or two on school: how it's going, what you enjoy, what you're aiming for in the Abitur.</div>{% endif %}
+
+    <div class="school-grid">
+      <div class="col">
+        {% if school.courses.size > 0 %}<div class="panel"><span class="tab">Courses</span><ul class="tags">{% for c in school.courses %}<li>{{ c }}</li>{% endfor %}</ul>{% if school.grades != "" %}<p class="grade"><span class="label">Grades</span> {{ school.grades }}</p>{% endif %}</div>
+        {% else %}<div class="slot"><b>Courses</b> List your Q12 courses in _data/school.yml.</div>{% endif %}
+
+        {% if school.competitions.size > 0 %}<div class="panel"><span class="tab">Competitions</span>
+        <ul class="rows">{% for c in school.competitions %}<li><span class="yr">{{ c.year | default: c.years }}</span><span><b>{{ c.title }}</b>{% if c.result %}<br>{{ c.result }}{% endif %}</span></li>{% endfor %}</ul></div>
+        {% else %}<div class="slot"><b>Competitions</b> School competitions and championships: year, name, result.</div>{% endif %}
+
+        <div class="panel"><span class="tab">Languages</span><ul class="tags">{% for l in school.languages %}<li>{{ l }}</li>{% endfor %}</ul></div>
+      </div>
+      <div class="col">
+        <div class="panel"><span class="tab">Roles</span>
+        <ul class="rows">{% for r in school.roles %}<li><span class="yr">{{ r.years }}</span><span>{{ r.title }}</span></li>{% endfor %}</ul></div>
+        <div class="panel"><span class="tab">Work and internships</span>
+        <ul class="rows">{% for e in school.experience %}<li><span class="yr">{{ e.years }}</span><span><b>{{ e.title }}</b><br>{{ e.detail }}</span></li>{% endfor %}</ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUILDS -->
+<section id="builds" class="sec sec-builds">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="label">Builds</p>
+      <h2>Things I made, things I'm making</h2>
+      <p class="sub">Electronics, 3D prints, code and small products. Finished, half-finished and failed.</p>
+    </header>
+    <ul class="cards">
+      {% assign shown = 0 %}
+      {% for p in site.posts %}{% if p.tags contains "builds" and shown < 9 %}
+        {% include card.html post=p %}
+        {% assign shown = shown | plus: 1 %}
+      {% endif %}{% endfor %}
+    </ul>
+    <p class="more"><a class="btn" href="{{ '/builds/' | relative_url }}">All builds</a></p>
+  </div>
+</section>
+
+<!-- DRONES -->
+<section id="drones" class="sec sec-drones">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="label">Drone services</p>
+      <h2>FPV flythroughs</h2>
+      {% if d.pitch != "" %}<p class="sub">{{ d.pitch }}</p>
+      {% else %}<div class="slot"><b>Pitch</b> One line on what you offer and why it's different, in your words.</div>{% endif %}
+    </header>
+
+    {% if d.reel_url != "" %}
+    <a class="reel" href="{{ d.reel_url }}">
+      {% if d.reel_poster != "" %}<img src="{{ d.reel_poster | relative_url }}" alt="">{% endif %}
+      <span class="reel-play">Watch the reel</span>
+    </a>
+    {% else %}<div class="slot slot-photo slot-reel"><b>Showreel</b> Your best 30–60 seconds. Upload to YouTube or Vimeo, put the link in <code>reel_url</code> and a still frame in <code>reel_poster</code>.</div>{% endif %}
+
+    <div class="drone-grid">
+      <div class="col">
+        <div class="panel"><span class="tab">What I offer</span>
+        <ul class="rows rows-plain">{% for o in d.offer %}<li><span><b>{{ o.title }}</b><br>{{ o.detail }}</span></li>{% endfor %}</ul></div>
+        <div class="panel"><span class="tab">For</span>
+        <ul class="tags">{% for w in d.for_whom %}<li>{{ w }}</li>{% endfor %}</ul>
+        <dl class="facts">{% for f in d.facts %}<div><dt>{{ f.label }}</dt><dd>{{ f.value }}</dd></div>{% endfor %}</dl></div>
+      </div>
+      <div class="col">
+        {% if d.story != "" %}<div class="panel"><span class="tab">How I got into it</span><div class="prose">{{ d.story | markdownify }}</div></div>
+        {% else %}<div class="slot"><b>Story</b> How FPV started for you: first drone, first crash, the moment it turned into more than a hobby.</div>{% endif %}
+        <div class="panel"><span class="tab">Work</span>
+        <ul class="rows">{% for w in d.work %}<li><span class="yr">{{ w.year }}</span><span><b>{{ w.title }}</b><br>{{ w.detail }}</span></li>{% endfor %}</ul></div>
+      </div>
+    </div>
+
+    <div class="panel panel-flush"><span class="tab">Fleet</span>
+    <div class="table-scroll">
+      <table class="fleet">
+        <thead><tr><th>Drone</th><th>Class</th><th>Used for</th><th>Status</th></tr></thead>
+        <tbody>
+          {% for q in d.fleet %}<tr><td><b>{{ q.name }}</b></td><td class="mono">{{ q.type }}</td><td>{{ q.use }}</td><td><span class="chip chip-{{ q.status | replace: ' ', '-' }}">{{ q.status }}</span></td></tr>{% endfor %}
+        </tbody>
+      </table>
+    </div>
+    </div>
+    <p class="kit"><span class="label">Also in the bag</span> {{ d.kit | join: " · " }}</p>
+
+    <div class="cta">
+      <p>Want a flythrough of your place?</p>
+      <a class="btn btn-solid" href="#contact">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- LOG -->
+<section id="log" class="sec sec-log">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="label">Log</p>
+      <h2>Notes along the way</h2>
+      <p class="sub">Wins, failures and everything in between, since October 2025.</p>
+    </header>
+    <ul class="log-list">
+      {% assign shown = 0 %}
+      {% for p in site.posts %}{% unless p.tags contains "builds" %}{% if shown < 4 %}
+      <li><a href="{{ p.url | relative_url }}"><time datetime="{{ p.date | date: '%Y-%m-%d' }}">{{ p.date | date: "%-d %b %Y" }}</time><span>{{ p.title }}</span></a></li>
+      {% assign shown = shown | plus: 1 %}{% endif %}{% endunless %}{% endfor %}
+    </ul>
+    <p class="more"><a class="btn" href="{{ '/log/' | relative_url }}">Whole log</a></p>
+  </div>
+</section>
