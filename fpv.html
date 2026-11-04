@@ -3,7 +3,7 @@ layout: client
 title: FPV-Durchflüge für Immobilien
 permalink: /fpv/
 cover: /assets/fpv/share.jpg
-summary: "Ein durchgehender FPV-Drohnenflug durch Ihr Objekt, als 16:9-Film und 9:16-Reel. Raum Rosenheim. Einführungspreis 390 € statt 590 €."
+summary: "Ein durchgehender FPV-Drohnenflug durch Ihr Objekt, als 16:9-Film und 9:16-Reel. Raum Rosenheim. Einführungspreis 340 € statt 490 €."
 ---
 {% assign f = site.data.fpv %}{% assign d = site.data.drones %}
 {% capture wa %}https://wa.me/{{ f.whatsapp }}?text={{ f.whatsapp_text | url_encode }}{% endcapture %}
@@ -57,7 +57,6 @@ summary: "Ein durchgehender FPV-Drohnenflug durch Ihr Objekt, als 16:9-Film und 
       {% if f.intro_left > 0 %}<p class="c-price"><s>{{ f.price }}</s> <b>{{ f.intro_price }}</b></p>
       <p class="c-intro">{{ f.intro_note }}, danach {{ f.price }}.</p>{% else %}<p class="c-price"><b>{{ f.price }}</b></p>{% endif %}
       <p class="sub">{{ f.price_note }}</p>
-      {% if f.bundle %}<div class="panel c-bundle"><span class="tab">{{ f.bundle.title }}</span><p class="c-bundle-price"><b>{{ f.bundle.price }}</b></p><p>{{ f.bundle.text }}</p></div>{% endif %}
     </header>
     <div class="panel"><span class="tab">Enthalten</span>
       <ul class="c-checks">{% for p in f.package %}<li>{{ p }}</li>{% endfor %}</ul>

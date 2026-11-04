@@ -9,15 +9,11 @@ headline: "Ein Flug. Das ganze Haus. Ohne Schnitt."
 lede: "FPV-Durchflüge für Immobilien im Raum Rosenheim. Ihre Interessenten erleben Grundriss, Licht und Übergänge in einer einzigen Kamerafahrt, bevor sie zur Besichtigung kommen."
 for_whom: "Für Makler, Bauträger und Eigentümer, die verkaufen oder vermieten."
 
-price: "590 €"                 # regular price
-intro_price: "390 €"           # introductory price; set intro_left to 0 when the three are used up
+price: "490 €"                 # regular price
+intro_price: "340 €"           # introductory price (about 30 % off); set intro_left to 0 when the three are used up
 intro_left: 3
 intro_note: "Einführungspreis für die ersten drei Aufträge"
 price_note: "Größere Objekte und Gewerbe auf Anfrage."
-bundle:
-  title: "3er-Paket"
-  price: "1.450 €"
-  text: "Drei Durchflüge für Makler und Bauträger mit mehreren Objekten, rund 483 € pro Objekt. Frei einlösbar innerhalb von 12 Monaten."
 
 package:
   - "Ein durchgehender Flug durch das Objekt, ca. 45–90 Sekunden"
