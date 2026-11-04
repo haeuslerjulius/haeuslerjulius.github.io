@@ -89,3 +89,28 @@ function select(b) {
   var r = document.createRange(); r.selectNodeContents(span);
   var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
 }
+
+// Vimeo films: start muted when at least half on screen, pause when scrolled away.
+// Viewers can unmute in the player. No autoplay for people who ask for reduced motion.
+(function () {
+  var frames = document.querySelectorAll('iframe.vimeo-auto');
+  if (!frames.length || !('IntersectionObserver' in window)) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var s = document.createElement('script');
+  s.src = 'https://player.vimeo.com/api/player.js';
+  s.onload = function () {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var p = e.target._vp;
+        if (!p) return;
+        if (e.isIntersecting) { p.play().catch(function () {}); }
+        else { p.pause().catch(function () {}); }
+      });
+    }, { threshold: 0.5 });
+    frames.forEach(function (f) {
+      f._vp = new Vimeo.Player(f);
+      io.observe(f);
+    });
+  };
+  document.head.appendChild(s);
+})();
