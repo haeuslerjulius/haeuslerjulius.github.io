@@ -90,26 +90,55 @@ function select(b) {
   var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
 }
 
-// Vimeo films: start muted when at least half on screen, pause when scrolled away.
-// Viewers can unmute in the player. No autoplay for people who ask for reduced motion.
+// Vimeo films.
+// All players: ask for 1080p so viewers start in HD (Vimeo may ignore this on
+// some plans; then the player stays on Auto).
+// Players with class "vimeo-auto": start muted when at least half on screen,
+// pause when scrolled away, and show a "sound on" button until the viewer unmutes.
+// Its label comes from data-sound on the iframe. No autoplay for people who ask
+// for reduced motion.
 (function () {
-  var frames = document.querySelectorAll('iframe.vimeo-auto');
-  if (!frames.length || !('IntersectionObserver' in window)) return;
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var all = document.querySelectorAll('iframe[src*="player.vimeo.com"]');
+  if (!all.length) return;
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var s = document.createElement('script');
   s.src = 'https://player.vimeo.com/api/player.js';
   s.onload = function () {
-    var io = new IntersectionObserver(function (entries) {
+    var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         var p = e.target._vp;
         if (!p) return;
         if (e.isIntersecting) { p.play().catch(function () {}); }
         else { p.pause().catch(function () {}); }
       });
-    }, { threshold: 0.5 });
-    frames.forEach(function (f) {
-      f._vp = new Vimeo.Player(f);
+    }, { threshold: 0.5 }) : null;
+
+    all.forEach(function (f) {
+      var p = new Vimeo.Player(f);
+      f._vp = p;
+      p.ready().then(function () { return p.setQuality('1080p'); }).catch(function () {});
+      if (!f.classList.contains('vimeo-auto') || still || !io) return;
       io.observe(f);
+
+      var label = f.getAttribute('data-sound');
+      if (!label) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'sound-on';
+      btn.textContent = label;
+      f.parentNode.appendChild(btn);
+      btn.addEventListener('click', function () {
+        p.setMuted(false)
+          .then(function () { return p.setVolume(1); })
+          .then(function () { return p.play(); })
+          .then(function () { btn.remove(); })
+          .catch(function () { btn.textContent = f.getAttribute('data-sound-fallback') || label; });
+      });
+      p.on('volumechange', function (d) {
+        if (d && d.volume > 0) {
+          p.getMuted().then(function (m) { if (!m) btn.remove(); }).catch(function () {});
+        }
+      });
     });
   };
   document.head.appendChild(s);
