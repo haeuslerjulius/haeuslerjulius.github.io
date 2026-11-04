@@ -130,16 +130,20 @@ function select(b) {
       p.ready().then(function () { return p.getQualities(); })
         .then(function (qs) { return p.setQuality(pickQuality(qs)); })
         .catch(function () { p.setQuality('1080p').catch(function () {}); });
-      if (!f.classList.contains('vimeo-auto') || still || !io) return;
+      var btn = f.parentNode.querySelector('.sound-on');
+      if (!f.classList.contains('vimeo-auto') || still || !io) { if (btn) btn.remove(); return; }
       io.observe(f);
 
       var label = f.getAttribute('data-sound');
-      if (!label) return;
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'sound-on';
-      btn.textContent = label;
-      f.parentNode.appendChild(btn);
+      if (!btn && !label) return;
+      if (!btn) {
+        btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'sound-on';
+        btn.textContent = label;
+        f.parentNode.appendChild(btn);
+      }
+      label = btn.textContent;
       btn.addEventListener('click', function () {
         p.setMuted(false)
           .then(function () { return p.setVolume(1); })
