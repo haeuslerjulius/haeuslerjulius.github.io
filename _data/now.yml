@@ -1,6 +1,8 @@
 # "Right now" strip at the top of the home page. Newest first, keep 3–5.
 # Update this whenever something changes, it's what makes the site feel alive.
 
+- date: 2026-11-04
+  text: First flythrough film online
 - date: 2026-10-14
   text: Rebuilding this site
 - date: 2026-10-12

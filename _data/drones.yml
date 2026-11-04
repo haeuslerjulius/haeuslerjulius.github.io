@@ -26,7 +26,22 @@ facts:
   - label: Based in
     value: Rosenheim area
 
-# Link to your showreel (YouTube / Vimeo). Poster image optional.
+# Showreel on Vimeo: id and hash come from the link vimeo.com/<id>/<hash>.
+# Plays right on the page. Leave id empty to fall back to reel_url below.
+reel_vimeo:
+  id: "1243352932"
+  hash: "e714526ce9"
+  title: "One-take FPV flythrough of a new-build house, 4K"
+
+# Same take with the 9:16 Reel area highlighted: shows one flight gives both formats.
+formats_vimeo:
+  id: "1243352998"
+  hash: "76a3f237c5"
+  title: "Same flythrough with the vertical 9:16 area highlighted"
+  heading: "One take, two formats"
+  text: "The bright strip in the middle is the vertical cut. One flight gives you the 16:9 film for your website and a 9:16 Reel for Instagram and TikTok, without flying twice."
+
+# Link to your showreel (YouTube / Vimeo) if it can't be embedded. Poster image optional.
 reel_url: ""
 reel_poster: ""
 
@@ -52,6 +67,9 @@ kit:
 
 # Jobs and shoots you've done.
 work:
+  - year: 2026
+    title: New-build house flythrough
+    detail: One continuous indoor flight through a house under construction, 16:9 film plus 9:16 cut
   - year: 2026
     title: SOCCACUP tournaments
     detail: Content production at SOCCACUP Regensburg, national youth tournament
