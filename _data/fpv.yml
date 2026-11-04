@@ -39,7 +39,7 @@ steps:
 
 faq:
   - q: "Ist das im Haus sicher?"
-    a: "Die Drohne wiegt unter 250 g und hat einen geschlossenen Propellerschutz. Ich plane die Route vorab und fliege nur, wenn niemand im Weg ist."
+    a: "Ich fliege drinnen mit einer kleinen Drohne mit geschlossenem Propellerschutz. Die Route plane ich vorab, und ich fliege nur, wenn niemand im Weg ist. Für den Fall der Fälle bin ich mit einer Drohnen-Haftpflichtversicherung versichert."
   - q: "Geht das auch draußen?"
     a: "Ja, Außenaufnahmen fliege ich nach den EU-Regeln (Kenntnisnachweis A1/A3). Was an Ihrem Standort erlaubt ist, kläre ich vor dem Termin."
   - q: "Geht das auch im Rohbau?"
@@ -49,15 +49,16 @@ faq:
 
 credentials:
   - "EU-Kenntnisnachweis A1/A3"
+  - "Drohnen-Haftpflicht versichert"
   - "Angemeldetes Gewerbe"
   - "Raum Rosenheim"
 
 # Impressum: the law needs a postal address where official mail reaches you.
-# Fill in both lines (or a business address service), then the page is complete.
+# Shown in the Impressum and the Datenschutz page.
 legal:
   name: "Julius Häusler"
   business: "FPV-Drohnenaufnahmen (Einzelunternehmen)"
-  street: ""          # e.g. "Musterstraße 1"
-  city: ""            # e.g. "83071 Stephanskirchen"
+  street: "Entleitenstraße 6"
+  city: "83071 Stephanskirchen, Deutschland"
   phone: "+49 177 2383924"
   vat_note: "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmer)."   # delete if you charge VAT
