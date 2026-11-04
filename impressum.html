@@ -1,0 +1,34 @@
+---
+layout: client
+title: Impressum
+permalink: /impressum/
+noindex: true
+---
+{% assign l = site.data.fpv.legal %}
+<article class="wrap prose-page legal">
+  <header class="page-head"><h1>Impressum</h1></header>
+  <div class="prose">
+    <h2>Angaben gemäß § 5 DDG</h2>
+    <address>
+      {{ l.name }}<br>
+      {{ l.business }}<br>
+      {% if l.street != "" %}{{ l.street }}<br>{{ l.city }}{% else %}<span class="todo">Straße und Hausnummer, PLZ und Ort fehlen noch</span>{% endif %}
+    </address>
+
+    <h2>Kontakt</h2>
+    <p>E-Mail: <a href="mailto:{{ site.email }}">{{ site.email }}</a><br>
+    Telefon und WhatsApp: {{ l.phone }}</p>
+
+    {% if l.vat_note != "" %}<h2>Umsatzsteuer</h2>
+    <p>{{ l.vat_note }}</p>{% endif %}
+
+    <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+    <p>{{ l.name }}, Anschrift wie oben.</p>
+
+    <h2>Haftung für Links</h2>
+    <p>Diese Website enthält Links zu externen Seiten, auf deren Inhalte ich keinen Einfluss habe. Für diese Inhalte ist der jeweilige Anbieter verantwortlich. Wird mir eine Rechtsverletzung bekannt, entferne ich den Link umgehend.</p>
+
+    <h2>Urheberrecht</h2>
+    <p>Filme, Fotos und Texte auf dieser Website sind von mir erstellt. Eine Nutzung außerhalb dieser Website ist nur mit meiner Zustimmung erlaubt.</p>
+  </div>
+</article>

@@ -1,0 +1,63 @@
+/* Client page /fpv/ and the legal pages. Builds on site.css. */
+
+.client .bar nav { align-items: center; }
+.bar-cta { background: var(--signal); color: var(--on-signal); padding: 4px 10px; border-radius: 4px; text-decoration: none; font-weight: 600; }
+.bar-cta:hover { background: var(--ink); color: var(--bench); text-decoration: none !important; }
+@media (max-width: 520px) { .client .mark { display: none; } }
+
+.c-hero { padding-block: clamp(28px, 6vw, 64px) clamp(40px, 7vw, 72px); border-bottom: 1px solid var(--rule); }
+.c-hero .wrap { display: grid; gap: 16px; }
+.c-hero h1 { font-size: var(--step-4); font-stretch: 125%; font-weight: 900; line-height: 0.92; letter-spacing: -0.03em; max-width: 14ch; }
+.c-hero .lede { max-width: 40rem; }
+.c-film { margin-top: 10px; }
+.c-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; }
+.c-hero .c-actions { margin-top: 8px; }
+.c-from { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); }
+.c-from b { font-family: var(--font-display); font-stretch: 112%; font-weight: 800; font-size: var(--step-1); color: var(--ink); }
+.c-for { color: var(--muted); }
+
+.c-three { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px clamp(16px, 3vw, 28px); }
+.c-three .panel { display: grid; gap: 8px; align-content: start; margin-top: 0; }
+.c-three h2 { font-size: var(--step-1); }
+.c-three p { line-height: 1.45; }
+@media (max-width: 760px) { .c-three { grid-template-columns: minmax(0, 1fr); } }
+
+.c-package { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 24px clamp(24px, 5vw, 64px); align-items: start; }
+.c-package .sec-head { margin-bottom: 0; }
+.c-price { font-family: var(--font-mono); color: var(--muted); }
+.c-price b { font-family: var(--font-display); font-stretch: 125%; font-weight: 900; font-size: var(--step-3); color: var(--ink); line-height: 1; }
+@media (max-width: 760px) { .c-package { grid-template-columns: minmax(0, 1fr); } }
+.c-checks { list-style: none; margin: 0; padding: 0; display: grid; }
+.c-checks li { position: relative; padding: 10px 0 10px 1.8em; border-top: 1px solid var(--rule); line-height: 1.4; }
+.c-checks li:first-child { border-top: 0; padding-top: 0; }
+.c-checks li:first-child::before { top: 0; }
+.c-checks li::before { content: "✓"; position: absolute; left: 0; top: 10px; font-family: var(--font-mono); font-weight: 600; color: var(--good); }
+
+.c-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px clamp(16px, 3vw, 28px); }
+.c-steps li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: start; }
+.c-steps h3 { font-size: var(--step-1); margin-bottom: 6px; }
+.c-steps p { line-height: 1.45; }
+.c-num { display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: 50%; background: var(--signal); color: var(--on-signal); font-family: var(--font-mono); font-weight: 600; }
+@media (max-width: 760px) { .c-steps { grid-template-columns: minmax(0, 1fr); } }
+
+.c-faq { display: grid; max-width: 46rem; border-top: 1px solid var(--rule); }
+.c-faq details { border-bottom: 1px solid var(--rule); padding-block: 14px; }
+.c-faq summary { cursor: pointer; font-family: var(--font-display); font-stretch: 105%; font-weight: 700; font-size: 1.1rem; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+.c-faq summary::-webkit-details-marker { display: none; }
+.c-faq summary::after { content: "+"; font-family: var(--font-mono); color: var(--muted); }
+.c-faq details[open] summary::after { content: "−"; }
+.c-faq details p { margin-top: 10px; line-height: 1.5; max-width: 40rem; }
+.c-creds { margin-top: 24px; }
+
+.c-cta { margin-top: 0; }
+.c-cta-sub { display: block; margin-top: 8px; color: color-mix(in srgb, var(--on-band) 70%, transparent); max-width: 32rem; }
+.c-btn-light { border-color: var(--on-band); color: var(--on-band); }
+.c-btn-light:hover { background: var(--on-band); color: var(--band); }
+.c-who { margin-top: 20px; color: var(--muted); max-width: 40rem; }
+
+
+
+/* Legal pages */
+.legal h2 { font-size: var(--step-1); margin-top: 1.8em; }
+.legal address { font-style: normal; }
+.legal .todo { background: color-mix(in srgb, var(--signal) 30%, transparent); padding: 0 4px; border-radius: 2px; }

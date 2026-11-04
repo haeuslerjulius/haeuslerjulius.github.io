@@ -9,9 +9,7 @@
 <meta property="og:description" content="{{ page.summary | default: site.description | strip_html | xml_escape }}">
 <meta property="og:image" content="{{ page.cover | default: '/selfie.upscaled.jpg' | absolute_url }}">
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="{{ '/assets/css/fonts.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
 </head>
 <body{% if site.show_slots %} class="show-slots"{% endif %}>
@@ -39,6 +37,7 @@
       <p class="label">Contact</p>
       <p class="mail"><span class="copy-text">{{ site.email }}</span> <button type="button" class="copy" data-copy="{{ site.email }}">Copy</button></p>
       <p><a href="mailto:{{ site.email }}">Write an email</a> · <a href="https://instagram.com/{{ site.instagram }}">Instagram</a> · <a href="https://github.com/haeuslerjulius">GitHub</a></p>
+      <p class="foot-legal"><a href="{{ '/fpv/' | relative_url }}">FPV flythroughs for businesses</a> · <a href="{{ '/impressum/' | relative_url }}">Impressum</a> · <a href="{{ '/datenschutz/' | relative_url }}">Datenschutz</a></p>
     </div>
     <p class="foot-meta">Built and updated by hand in Stephanskirchen. Last change {{ site.time | date: "%-d %B %Y" }}.</p>
   </div>

@@ -1,0 +1,102 @@
+---
+layout: client
+title: FPV-Durchflüge für Immobilien
+permalink: /fpv/
+summary: "Ein durchgehender FPV-Drohnenflug durch Ihr Objekt, als 16:9-Film und 9:16-Reel. Raum Rosenheim, ab 390 €."
+---
+{% assign f = site.data.fpv %}{% assign d = site.data.drones %}
+{% capture wa %}https://wa.me/{{ f.whatsapp }}?text={{ f.whatsapp_text | url_encode }}{% endcapture %}
+{% capture mail %}mailto:{{ site.email }}?subject={{ f.email_subject | url_encode }}{% endcapture %}
+
+<section class="c-hero">
+  <div class="wrap">
+    <p class="label">FPV-Durchflüge · Raum Rosenheim</p>
+    <h1>{{ f.headline }}</h1>
+    <p class="lede">{{ f.lede }}</p>
+    <div class="reel reel-embed c-film">
+      <iframe src="https://player.vimeo.com/video/{{ d.reel_vimeo.id }}?h={{ d.reel_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" class="vimeo-auto" title="FPV-Durchflug durch ein Einfamilienhaus im Bau" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="c-actions">
+      <a class="btn btn-solid" href="{{ wa }}">Per WhatsApp anfragen</a>
+      <a class="btn" href="{{ mail }}">Per E-Mail anfragen</a>
+      <span class="c-from">ab <b>{{ f.price }}</b></span>
+    </div>
+    <p class="c-for">{{ f.for_whom }}</p>
+  </div>
+</section>
+
+<section class="sec c-why">
+  <div class="wrap">
+    <ul class="c-three">
+      {% for w in f.why %}<li class="panel"><span class="tab">{{ forloop.index | prepend: '0' }}</span><h2>{{ w.title }}</h2><p>{{ w.text }}</p></li>{% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="sec" id="formate">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="label">Ein Flug, zwei Formate</p>
+      <h2>Der helle Streifen ist Ihr Reel</h2>
+      <p class="sub">Dieselbe Aufnahme wie oben. Der markierte Bereich in der Mitte wird zum Hochformat für Instagram und TikTok, ohne zweiten Flug.</p>
+    </header>
+    <div class="reel reel-embed">
+      <iframe src="https://player.vimeo.com/video/{{ d.formats_vimeo.id }}?h={{ d.formats_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;loop=1&amp;autopause=0" title="Derselbe Flug mit markiertem 9:16-Bereich" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="paket">
+  <div class="wrap c-package">
+    <header class="sec-head">
+      <p class="label">Paket</p>
+      <h2>Durchflug Immobilie</h2>
+      <p class="c-price">ab <b>{{ f.price }}</b></p>
+      <p class="sub">{{ f.price_note }}</p>
+    </header>
+    <div class="panel"><span class="tab">Enthalten</span>
+      <ul class="c-checks">{% for p in f.package %}<li>{{ p }}</li>{% endfor %}</ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="ablauf">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="label">Ablauf</p>
+      <h2>Drei Schritte bis zum fertigen Film</h2>
+    </header>
+    <ol class="c-steps">
+      {% for s in f.steps %}<li><span class="c-num">{{ forloop.index }}</span><div><h3>{{ s.title }}</h3><p>{{ s.text }}</p></div></li>{% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="sec" id="fragen">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="label">Fragen</p>
+      <h2>Was Kunden vorher wissen wollen</h2>
+    </header>
+    <div class="c-faq">
+      {% for q in f.faq %}<details><summary>{{ q.q }}</summary><p>{{ q.a }}</p></details>{% endfor %}
+    </div>
+    <ul class="tags c-creds">{% for c in f.credentials %}<li>{{ c }}</li>{% endfor %}</ul>
+  </div>
+</section>
+
+<section class="sec" id="anfrage">
+  <div class="wrap">
+    <div class="cta c-cta">
+      <div>
+        <p>Termin für Ihr Objekt anfragen</p>
+        <span class="c-cta-sub">Adresse, Wohnfläche und Wunschtermin genügen. Antwort innerhalb von 24 Stunden.</span>
+      </div>
+      <div class="c-actions">
+        <a class="btn btn-solid" href="{{ wa }}">WhatsApp</a>
+        <a class="btn c-btn-light" href="{{ mail }}">E-Mail</a>
+      </div>
+    </div>
+    <p class="c-who">Ich bin Julius, 18, aus Stephanskirchen, und fliege FPV, seit ich 15 bin. Mehr über mich und meine Projekte auf <a href="{{ '/' | relative_url }}">meiner Website</a>.</p>
+  </div>
+</section>

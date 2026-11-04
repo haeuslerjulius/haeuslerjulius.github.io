@@ -1,0 +1,63 @@
+# Client page /fpv/ (German, for estate agents and developers).
+# Everything a client sees that you might want to change lives here.
+
+whatsapp: "491772383924"          # digits only, country code first
+whatsapp_text: "Hallo Julius, ich interessiere mich für einen FPV-Durchflug für folgendes Objekt: "
+email_subject: "Anfrage FPV-Durchflug"
+
+headline: "Ein Flug. Das ganze Haus. Ohne Schnitt."
+lede: "FPV-Durchflüge für Immobilien im Raum Rosenheim. Ihre Interessenten erleben Grundriss, Licht und Übergänge in einer einzigen Kamerafahrt, bevor sie zur Besichtigung kommen."
+for_whom: "Für Makler, Bauträger und Eigentümer, die verkaufen oder vermieten."
+
+price: "390 €"
+price_note: "Einführungspreis für die ersten fünf Aufträge. Größere Objekte und Gewerbe auf Anfrage."
+
+package:
+  - "Ein durchgehender Flug durch das Objekt, ca. 45–90 Sekunden"
+  - "Querformat 16:9 in 4K für Website und Exposé"
+  - "Hochformat 9:16 für Instagram, TikTok und Reels"
+  - "Farbkorrektur und Stabilisierung"
+  - "Lieferung per Download-Link innerhalb von 5 Werktagen"
+  - "Eine Korrekturrunde"
+  - "Anfahrt im Umkreis von 30 km um Rosenheim inklusive"
+
+why:
+  - title: "Mehr als Fotos"
+    text: "Fotos zeigen Räume. Ein Durchflug zeigt, wie sie zusammenhängen: vom Eingang durch den Wohnbereich bis auf die Terrasse."
+  - title: "Ein Flug, zwei Formate"
+    text: "Aus derselben Aufnahme entstehen der Film fürs Exposé und das Reel für Social Media. Ein Termin, kein zweiter Dreh."
+  - title: "Klein und leise im Haus"
+    text: "Ich fliege drinnen mit einer 85-mm-Drohne mit Propellerschutz. Sie passt durch Türen und Treppenhäuser."
+
+steps:
+  - title: "Anfrage"
+    text: "Schreiben Sie mir per WhatsApp oder E-Mail: Adresse, Wohnfläche, Wunschtermin. Ich melde mich innerhalb von 24 Stunden."
+  - title: "Flugtag"
+    text: "Ich bin ein bis zwei Stunden vor Ort. Licht an, Türen offen, Personen und Haustiere außerhalb der Flugroute: mehr brauche ich nicht."
+  - title: "Lieferung"
+    text: "Innerhalb von 5 Werktagen bekommen Sie Querformat und Hochformat, bereit zum Hochladen."
+
+faq:
+  - q: "Ist das im Haus sicher?"
+    a: "Die Drohne wiegt unter 250 g und hat einen geschlossenen Propellerschutz. Ich plane die Route vorab und fliege nur, wenn niemand im Weg ist."
+  - q: "Geht das auch draußen?"
+    a: "Ja, Außenaufnahmen fliege ich nach den EU-Regeln (Kenntnisnachweis A1/A3). Was an Ihrem Standort erlaubt ist, kläre ich vor dem Termin."
+  - q: "Geht das auch im Rohbau?"
+    a: "Ja. Der Film oben ist in einem Haus im Bau entstanden. Für Bauträger eignet sich das gut, um Baufortschritt und Raumgefühl früh zu zeigen."
+  - q: "Wem gehören die Aufnahmen?"
+    a: "Sie bekommen die Nutzungsrechte für die Vermarktung des Objekts. Ich darf den Film als Referenz zeigen, wenn Sie nichts dagegen haben."
+
+credentials:
+  - "EU-Kenntnisnachweis A1/A3"
+  - "Angemeldetes Gewerbe"
+  - "Raum Rosenheim"
+
+# Impressum: the law needs a postal address where official mail reaches you.
+# Fill in both lines (or a business address service), then the page is complete.
+legal:
+  name: "Julius Häusler"
+  business: "FPV-Drohnenaufnahmen (Einzelunternehmen)"
+  street: ""          # e.g. "Musterstraße 1"
+  city: ""            # e.g. "83071 Stephanskirchen"
+  phone: "+49 177 2383924"
+  vat_note: "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmer)."   # delete if you charge VAT

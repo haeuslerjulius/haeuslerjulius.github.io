@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{ page.title | strip_html }} · Julius Häusler</title>
+<meta name="description" content="{{ page.summary | default: site.description | strip_html | xml_escape }}">
+<meta property="og:title" content="{{ page.title | strip_html | xml_escape }}">
+<meta property="og:description" content="{{ page.summary | default: site.description | strip_html | xml_escape }}">
+<meta property="og:locale" content="de_DE">
+{% if page.noindex %}<meta name="robots" content="noindex">{% endif %}
+<link rel="stylesheet" href="{{ '/assets/css/fonts.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/client.css' | relative_url }}">
+</head>
+<body class="client">
+<a class="skip" href="#main">Zum Inhalt</a>
+{% assign f = site.data.fpv %}
+<header class="bar">
+  <div class="bar-in">
+    <a class="mark" href="{{ '/fpv/' | relative_url }}">Julius Häusler · FPV</a>
+    <nav aria-label="Abschnitte">
+      <a href="{{ '/fpv/#paket' | relative_url }}">Paket</a>
+      <a href="{{ '/fpv/#ablauf' | relative_url }}">Ablauf</a>
+      <a href="{{ '/fpv/#fragen' | relative_url }}">Fragen</a>
+      <a class="bar-cta" href="{{ '/fpv/#anfrage' | relative_url }}">Anfragen</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+{{ content }}
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-contact">
+      <p class="label">Kontakt</p>
+      <p class="mail"><span class="copy-text">{{ site.email }}</span> <button type="button" class="copy" data-copy="{{ site.email }}" data-done="Kopiert">Kopieren</button></p>
+      <p><a href="https://wa.me/{{ f.whatsapp }}">WhatsApp</a> · <a href="mailto:{{ site.email }}?subject={{ f.email_subject | url_encode }}">E-Mail schreiben</a> · <a href="https://instagram.com/{{ site.instagram }}">Instagram</a></p>
+      <p class="foot-legal"><a href="{{ '/impressum/' | relative_url }}">Impressum</a> · <a href="{{ '/datenschutz/' | relative_url }}">Datenschutz</a> · <a href="{{ '/' | relative_url }}">Über mich</a></p>
+    </div>
+  </div>
+</footer>
+<script src="{{ '/assets/js/site.js' | relative_url }}" defer></script>
+</body>
+</html>

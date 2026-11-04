@@ -78,7 +78,7 @@
 document.querySelectorAll('.copy').forEach(function (b) {
   b.addEventListener('click', function () {
     var t = b.getAttribute('data-copy');
-    var done = function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1600); };
+    var label = b.textContent; var done = function () { b.textContent = b.getAttribute('data-done') || 'Copied'; setTimeout(function () { b.textContent = label; }, 1600); };
     if (navigator.clipboard) {
       navigator.clipboard.writeText(t).then(done, function () { select(b); });
     } else { select(b); }
