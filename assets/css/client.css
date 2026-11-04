@@ -61,3 +61,9 @@
 .legal h2 { font-size: var(--step-1); margin-top: 1.8em; }
 .legal address { font-style: normal; }
 .legal .todo { background: color-mix(in srgb, var(--signal) 30%, transparent); padding: 0 4px; border-radius: 2px; }
+
+.c-price s, .c-from s { color: var(--muted); font-weight: 400; text-decoration-thickness: 2px; }
+.c-price s { font-size: var(--step-1); margin-right: 6px; }
+.c-intro { font-family: var(--font-mono); font-size: var(--step--1); color: var(--signal-ink); font-weight: 600; }
+.c-bundle { margin-top: 18px; display: grid; gap: 6px; }
+.c-bundle-price b { font-family: var(--font-display); font-stretch: 112%; font-weight: 800; font-size: var(--step-2); }
