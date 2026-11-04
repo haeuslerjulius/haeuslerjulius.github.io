@@ -19,8 +19,8 @@ for_whom:
   - Car dealerships
 
 facts:
-  - label: Business
-    value: Kleingewerbe, registered 2026
+  # - label: Business              # put back once the Gewerbe is registered
+  #   value: Kleingewerbe, registered 2026
   - label: Licence
     value: EU A1/A3
   - label: Based in

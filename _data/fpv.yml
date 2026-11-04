@@ -53,7 +53,7 @@ faq:
 credentials:
   - "EU-Kenntnisnachweis A1/A3"
   - "Drohnen-Haftpflicht versichert"
-  - "Angemeldetes Gewerbe"
+  # - "Angemeldetes Gewerbe"   # put back once the Gewerbe is registered
   - "Raum Rosenheim"
 
 # Impressum: the law needs a postal address where official mail reaches you.
