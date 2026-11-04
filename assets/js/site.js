@@ -91,8 +91,8 @@ function select(b) {
 }
 
 // Vimeo films.
-// All players: ask for 1080p so viewers start in HD (Vimeo may ignore this on
-// some plans; then the player stays on Auto).
+// All players: start in the highest quality (1080p on phones), never below 1080p
+// (Vimeo may ignore this on some plans; then the player stays on Auto).
 // Players with class "vimeo-auto": start muted when at least half on screen,
 // pause when scrolled away, and show a "sound on" button until the viewer unmutes.
 // Its label comes from data-sound on the iframe. No autoplay for people who ask
@@ -101,6 +101,17 @@ function select(b) {
   var all = document.querySelectorAll('iframe[src*="player.vimeo.com"]');
   if (!all.length) return;
   var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Desktop and tablet: the highest quality the video has (4K for these films).
+  // Phones (under 760 px wide): 1080p, which is all a phone screen shows and
+  // avoids stalling on mobile data. Never below 1080p.
+  var WIDTH = { '4K': 3840, '2K': 2560, '1080p': 1920 };
+  function pickQuality(qs) {
+    var have = (qs || []).map(function (q) { return q.id; }).filter(function (id) { return WIDTH[id]; });
+    have.sort(function (a, b) { return WIDTH[b] - WIDTH[a]; });
+    if (!have.length) return '1080p';
+    if (window.innerWidth < 760 && have.indexOf('1080p') > -1) return '1080p';
+    return have[0];
+  }
   var s = document.createElement('script');
   s.src = 'https://player.vimeo.com/api/player.js';
   s.onload = function () {
@@ -116,7 +127,9 @@ function select(b) {
     all.forEach(function (f) {
       var p = new Vimeo.Player(f);
       f._vp = p;
-      p.ready().then(function () { return p.setQuality('1080p'); }).catch(function () {});
+      p.ready().then(function () { return p.getQualities(); })
+        .then(function (qs) { return p.setQuality(pickQuality(qs)); })
+        .catch(function () { p.setQuality('1080p').catch(function () {}); });
       if (!f.classList.contains('vimeo-auto') || still || !io) return;
       io.observe(f);
 
