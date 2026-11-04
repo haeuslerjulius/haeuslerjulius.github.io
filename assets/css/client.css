@@ -1,7 +1,7 @@
 /* Client page /fpv/ and the legal pages. Builds on site.css. */
 
 .client .bar nav { align-items: center; }
-.bar-cta { background: var(--signal); color: var(--on-signal); padding: 4px 10px; border-radius: 4px; text-decoration: none; font-weight: 600; }
+.bar-cta { background: var(--signal); color: var(--on-signal); padding: 5px 16px; white-space: nowrap; border-radius: 4px; text-decoration: none; font-weight: 600; }
 .bar-cta:hover { background: var(--ink); color: var(--bench); text-decoration: none !important; }
 @media (max-width: 520px) { .client .mark { display: none; } }
 

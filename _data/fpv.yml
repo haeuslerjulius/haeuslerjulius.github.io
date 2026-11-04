@@ -10,9 +10,9 @@ lede: "FPV-Durchflüge für Immobilien im Raum Rosenheim. Ihre Interessenten erl
 for_whom: "Für Makler, Bauträger und Eigentümer, die verkaufen oder vermieten."
 
 price: "490 €"                 # regular price
-intro_price: "340 €"           # introductory price (about 30 % off); set intro_left to 0 when the three are used up
+intro_price: "340 €"           # introductory price (about 30 % off); set intro_left to 0 to end the introductory price
 intro_left: 3
-intro_note: "Einführungspreis für die ersten drei Aufträge"
+intro_note: "Einführungspreis für die ersten Aufträge"
 price_note: "Größere Objekte und Gewerbe auf Anfrage."
 
 package:
