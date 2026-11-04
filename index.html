@@ -115,7 +115,7 @@ title: Julius Häusler
     {% if d.formats_vimeo.id and d.formats_vimeo.id != "" %}
     <div class="formats">
       <div class="reel reel-embed">
-        <iframe src="https://player.vimeo.com/video/{{ d.formats_vimeo.id }}?h={{ d.formats_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" class="vimeo-auto" title="{{ d.formats_vimeo.title | escape }}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        <iframe src="https://player.vimeo.com/video/{{ d.formats_vimeo.id }}?h={{ d.formats_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;loop=1&amp;autopause=0" title="{{ d.formats_vimeo.title | escape }}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
       </div>
       <div class="panel"><span class="tab">{{ d.formats_vimeo.heading }}</span><div class="prose">{{ d.formats_vimeo.text | markdownify }}</div></div>
     </div>
