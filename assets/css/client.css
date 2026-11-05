@@ -161,7 +161,13 @@
 .c-final { --img-h: clamp(600px, 62vw, 820px); position: relative; overflow: hidden; color: var(--on-band); background: var(--band); padding-block: calc(var(--img-h) * .57) clamp(64px, 10vw, 110px); }
 /* The house photo sits at the top, clearly visible, and fades to black so the card below sits on solid black like the footer */
 .c-final::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: var(--img-h); background: linear-gradient(180deg, rgba(14,17,16,.30) 0%, rgba(14,17,16,.08) 22%, rgba(14,17,16,.15) 48%, rgba(22,26,25,.8) 74%, var(--band) 97%), url("../fpv/final.jpg") center 42% / cover; }
-@media (max-width: 760px) { .c-final { padding-top: calc(var(--img-h) * .58); } }
+@media (max-width: 760px) {
+  /* Phones: shorter photo area, zoomed in on the house, text starts below it */
+  .c-final { --img-h: 470px; padding-top: calc(var(--img-h) * .6); }
+  .c-final::before { background-size: 100% 100%, auto 132%; background-position: 0 0, 57% 80%; }
+  .c-final-osd { height: calc(var(--img-h) * .5); }
+  .c-final-osd .osd-bl, .c-final-osd .osd-br { display: none; }
+}
 .c-final-in { position: relative; z-index: 2; display: grid; gap: 14px; justify-items: start; }
 .c-final .label { color: var(--signal); }
 .c-final h2 { font-size: var(--step-4); font-stretch: 125%; font-weight: 900; line-height: .95; letter-spacing: -.03em; max-width: 13ch; color: #fff; }
@@ -178,7 +184,6 @@
 .c-final-osd .osd-bl { bottom: 4px; left: 0; }
 .c-final-osd .osd-br { bottom: 4px; right: 38px; }
 @keyframes rec { to { visibility: hidden; } }
-@media (max-width: 480px) { .c-final-osd .osd-br { display: none; } }
 
 /* Pilot card */
 .c-about-sec { border-bottom: 0; }
