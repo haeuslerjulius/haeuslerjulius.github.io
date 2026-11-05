@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Julius Häusler
+films: true
 ---
 {% assign me = site.data.me %}{% assign school = site.data.school %}{% assign d = site.data.drones %}
 
@@ -110,7 +111,7 @@ title: Julius Häusler
 
     {% if d.reel_vimeo.id and d.reel_vimeo.id != "" %}
     <div class="reel reel-embed has-poster is-loading">
-      <iframe src="https://player.vimeo.com/video/{{ d.reel_vimeo.id }}?h={{ d.reel_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" class="vimeo-auto" data-sound="🔊 Tap for sound" data-sound-fallback="Use the speaker icon in the player" title="{{ d.reel_vimeo.title | escape }}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      <iframe fetchpriority="high" src="https://player.vimeo.com/video/{{ d.reel_vimeo.id }}?h={{ d.reel_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" class="vimeo-auto" data-sound="🔊 Tap for sound" data-sound-fallback="Use the speaker icon in the player" title="{{ d.reel_vimeo.title | escape }}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
       <button type="button" class="sound-on">🔊 Tap for sound</button>
     </div>
     {% assign v = d.vertical_vimeo %}

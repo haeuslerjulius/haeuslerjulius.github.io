@@ -2,6 +2,7 @@
 layout: client
 title: FPV-Durchflüge für Immobilien
 permalink: /fpv/
+films: true
 cover: /assets/fpv/share.jpg
 summary: "Ein durchgehender FPV-Drohnenflug durch Ihr Objekt, als 16:9-Film und 9:16-Reel. Raum Rosenheim. Einführungspreis 340 € statt 490 €."
 ---
@@ -15,7 +16,7 @@ summary: "Ein durchgehender FPV-Drohnenflug durch Ihr Objekt, als 16:9-Film und 
     <h1>{{ f.headline }}</h1>
     <p class="lede">{{ f.lede }}</p>
     <div class="reel reel-embed c-film has-poster is-loading">
-      <iframe src="https://player.vimeo.com/video/{{ d.reel_vimeo.id }}?h={{ d.reel_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" class="vimeo-auto" data-sound="🔊 Ton einschalten" data-sound-fallback="Ton über das Lautsprecher-Symbol im Video" title="FPV-Durchflug durch ein Einfamilienhaus im Bau" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      <iframe fetchpriority="high" src="https://player.vimeo.com/video/{{ d.reel_vimeo.id }}?h={{ d.reel_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" class="vimeo-auto" data-sound="🔊 Ton einschalten" data-sound-fallback="Ton über das Lautsprecher-Symbol im Video" title="FPV-Durchflug durch ein Einfamilienhaus im Bau" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
       <button type="button" class="sound-on">🔊 Ton einschalten</button>
     </div>
     <div class="c-actions">

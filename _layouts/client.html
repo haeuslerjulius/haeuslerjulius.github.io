@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="preconnect" href="https://player.vimeo.com">
+{% if page.films %}<link rel="preload" as="image" href="{{ '/assets/fpv/share.jpg' | relative_url }}" fetchpriority="high">
+<link rel="preload" as="font" type="font/woff2" href="{{ '/assets/fonts/archivo-latin-wdth-normal.woff2' | relative_url }}" crossorigin>
+<link rel="preload" as="script" href="https://player.vimeo.com/api/player.js">
+{% endif %}<link rel="preconnect" href="https://player.vimeo.com">
 <link rel="preconnect" href="https://f.vimeocdn.com">
 <link rel="preconnect" href="https://i.vimeocdn.com">
 <link rel="preconnect" href="https://vod-adaptive-ak.vimeocdn.com">
