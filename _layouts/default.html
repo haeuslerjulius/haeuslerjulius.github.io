@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://player.vimeo.com">
+<link rel="preconnect" href="https://f.vimeocdn.com">
+<link rel="preconnect" href="https://i.vimeocdn.com">
+<link rel="preconnect" href="https://vod-adaptive-ak.vimeocdn.com">
 <title>{% if page.title and page.url != "/" %}{{ page.title | strip_html }} · {% endif %}{{ site.title }}</title>
 <meta name="description" content="{% if page.summary %}{{ page.summary | strip_html | xml_escape }}{% else %}{{ site.description | xml_escape }}{% endif %}">
 <meta property="og:title" content="{{ page.title | default: site.title | strip_html | xml_escape }}">

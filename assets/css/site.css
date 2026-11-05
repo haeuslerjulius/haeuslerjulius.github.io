@@ -300,3 +300,8 @@ code { font-family: var(--font-mono); font-size: 0.85em; }
 .formats-vertical { grid-template-columns: minmax(220px, 340px) minmax(0, 1fr); }
 .formats-vertical .reel-vertical { width: 100%; }
 @media (max-width: 759px) { .formats-vertical { grid-template-columns: minmax(0, 1fr); } .formats-vertical .reel-vertical { width: min(100%, calc(80vh * 9 / 16)); } }
+
+/* Still frame shown until the film plays */
+.has-poster { background: #0e1110 url("../fpv/share.jpg") center / cover; }
+.has-poster iframe { transition: opacity .5s ease; }
+.is-loading iframe { opacity: 0; }

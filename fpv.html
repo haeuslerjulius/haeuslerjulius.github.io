@@ -14,7 +14,7 @@ summary: "Ein durchgehender FPV-Drohnenflug durch Ihr Objekt, als 16:9-Film und 
     <p class="label">FPV-Durchflüge · Raum Rosenheim</p>
     <h1>{{ f.headline }}</h1>
     <p class="lede">{{ f.lede }}</p>
-    <div class="reel reel-embed c-film">
+    <div class="reel reel-embed c-film has-poster is-loading">
       <iframe src="https://player.vimeo.com/video/{{ d.reel_vimeo.id }}?h={{ d.reel_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" class="vimeo-auto" data-sound="🔊 Ton einschalten" data-sound-fallback="Ton über das Lautsprecher-Symbol im Video" title="FPV-Durchflug durch ein Einfamilienhaus im Bau" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
       <button type="button" class="sound-on">🔊 Ton einschalten</button>
     </div>
@@ -49,8 +49,8 @@ summary: "Ein durchgehender FPV-Drohnenflug durch Ihr Objekt, als 16:9-Film und 
     <figure class="phone">
       <div class="phone-body">
         <div class="phone-screen">
-          <div class="ph-video">
-            <iframe src="https://player.vimeo.com/video/{{ v.id }}?h={{ v.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0&amp;controls=0" class="vimeo-auto" title="Derselbe Flug als Hochformat-Video fürs Handy" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+          <div class="ph-video has-poster is-loading">
+            <iframe data-defer data-src="https://player.vimeo.com/video/{{ v.id }}?h={{ v.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0&amp;controls=0" class="vimeo-auto" title="Derselbe Flug als Hochformat-Video fürs Handy" allow="autoplay; fullscreen; picture-in-picture"></iframe>
             <button type="button" class="sound-on">🔊 Ton einschalten</button>
           </div>
           <div class="ph-shade" aria-hidden="true"></div>
