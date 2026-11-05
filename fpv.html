@@ -87,7 +87,7 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
   </div>
 </section>
 
-<section class="sec" id="paket">
+<section class="sec c-dark" id="paket">
   <div class="wrap c-package">
     <header class="sec-head">
       <p class="label">Paket</p>
@@ -95,7 +95,7 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
       {% if f.intro_left > 0 %}<p class="c-price"><s>{{ f.price }}</s> <b>{{ f.intro_price }}</b></p>
       <p class="c-intro">{{ f.intro_note }}, danach {{ f.price }}.</p>{% else %}<p class="c-price"><b>{{ f.price }}</b></p>{% endif %}
       <p class="sub">{{ f.price_note }}</p>
-      <div class="c-actions c-pk-actions"><a class="btn btn-solid" href="{{ wa }}">Per WhatsApp anfragen</a><a class="btn" href="{{ mail }}">Per E-Mail</a></div>
+      <div class="c-actions c-pk-actions"><a class="btn btn-solid" href="{{ wa }}">Per WhatsApp anfragen</a><a class="btn c-btn-light" href="{{ mail }}">Per E-Mail</a></div>
       <ul class="tags c-creds c-creds-top">{% for c in f.credentials %}<li>{{ c }}</li>{% endfor %}</ul>
     </header>
     <div class="panel"><span class="tab">Enthalten</span>
@@ -110,40 +110,51 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
       <p class="label">Ablauf</p>
       <h2>Drei Schritte bis zum fertigen Film</h2>
     </header>
-    <ol class="c-steps">
-      {% for s in f.steps %}<li><span class="c-num">{{ forloop.index }}</span><div><h3>{{ s.title }}</h3><p>{{ s.text }}</p></div></li>{% endfor %}
+    <ol class="c-route">
+      {% for st in f.steps %}<li>
+        <span class="c-wp-dot" aria-hidden="true"></span>
+        <div class="c-wp"><span class="c-wp-id">WP 0{{ forloop.index }}</span>{% if st.when %}<span class="c-wp-when">{{ st.when }}</span>{% endif %}</div>
+        <h3>{{ st.title }}</h3><p>{{ st.text }}</p>
+      </li>{% endfor %}
     </ol>
   </div>
 </section>
 
-<section class="sec" id="fragen">
-  <div class="wrap">
-    <header class="sec-head">
+<section class="sec c-faq-sec" id="fragen">
+  <div class="wrap c-faq-grid">
+    <header class="sec-head c-faq-head">
       <p class="label">Fragen</p>
       <h2>FAQs</h2>
+      <p class="sub">Ihre Frage ist nicht dabei? Schreiben Sie mir, ich antworte innerhalb von 24 Stunden.</p>
+      <p><a class="btn btn-solid" href="{{ wa }}">Frage per WhatsApp</a></p>
     </header>
     <div class="c-faq">
       {% for q in f.faq %}<details><summary>{{ q.q }}</summary><p>{{ q.a }}</p></details>{% endfor %}
     </div>
-    <ul class="tags c-creds">{% for c in f.credentials %}<li>{{ c }}</li>{% endfor %}</ul>
   </div>
 </section>
 
-<section class="sec" id="anfrage">
+<section class="c-final" id="anfrage">
+  <div class="c-final-osd" aria-hidden="true"><span class="osd-tl"><i></i>REC</span><span class="osd-tr">4K · 9:16</span><span class="osd-bl">Raum Rosenheim</span><span class="osd-br">47.86° N · 12.13° E</span></div>
+  <div class="wrap c-final-in">
+    <p class="label">Anfrage</p>
+    <h2>Termin für Ihr Objekt anfragen</h2>
+    <p class="c-final-sub">Adresse, Wohnfläche und Wunschtermin genügen. Antwort innerhalb von 24 Stunden.</p>
+    <div class="c-actions"><a class="btn btn-solid" href="{{ wa }}">Per WhatsApp anfragen</a><a class="btn c-btn-light" href="{{ mail }}">Per E-Mail anfragen</a></div>
+  </div>
+</section>
+
+<section class="sec c-about-sec">
   <div class="wrap">
-    <div class="cta c-cta">
-      <div>
-        <p>Termin für Ihr Objekt anfragen</p>
-        <span class="c-cta-sub">Adresse, Wohnfläche und Wunschtermin genügen. Antwort innerhalb von 24 Stunden.</span>
-      </div>
-      <div class="c-actions">
-        <a class="btn btn-solid" href="{{ wa }}">WhatsApp</a>
-        <a class="btn c-btn-light" href="{{ mail }}">E-Mail</a>
-      </div>
-    </div>
-    <div class="c-about">
+    <div class="c-pilot">
       {% if f.about.photo %}<img src="{{ f.about.photo | relative_url }}" alt="Julius Häusler" width="160" height="160" loading="lazy">{% endif %}
-      <div><p class="label">Über mich</p><p>{{ f.about.text }}</p><p class="c-about-more"><a href="{{ '/' | relative_url }}">Meine Website mit Projekten (Englisch)</a></p></div>
+      <div>
+        <p class="label">Ihr Pilot</p>
+        <h3>Julius Häusler</h3>
+        <p>{{ f.about.text }}</p>
+        <ul class="tags">{% for c in f.credentials %}<li>{{ c }}</li>{% endfor %}</ul>
+        <p class="c-about-more"><a href="{{ '/' | relative_url }}">Meine Website mit Projekten (Englisch)</a></p>
+      </div>
     </div>
   </div>
 </section>

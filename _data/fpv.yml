@@ -39,10 +39,13 @@ why:
 
 steps:
   - title: "Anfrage"
+    when: "Heute"
     text: "Schreiben Sie mir per WhatsApp oder E-Mail: Adresse, Wohnfläche, Wunschtermin. Ich melde mich innerhalb von 24 Stunden."
   - title: "Flugtag"
+    when: "ca. 1 Woche später"
     text: "Ich bin ein bis zwei Stunden vor Ort. Licht an, Türen offen, Personen und Haustiere außerhalb der Flugroute: mehr brauche ich nicht."
   - title: "Lieferung"
+    when: "bis 5 Werktage danach"
     text: "Innerhalb von 5 Werktagen bekommen Sie Querformat und Hochformat, bereit zum Hochladen."
 
 faq:

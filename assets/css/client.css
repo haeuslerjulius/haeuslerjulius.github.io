@@ -116,3 +116,75 @@
 .c-about .label { margin-bottom: 6px; }
 .c-about-more { margin-top: 8px; font-family: var(--font-mono); font-size: var(--step--1); }
 @media (max-width: 480px) { .c-about { grid-template-columns: minmax(0, 1fr); } .c-about img { width: 96px; height: 96px; } }
+
+/* ---------- Lower part of /fpv ---------- */
+/* Paket on a dark band */
+.c-dark { background: var(--band); color: var(--on-band); border-bottom: 0; }
+.c-dark .label { color: color-mix(in srgb, var(--on-band) 62%, transparent); }
+.c-dark h2 { color: var(--on-band); }
+.c-dark .c-price { color: color-mix(in srgb, var(--on-band) 60%, transparent); }
+.c-dark .c-price b { color: var(--signal); font-size: clamp(3rem, 9vw, 5rem); }
+.c-dark .c-price s { color: color-mix(in srgb, var(--on-band) 55%, transparent); }
+.c-dark .c-intro { color: var(--signal); }
+.c-dark .sub { color: color-mix(in srgb, var(--on-band) 72%, transparent); }
+.c-dark .tags li { background: transparent; border-color: color-mix(in srgb, var(--on-band) 28%, transparent); color: var(--on-band); }
+.c-dark .panel { color: var(--ink); box-shadow: 0 18px 50px rgba(0,0,0,.35); }
+
+/* Ablauf as a flight route with waypoints */
+.c-route { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px clamp(20px, 4vw, 48px); position: relative; }
+.c-route::before { content: ""; position: absolute; top: 9px; left: 9px; right: calc(33.33% - 9px); border-top: 2px dashed var(--signal-ink); opacity: .55; }
+.c-route li { position: relative; display: grid; gap: 10px; align-content: start; }
+.c-wp { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-family: var(--font-mono); font-size: var(--step--1); }
+.c-wp-dot { display: block; width: 20px; height: 20px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 5px var(--bench), 0 0 0 7px color-mix(in srgb, var(--signal) 45%, transparent); position: relative; z-index: 1; }
+.c-wp-id { font-weight: 600; letter-spacing: .06em; }
+.c-wp-when { color: var(--muted); border: 1px solid var(--rule); border-radius: 99px; padding: 1px 9px; background: var(--sheet); }
+.c-route h3 { font-size: var(--step-2); margin-top: 6px; }
+.c-route p { line-height: 1.5; color: var(--muted); max-width: 30ch; }
+@media (max-width: 760px) {
+  .c-route { grid-template-columns: minmax(0, 1fr); gap: 30px; padding-left: 0; }
+  .c-route::before { top: 10px; bottom: 10px; left: 9px; right: auto; border-top: 0; border-left: 2px dashed var(--signal-ink); }
+  .c-route li { padding-left: 38px; }
+  .c-wp-dot { position: absolute; left: 0; top: 0; }
+  .c-route p { max-width: none; }
+}
+
+/* FAQ: heading left (sticky), questions right */
+.c-faq-sec { background: var(--sheet); }
+.c-faq-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 24px clamp(32px, 6vw, 80px); align-items: start; }
+.c-faq-head { position: sticky; top: 84px; margin-bottom: 0; }
+.c-faq-head .btn { margin-top: 6px; }
+.c-faq-grid .c-faq { max-width: none; }
+.c-faq details[open] summary { color: var(--signal-ink); }
+@media (max-width: 760px) { .c-faq-grid { grid-template-columns: minmax(0, 1fr); } .c-faq-head { position: static; } }
+
+/* Final call to action over the still, with an FPV goggle overlay */
+.c-final { position: relative; overflow: hidden; color: var(--on-band); padding-block: clamp(72px, 14vw, 150px); background: linear-gradient(180deg, rgba(14,17,16,.5), rgba(14,17,16,.86)), url("../fpv/share.jpg") center / cover; }
+.c-final-in { position: relative; z-index: 1; display: grid; gap: 14px; justify-items: start; }
+.c-final .label { color: var(--signal); }
+.c-final h2 { font-size: var(--step-4); font-stretch: 125%; font-weight: 900; line-height: .95; letter-spacing: -.03em; max-width: 13ch; color: #fff; }
+.c-final-sub { font-size: var(--step-1); max-width: 34rem; color: rgba(255,255,255,.85); }
+.c-final .c-actions { margin-top: 8px; }
+.c-final-osd { position: absolute; inset: clamp(14px, 3vw, 28px); pointer-events: none; font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; color: rgba(255,255,255,.75); }
+.c-final-osd::before, .c-final-osd::after { content: ""; position: absolute; width: 26px; height: 26px; border: 2px solid rgba(255,255,255,.6); }
+.c-final-osd::before { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+.c-final-osd::after { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+.c-final-osd span { position: absolute; }
+.c-final-osd .osd-tl { top: 4px; left: 38px; display: flex; align-items: center; gap: 6px; }
+.c-final-osd .osd-tl i { width: 8px; height: 8px; border-radius: 50%; background: #ff3b30; animation: rec 1.6s steps(2, start) infinite; }
+.c-final-osd .osd-tr { top: 4px; right: 0; }
+.c-final-osd .osd-bl { bottom: 4px; left: 0; }
+.c-final-osd .osd-br { bottom: 4px; right: 38px; }
+@keyframes rec { to { visibility: hidden; } }
+@media (max-width: 480px) { .c-final-osd .osd-br { display: none; } }
+
+/* Pilot card */
+.c-about-sec { border-bottom: 0; }
+.c-pilot { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 20px clamp(20px, 4vw, 40px); align-items: center; max-width: 52rem; padding: clamp(20px, 4vw, 36px); background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; }
+.c-pilot::before, .c-pilot::after { content: ""; position: absolute; width: 18px; height: 18px; border: 2px solid var(--signal-ink); }
+.c-pilot::before { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+.c-pilot::after { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+.c-pilot img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 4px var(--bench), 0 0 0 6px var(--signal); }
+.c-pilot h3 { font-size: var(--step-2); margin: 2px 0 10px; }
+.c-pilot p { line-height: 1.55; }
+.c-pilot .tags { margin-top: 14px; }
+@media (max-width: 560px) { .c-pilot { grid-template-columns: minmax(0, 1fr); } .c-pilot img { width: 110px; height: 110px; } }
