@@ -13,7 +13,7 @@ tagline: "student, entrepreneur, technical engineer and sport person"
 turn_frames: 24
 # true = the frames are the stand-in. Set to false once they're your photos.
 turn_placeholder: false
-turn_fallback: /selfie.upscaled.jpg
+turn_fallback: /assets/me/portrait.jpg
 
 # 3 to 5 sentences about you. Separate paragraphs with an empty line.
 about: |

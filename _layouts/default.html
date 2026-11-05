@@ -17,7 +17,7 @@
 <meta property="og:url" content="{{ page.url | absolute_url }}">
 <link rel="canonical" href="{{ page.url | absolute_url }}">
 <link rel="icon" href="{{ '/favicon.svg' | relative_url }}" type="image/svg+xml">
-<meta property="og:image" content="{{ page.cover | default: '/selfie.upscaled.jpg' | absolute_url }}">
+<meta property="og:image" content="{{ page.cover | default: '/assets/me/portrait.jpg' | absolute_url }}">
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
 {% unless site.show_log %}{% assign is_log = false %}{% if page.url == "/log/" %}{% assign is_log = true %}{% endif %}{% if page.collection == "posts" %}{% unless page.tags contains "builds" %}{% assign is_log = true %}{% endunless %}{% endif %}{% if is_log %}<meta name="robots" content="noindex">
 {% endif %}{% endunless %}<link rel="stylesheet" href="{{ '/assets/css/fonts.css' | relative_url }}?v={{ site.time | date: '%s' }}">
