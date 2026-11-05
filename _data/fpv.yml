@@ -3,6 +3,7 @@
 
 whatsapp: "491772383924"          # digits only, country code first
 whatsapp_text: "Hallo Julius, ich interessiere mich für einen Durchflug.\nOrt / Adresse: \nWohnfläche (ca. m²): \nWunschtermin: \nIch bin: Makler / Bauträger / Eigentümer"
+whatsapp_question: "Hallo Julius, kurze Frage: "
 email_subject: "Anfrage Immobilienvideo per Drohne"
 email_body: "Hallo Julius,\n\nich interessiere mich für einen Durchflug.\nOrt / Adresse: \nWohnfläche (ca. m²): \nWunschtermin: \nIch bin: Makler / Bauträger / Eigentümer\n"
 
@@ -32,8 +33,8 @@ package:
 why:
   - title: "Mehr als Fotos"
     text: "Fotos zeigen Räume. Ein Durchflug zeigt, wie sie zusammenhängen: vom Eingang durch den Wohnbereich bis auf die Terrasse."
-  - title: "Ein Flug, zwei Formate"
-    text: "Aus derselben Aufnahme entstehen der Film fürs Exposé und das Reel für Social Media. Ein Termin, kein zweiter Dreh."
+  - title: "Hilft beim nächsten Auftrag"
+    text: "Verkäufer wählen den Makler, der ihr Haus am besten zeigt. Mit einem Durchflug in Ihrer Vermarktung haben Sie beim nächsten Verkäufergespräch etwas, das andere nicht zeigen können."
   - title: "Klein und sicher im Haus"
     text: "Ich fliege drinnen mit einer handtellergroßen Drohne mit geschlossenem Propellerschutz. Sie passt durch Türen und Treppenhäuser."
 

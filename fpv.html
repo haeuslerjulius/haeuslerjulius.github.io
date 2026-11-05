@@ -8,13 +8,13 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
 ---
 {% assign f = site.data.fpv %}{% assign d = site.data.drones %}
 {% capture wa %}https://wa.me/{{ f.whatsapp }}?text={{ f.whatsapp_text | url_encode | replace: '+', '%20' }}{% endcapture %}
+{% capture wa_q %}https://wa.me/{{ f.whatsapp }}?text={{ f.whatsapp_question | url_encode | replace: '+', '%20' }}{% endcapture %}
 {% capture mail %}mailto:{{ site.email }}?subject={{ f.email_subject | url_encode | replace: '+', '%20' }}&amp;body={{ f.email_body | url_encode | replace: '+', '%20' }}{% endcapture %}
 
 <section class="c-hero">
   <div class="wrap">
     <p class="label">{{ f.label }}</p>
     <h1>{{ f.headline }}</h1>
-    <p class="lede">{{ f.lede }}</p>
     <div class="reel reel-embed c-film has-poster is-loading">
       <iframe fetchpriority="high" src="https://player.vimeo.com/video/{{ d.reel_vimeo.id }}?h={{ d.reel_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" class="vimeo-auto" data-sound="🔊 Ton einschalten" data-sound-fallback="Ton über das Lautsprecher-Symbol im Video" title="FPV-Durchflug durch ein Einfamilienhaus im Bau" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
       <button type="button" class="sound-on">🔊 Ton einschalten</button>
@@ -25,6 +25,8 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
       <a class="btn" href="{{ mail }}">Per E-Mail anfragen</a>
       {% if f.intro_left > 0 %}<span class="c-from"><s>{{ f.price }}</s> <b>{{ f.intro_price }}</b> · {{ f.intro_note }}</span>{% else %}<span class="c-from"><b>{{ f.price }}</b></span>{% endif %}
     </div>
+    <p class="c-quick"><a href="{{ wa_q }}">Erst eine kurze Frage? Per WhatsApp</a></p>
+    <p class="lede c-lede-after">{{ f.lede }}</p>
     <p class="c-for">{{ f.for_whom }}</p>
   </div>
 </section>
@@ -126,7 +128,7 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
       <p class="label">Fragen</p>
       <h2>FAQs</h2>
       <p class="sub">Ihre Frage ist nicht dabei? Schreiben Sie mir, ich antworte innerhalb von 24 Stunden.</p>
-      <p><a class="btn btn-solid" href="{{ wa }}">Frage per WhatsApp</a></p>
+      <p><a class="btn btn-solid" href="{{ wa_q }}">Frage per WhatsApp</a></p>
     </header>
     <div class="c-faq">
       {% for q in f.faq %}<details><summary>{{ q.q }}</summary><p>{{ q.a }}</p></details>{% endfor %}
@@ -148,7 +150,6 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
         <h3>Julius Häusler</h3>
         <p>{{ f.about.text }}</p>
         <ul class="tags">{% for c in f.credentials %}<li>{{ c }}</li>{% endfor %}</ul>
-        <p class="c-about-more"><a href="{{ '/' | relative_url }}">Meine Website mit Projekten (Englisch)</a></p>
       </div>
     </div>
   </div>
