@@ -98,6 +98,12 @@ function select(b) {
 // Its label comes from data-sound on the iframe. No autoplay for people who ask
 // for reduced motion.
 (function () {
+  // Films with data-src load only on the screen size in their data-media,
+  // so a phone never downloads the desktop film and the other way round.
+  document.querySelectorAll('iframe[data-src]').forEach(function (f) {
+    var m = f.getAttribute('data-media');
+    if (!m || !window.matchMedia || window.matchMedia(m).matches) f.src = f.getAttribute('data-src');
+  });
   var all = document.querySelectorAll('iframe[src*="player.vimeo.com"]');
   if (!all.length) return;
   var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;

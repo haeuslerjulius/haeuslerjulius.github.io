@@ -36,9 +36,24 @@ summary: "Ein durchgehender FPV-Drohnenflug durch Ihr Objekt, als 16:9-Film und 
 </section>
 
 <section class="sec" id="formate">
+  {% assign v = d.vertical_vimeo %}
   <div class="wrap">
     <header class="sec-head">
       <p class="label">Ein Flug, zwei Formate</p>
+      {% if v.id and v.id != "" %}
+      <h2><span class="only-wide">Der helle Streifen ist Ihr Reel</span><span class="only-narrow">Dasselbe Haus als Reel</span></h2>
+      <p class="sub"><span class="only-wide">Dieselbe Aufnahme wie oben. Der markierte Bereich in der Mitte wird zum Hochformat für Instagram und TikTok, ohne zweiten Flug.</span><span class="only-narrow">Aus demselben Flug wie oben entsteht das Hochformat für Instagram und TikTok, ohne zweiten Flug.</span></p>
+    </header>
+    <div class="reel reel-embed only-wide">
+      <iframe data-src="https://player.vimeo.com/video/{{ d.formats_vimeo.id }}?h={{ d.formats_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" data-media="(min-width: 760px)" class="vimeo-auto" data-sound="🔊 Ton einschalten" data-sound-fallback="Ton über das Lautsprecher-Symbol im Video" title="Derselbe Flug mit markiertem 9:16-Bereich" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      <button type="button" class="sound-on">🔊 Ton einschalten</button>
+    </div>
+    <div class="reel reel-embed reel-vertical only-narrow">
+      <iframe data-src="https://player.vimeo.com/video/{{ v.id }}?h={{ v.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" data-media="(max-width: 759px)" class="vimeo-auto" data-sound="🔊 Ton einschalten" data-sound-fallback="Ton über das Lautsprecher-Symbol im Video" title="Derselbe Flug als 9:16-Reel" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      <button type="button" class="sound-on">🔊 Ton einschalten</button>
+    </div>
+    <noscript><div class="reel reel-embed"><iframe src="https://player.vimeo.com/video/{{ d.formats_vimeo.id }}?h={{ d.formats_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" title="Derselbe Flug mit markiertem 9:16-Bereich" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></noscript>
+      {% else %}
       <h2>Der helle Streifen ist Ihr Reel</h2>
       <p class="sub">Dieselbe Aufnahme wie oben. Der markierte Bereich in der Mitte wird zum Hochformat für Instagram und TikTok, ohne zweiten Flug.</p>
     </header>
@@ -46,6 +61,7 @@ summary: "Ein durchgehender FPV-Drohnenflug durch Ihr Objekt, als 16:9-Film und 
       <iframe src="https://player.vimeo.com/video/{{ d.formats_vimeo.id }}?h={{ d.formats_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" class="vimeo-auto" data-sound="🔊 Ton einschalten" data-sound-fallback="Ton über das Lautsprecher-Symbol im Video" title="Derselbe Flug mit markiertem 9:16-Bereich" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
       <button type="button" class="sound-on">🔊 Ton einschalten</button>
     </div>
+      {% endif %}
   </div>
 </section>
 

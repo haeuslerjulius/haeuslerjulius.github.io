@@ -113,12 +113,23 @@ title: Julius Häusler
       <iframe src="https://player.vimeo.com/video/{{ d.reel_vimeo.id }}?h={{ d.reel_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" class="vimeo-auto" data-sound="🔊 Tap for sound" data-sound-fallback="Use the speaker icon in the player" title="{{ d.reel_vimeo.title | escape }}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
       <button type="button" class="sound-on">🔊 Tap for sound</button>
     </div>
-    {% if d.formats_vimeo.id and d.formats_vimeo.id != "" %}
+    {% if d.formats_vimeo.id and d.formats_vimeo.id != "" %}{% assign v = d.vertical_vimeo %}
     <div class="formats">
+      {% if v.id and v.id != "" %}
+      <div class="reel reel-embed only-wide">
+        <iframe data-src="https://player.vimeo.com/video/{{ d.formats_vimeo.id }}?h={{ d.formats_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;loop=1&amp;autopause=0" data-media="(min-width: 760px)" title="{{ d.formats_vimeo.title | escape }}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="reel reel-embed reel-vertical only-narrow">
+        <iframe data-src="https://player.vimeo.com/video/{{ v.id }}?h={{ v.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;loop=1&amp;autopause=0" data-media="(max-width: 759px)" title="{{ v.title | escape }}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <noscript><div class="reel reel-embed"><iframe src="https://player.vimeo.com/video/{{ d.formats_vimeo.id }}?h={{ d.formats_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;loop=1&amp;autopause=0" title="{{ d.formats_vimeo.title | escape }}" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div></noscript>
+      <div class="panel"><span class="tab only-wide">{{ d.formats_vimeo.heading }}</span><span class="tab only-narrow">{{ v.heading }}</span><div class="prose only-wide">{{ d.formats_vimeo.text | markdownify }}</div><div class="prose only-narrow">{{ v.text | markdownify }}</div></div>
+      {% else %}
       <div class="reel reel-embed">
         <iframe src="https://player.vimeo.com/video/{{ d.formats_vimeo.id }}?h={{ d.formats_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;loop=1&amp;autopause=0" title="{{ d.formats_vimeo.title | escape }}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
       </div>
       <div class="panel"><span class="tab">{{ d.formats_vimeo.heading }}</span><div class="prose">{{ d.formats_vimeo.text | markdownify }}</div></div>
+      {% endif %}
     </div>
     {% endif %}
     {% elsif d.reel_url != "" %}

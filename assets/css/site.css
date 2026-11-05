@@ -292,3 +292,8 @@ code { font-family: var(--font-mono); font-size: 0.85em; }
 .foot-legal { font-family: var(--font-mono); font-size: var(--step--1); }
 .sound-on { position: absolute; top: 12px; left: 12px; z-index: 2; font-family: var(--font-mono); font-size: 13px; font-weight: 600; background: var(--signal); color: var(--on-signal); border: 0; border-radius: 4px; padding: 8px 12px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.35); }
 .sound-on:hover { background: var(--ink); color: var(--bench); }
+
+/* Phone gets the true 9:16 film, desktop the 16:9 cut-out (breakpoint 760 px, same as site.js data-media) */
+.reel-vertical { aspect-ratio: 9 / 16; width: min(100%, calc(80vh * 9 / 16)); margin-inline: auto; }
+@media (min-width: 760px) { .only-narrow { display: none !important; } }
+@media (max-width: 759px) { .only-wide { display: none !important; } }

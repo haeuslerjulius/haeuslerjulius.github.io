@@ -41,6 +41,15 @@ formats_vimeo:
   heading: "One take, two formats"
   text: "The bright strip in the middle is the vertical cut. One flight gives you the 16:9 film for your website and a 9:16 Reel for Instagram and TikTok, without flying twice."
 
+# True 9:16 version for phones (screens under 760 px wide). Phones get this one,
+# desktops keep formats_vimeo. Leave id empty and everyone gets formats_vimeo.
+vertical_vimeo:
+  id: ""
+  hash: ""
+  title: "Same flythrough as a vertical 9:16 Reel"
+  heading: "The same flight as a Reel"
+  text: "This is the vertical cut of the same take: a 9:16 Reel for Instagram and TikTok, from one flight, without flying twice."
+
 # Link to your showreel (YouTube / Vimeo) if it can't be embedded. Poster image optional.
 reel_url: ""
 reel_poster: ""
