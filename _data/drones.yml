@@ -44,8 +44,8 @@ formats_vimeo:
 # True 9:16 version for phones (screens under 760 px wide). Phones get this one,
 # desktops keep formats_vimeo. Leave id empty and everyone gets formats_vimeo.
 vertical_vimeo:
-  id: ""
-  hash: ""
+  id: "1243647349"
+  hash: "ea45ceff05"
   title: "Same flythrough as a vertical 9:16 Reel"
   heading: "The same flight as a Reel"
   text: "This is the vertical cut of the same take: a 9:16 Reel for Instagram and TikTok, from one flight, without flying twice."
