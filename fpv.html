@@ -141,15 +141,10 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
     <h2>Termin für Ihr Objekt anfragen</h2>
     <p class="c-final-sub">Adresse, Wohnfläche und Wunschtermin genügen. Antwort innerhalb von 24 Stunden.</p>
     <div class="c-actions"><a class="btn btn-solid" href="{{ wa }}">Per WhatsApp anfragen</a><a class="btn c-btn-light" href="{{ mail }}">Per E-Mail anfragen</a></div>
-  </div>
-</section>
-
-<section class="sec c-about-sec">
-  <div class="wrap">
     <div class="c-pilot">
       {% if f.about.photo %}<img src="{{ f.about.photo | relative_url }}" alt="Julius Häusler" width="160" height="160" loading="lazy">{% endif %}
       <div>
-        <p class="label">Ihr Pilot</p>
+        <p class="label">Ihr Pilot · ID 01</p>
         <h3>Julius Häusler</h3>
         <p>{{ f.about.text }}</p>
         <ul class="tags">{% for c in f.credentials %}<li>{{ c }}</li>{% endfor %}</ul>
@@ -158,3 +153,4 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
     </div>
   </div>
 </section>
+

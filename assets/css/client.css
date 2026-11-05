@@ -158,7 +158,7 @@
 @media (max-width: 760px) { .c-faq-grid { grid-template-columns: minmax(0, 1fr); } .c-faq-head { position: static; } }
 
 /* Final call to action over the still, with an FPV goggle overlay */
-.c-final { position: relative; overflow: hidden; color: var(--on-band); padding-block: clamp(72px, 14vw, 150px); background: linear-gradient(180deg, rgba(14,17,16,.5), rgba(14,17,16,.86)), url("../fpv/share.jpg") center / cover; }
+.c-final { position: relative; overflow: hidden; color: var(--on-band); padding-block: clamp(72px, 14vw, 150px) clamp(64px, 10vw, 110px); background: linear-gradient(180deg, rgba(14,17,16,.5) 0%, rgba(14,17,16,.8) 45%, rgba(22,26,25,.97) 100%), url("../fpv/share.jpg") center top / cover; }
 .c-final-in { position: relative; z-index: 1; display: grid; gap: 14px; justify-items: start; }
 .c-final .label { color: var(--signal); }
 .c-final h2 { font-size: var(--step-4); font-stretch: 125%; font-weight: 900; line-height: .95; letter-spacing: -.03em; max-width: 13ch; color: #fff; }
@@ -188,3 +188,13 @@
 .c-pilot p { line-height: 1.55; }
 .c-pilot .tags { margin-top: 14px; }
 @media (max-width: 560px) { .c-pilot { grid-template-columns: minmax(0, 1fr); } .c-pilot img { width: 110px; height: 110px; } }
+
+/* Pilot card inside the dark final section, styled like a goggle HUD */
+.c-final .c-pilot { margin-top: clamp(48px, 8vw, 88px); justify-self: stretch; background: rgba(10,12,12,.62); border: 1px solid rgba(255,255,255,.14); color: var(--on-band); box-shadow: 0 20px 60px rgba(0,0,0,.35); }
+.c-final .c-pilot::before, .c-final .c-pilot::after { border-color: var(--signal); }
+.c-final .c-pilot .label { color: var(--signal); letter-spacing: .1em; }
+.c-final .c-pilot h3 { color: #fff; }
+.c-final .c-pilot p { color: rgba(255,255,255,.84); }
+.c-final .c-pilot img { box-shadow: 0 0 0 4px rgba(10,12,12,.9), 0 0 0 6px var(--signal); }
+.c-final .c-pilot .tags li { background: transparent; border-color: rgba(255,255,255,.26); color: rgba(255,255,255,.9); }
+.c-final .c-about-more a { color: #fff; }
