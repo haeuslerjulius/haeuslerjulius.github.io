@@ -91,12 +91,14 @@ function select(b) {
 }
 
 // Vimeo films.
-// Speed: the first film loads right away and starts in a quality that starts fast
-// (what the screen needs, at most 1080p), then steps up to the best quality after
-// 5 s of playing. Films marked data-defer load once the first film plays, when
-// they come near the screen, or after 6 s, so they don't slow down the first one.
+// Quality: the first film starts in 1080p so it starts fast, and switches to the
+// best quality (4K) after 2 s of playing. Films marked data-defer (the phone
+// film) load once the first film has buffered a good part in 4K, when they come
+// near the screen, or after 8 s, and they play in 4K from the start. If a film
+// really stalls (buffering longer than 0.8 s), it steps down one quality
+// (4K → 2K → 1080p), never below 1080p.
 // Autoplay films (class "vimeo-auto") show a still (poster) until they play,
-// start muted when half on screen, pause when scrolled away, and show a
+// start muted when a quarter is on screen, pause when scrolled away, and show a
 // "sound on" button. No autoplay for people who ask for reduced motion.
 (function () {
   document.querySelectorAll('iframe[data-src]:not([data-defer])').forEach(function (f) {
@@ -109,16 +111,11 @@ function select(b) {
 
   // Quality names describe the short side of the picture.
   var SHORT = { '360p': 360, '540p': 540, '720p': 720, '1080p': 1080, '2K': 1440, '4K': 2160 };
+  var FLOOR = 1080, STEP_UP_AT = 2, STALL_MS = 800, GRACE_MS = 3000;
   function ladder(qs) {
     return (qs || []).map(function (q) { return q.id; })
       .filter(function (id) { return SHORT[id]; })
       .sort(function (a, b) { return SHORT[a] - SHORT[b]; });
-  }
-  function ideal(have, f) {
-    var r = f.getBoundingClientRect();
-    var need = Math.min(r.width, r.height) * (window.devicePixelRatio || 1);
-    for (var i = 0; i < have.length; i++) if (SHORT[have[i]] >= need && SHORT[have[i]] >= 720) return have[i];
-    return have[have.length - 1];
   }
   // Windows: Edge and Chrome often decode Vimeo's high qualities in software
   // (no AV1 hardware support installed), which makes playback stutter once sound
@@ -127,36 +124,65 @@ function select(b) {
   var players = [], soundOn = null;
   function reveal(f) { var box = f.closest('.is-loading'); if (box) box.classList.remove('is-loading'); }
 
-  var io = null, api = false, queue = [];
+  // Picks the quality, steps up after 2 s (first film only) and steps down on real stalls.
+  function tune(p, f, first) {
+    var have = [], cur = null, best = null, up = false, playing = false, switchedAt = 0, stallT = null;
+    function set(q) { if (!q || q === cur) return; cur = q; switchedAt = Date.now(); p.setQuality(q).catch(function () {}); }
+    function lower(q) {
+      var i = have.indexOf(q);
+      return (i > 0 && SHORT[have[i - 1]] >= FLOOR) ? have[i - 1] : null;
+    }
+    var picked = p.ready().then(function () { return p.getQualities(); }).then(function (qs) {
+      have = ladder(qs);
+      if (!have.length) return;
+      best = have[have.length - 1];
+      while (SHORT[best] > CAP && have.indexOf(best) > 0) best = have[have.indexOf(best) - 1];
+      var start = first && SHORT[best] > 1080 && have.indexOf('1080p') > -1 ? '1080p' : best;
+      up = start === best;
+      if (up && first) setTimeout(loadDeferred, 4000);
+      set(start);
+    }).catch(function () {});
+    p.on('playing', function () { playing = true; });
+    p.on('timeupdate', function (d) {
+      if (!up && best && d && d.seconds >= STEP_UP_AT) {
+        up = true; set(best);
+        // Phone film starts loading 4 s after the first film switched to 4K.
+        if (first) setTimeout(loadDeferred, 4000);
+      }
+    });
+    if (first) p.on('progress', function (d) { if (up && d && d.percent >= 0.4) loadDeferred(); });
+    p.on('bufferstart', function () {
+      if (!playing || Date.now() - switchedAt < GRACE_MS) return;
+      clearTimeout(stallT);
+      stallT = setTimeout(function () { var q = lower(cur); if (q) { best = q; set(q); } }, STALL_MS);
+    });
+    p.on('bufferend', function () { clearTimeout(stallT); });
+    return picked;
+  }
+
+  var io = null, api = false, queue = [], firstDone = false;
   function setup(f) {
     if (!api) { queue.push(f); return; }
     var p = new Vimeo.Player(f);
     f._vp = p;
     players.push(p);
     setTimeout(function () { reveal(f); }, 5000);
-    p.on('playing', function () { reveal(f); loadDeferred(); });
-    p.ready().then(function () { return p.getQualities(); }).then(function (qs) {
-      var have = ladder(qs);
-      if (!have.length) return;
-      var best = ideal(have, f);
-      while (SHORT[best] > CAP && have.indexOf(best) > 0) best = have[have.indexOf(best) - 1];
-      var start = SHORT[best] > 1080 && have.indexOf('1080p') > -1 ? '1080p' : best;
-      p.setQuality(start).catch(function () {});
-      if (start !== best) {
-        // Step up after 5 s, but only if nothing stalled so far; step back down
-        // to the start quality if it stalls after the step-up.
-        var up = false, stalled = false;
-        p.on('bufferstart', function () {
-          if (up) { p.setQuality(start).catch(function () {}); }
-          stalled = true;
-        });
-        p.on('timeupdate', function (d) {
-          if (!up && !stalled && d && d.seconds >= 5) { up = true; p.setQuality(best).catch(function () {}); }
-        });
-      }
-    }).catch(function () {});
+    p.on('playing', function () { reveal(f); });
+    var first = !firstDone && !f.hasAttribute('data-defer');
+    if (first) firstDone = true;
+    var picked = tune(p, f, first);
+    // Phone film: once 4K is set, start it muted for a moment and pause it again,
+    // so it buffers in 4K before it is scrolled to.
+    if (f.hasAttribute('data-defer') && !still) {
+      picked.then(function () {
+        if (isVisible(f)) return;
+        var warm = function () { p.off('playing', warm); if (!isVisible(f)) p.pause().catch(function () {}); };
+        p.on('playing', warm);
+        p.setMuted(true).then(function () { return p.play(); }).catch(function () {});
+      }).catch(function () {});
+    }
 
-    var btn = f.parentNode.querySelector('.sound-on');
+  var btn = f.parentNode.querySelector('.sound-on');
     if (!f.classList.contains('vimeo-auto') || still || !io) { if (btn) btn.remove(); reveal(f); return; }
     io.observe(f);
     if (!btn) return;
@@ -188,9 +214,10 @@ function select(b) {
     f.src = f.getAttribute('data-src');
     setup(f);
   }
+  function isVisible(f) { var r = f.getBoundingClientRect(); return r.bottom > 0 && r.top < (window.innerHeight || 0); }
   function loadDeferred() { deferred.forEach(loadOne); deferred = []; }
   if (deferred.length) {
-    setTimeout(loadDeferred, 6000);
+    setTimeout(loadDeferred, 8000);
     if ('IntersectionObserver' in window) {
       var near = new IntersectionObserver(function (es) {
         es.forEach(function (e) { if (e.isIntersecting) { near.unobserve(e.target); loadOne(e.target); } });
@@ -206,10 +233,10 @@ function select(b) {
       entries.forEach(function (e) {
         var p = e.target._vp;
         if (!p) return;
-        if (e.isIntersecting) { if (!soundOn || soundOn === p) p.play().catch(function () {}); }
+        if (e.isIntersecting && e.intersectionRatio >= 0.25) { if (!soundOn || soundOn === p) p.play().catch(function () {}); }
         else { p.pause().catch(function () {}); if (soundOn === p) soundOn = null; }
       });
-    }, { threshold: 0.5 }) : null;
+    }, { threshold: [0, 0.25] }) : null;
     api = true;
     document.querySelectorAll('iframe[src*="player.vimeo.com"]').forEach(function (f) { if (!f._vp && queue.indexOf(f) < 0) setup(f); });
     queue.splice(0).forEach(setup);
