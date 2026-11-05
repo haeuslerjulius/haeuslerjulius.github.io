@@ -9,7 +9,8 @@
 <meta property="og:description" content="{{ page.summary | default: site.description | strip_html | xml_escape }}">
 <meta property="og:image" content="{{ page.cover | default: '/selfie.upscaled.jpg' | absolute_url }}">
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/css/fonts.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+{% unless site.show_log %}{% assign is_log = false %}{% if page.url == "/log/" %}{% assign is_log = true %}{% endif %}{% if page.collection == "posts" %}{% unless page.tags contains "builds" %}{% assign is_log = true %}{% endunless %}{% endif %}{% if is_log %}<meta name="robots" content="noindex">
+{% endif %}{% endunless %}<link rel="stylesheet" href="{{ '/assets/css/fonts.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 </head>
 <body{% if site.show_slots %} class="show-slots"{% endif %}>
@@ -22,7 +23,7 @@
       <a href="{{ '/#school' | relative_url }}">School</a>
       <a href="{{ '/#builds' | relative_url }}">Builds</a>
       <a href="{{ '/#drones' | relative_url }}">Drones</a>
-      <a href="{{ '/log/' | relative_url }}">Log</a>
+      {% if site.show_log %}<a href="{{ '/log/' | relative_url }}">Log</a>{% endif %}
     </nav>
   </div>
 </header>

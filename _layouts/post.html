@@ -54,7 +54,16 @@ layout: default
   {% endif %}
 
   <nav class="pager" aria-label="More posts">
-    {% if page.previous %}<a href="{{ page.previous.url | relative_url }}"><span class="label">Older</span>{{ page.previous.title }}</a>{% else %}<span></span>{% endif %}
-    {% if page.next %}<a class="next" href="{{ page.next.url | relative_url }}"><span class="label">Newer</span>{{ page.next.title }}</a>{% endif %}
+    {% assign older = page.previous %}{% assign newer = page.next %}
+    {% unless site.show_log %}{% if is_build %}
+      {% assign older = nil %}{% assign newer = nil %}{% assign found = false %}
+      {% for p in site.posts %}{% if p.tags contains "builds" %}
+        {% if found and older == nil %}{% assign older = p %}{% endif %}
+        {% if p.url == page.url %}{% assign found = true %}{% endif %}
+        {% unless found %}{% assign newer = p %}{% endunless %}
+      {% endif %}{% endfor %}
+    {% endif %}{% endunless %}
+    {% if older %}<a href="{{ older.url | relative_url }}"><span class="label">Older</span>{{ older.title }}</a>{% else %}<span></span>{% endif %}
+    {% if newer %}<a class="next" href="{{ newer.url | relative_url }}"><span class="label">Newer</span>{{ newer.title }}</a>{% endif %}
   </nav>
 </article>

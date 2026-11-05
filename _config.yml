@@ -14,6 +14,10 @@ baseurl: ""
 # Set to false before you share the site.
 show_slots: false
 
+# Log (personal posts, not tagged builds). false = hidden: no Log section, no Log
+# links, log pages marked noindex. Their addresses keep working. true = back as before.
+show_log: false
+
 # Keeps the old post addresses working.
 permalink: /:year-:month-:day-:title/
 timezone: Europe/Berlin

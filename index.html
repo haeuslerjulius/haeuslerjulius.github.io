@@ -41,7 +41,7 @@ title: Julius Häusler
       {% if me.next != "" %}<div class="panel panel-next"><span class="tab">Next</span><div class="prose">{{ me.next | markdownify }}</div></div>
       {% else %}<div class="slot"><b>Next</b> Where you're heading: the work or gap year after school, the drone business, the next thing you want to build.</div>{% endif %}
 
-      <p class="me-links"><a href="{{ '/aboutme/' | relative_url }}">My story</a> · <a href="{{ '/philosophy/' | relative_url }}">How I think</a> · <a href="{{ '/log/' | relative_url }}">Log</a></p>
+      <p class="me-links"><a href="{{ '/aboutme/' | relative_url }}">My story</a> · <a href="{{ '/philosophy/' | relative_url }}">How I think</a>{% if site.show_log %} · <a href="{{ '/log/' | relative_url }}">Log</a>{% endif %}</p>
     </div>
   </div>
 </section>
@@ -171,6 +171,7 @@ title: Julius Häusler
   </div>
 </section>
 
+{% if site.show_log %}
 <!-- LOG -->
 <section id="log" class="sec sec-log">
   <div class="wrap">
@@ -188,3 +189,4 @@ title: Julius Häusler
     <p class="more"><a class="btn" href="{{ '/log/' | relative_url }}">Whole log</a></p>
   </div>
 </section>
+{% endif %}
