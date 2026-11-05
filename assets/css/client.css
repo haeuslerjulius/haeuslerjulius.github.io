@@ -1,8 +1,8 @@
 /* Client page /fpv/ and the legal pages. Builds on site.css. */
 
 .client .bar nav { align-items: center; }
-.bar-cta { background: var(--signal); color: var(--on-signal); padding: 5px 16px; white-space: nowrap; border-radius: 4px; text-decoration: none; font-weight: 600; }
-.bar-cta:hover { background: var(--ink); color: var(--bench); text-decoration: none !important; }
+.bar nav .bar-cta { background: var(--signal); color: var(--on-signal); padding: 7px 16px; line-height: 1.2; white-space: nowrap; border-radius: 4px; text-decoration: none; font-weight: 600; }
+.bar nav .bar-cta:hover { background: var(--ink); color: var(--bench); text-decoration: none !important; }
 @media (max-width: 520px) { .client .bar nav a:not(.bar-cta) { display: none; } .client .bar-in { justify-content: space-between; flex-wrap: nowrap; } .client .mark { display: inline; font-size: .95rem; } }
 
 .c-hero { padding-block: clamp(28px, 6vw, 64px) clamp(40px, 7vw, 72px); border-bottom: 1px solid var(--rule); }
