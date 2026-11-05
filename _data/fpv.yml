@@ -65,3 +65,16 @@ legal:
   city: "83071 Stephanskirchen, Deutschland"
   phone: "+49 177 2383924"
   vat_note: "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmer)."   # delete if you charge VAT
+
+# Section "Für Social Media" with the phone preview (fpv.html, #formate).
+social:
+  label: "Für Instagram, Facebook und TikTok"
+  heading: "Dasselbe Haus als Kurzvideo fürs Handy"
+  text: "Aus demselben Flug schneide ich ein Video im Hochformat, so wie man es auf Instagram, Facebook und TikTok sieht. Dort heißt so ein Kurzvideo „Reel“. Sie posten es auf Ihrem Kanal oder schalten es als Anzeige und erreichen Interessenten dort, wo sie jeden Tag ohnehin scrollen."
+  points:
+    - "Fertig zum Posten, im Format, das Instagram, Facebook und TikTok erwarten"
+    - "Aus demselben Flug, kein zweiter Termin"
+    - "Im Preis enthalten"
+  demo_account: "ihr_maklerbüro"     # contains ü on purpose: can't be a real account name
+  demo_caption: "Neu im Angebot 🏡 Einmal durch alle Räume, in einem Flug."
+  demo_note: "Beispielansicht: so kann der Film auf Ihrem Kanal aussehen."

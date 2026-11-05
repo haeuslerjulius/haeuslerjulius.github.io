@@ -36,32 +36,47 @@ summary: "Ein durchgehender FPV-Drohnenflug durch Ihr Objekt, als 16:9-Film und 
 </section>
 
 <section class="sec" id="formate">
-  {% assign v = d.vertical_vimeo %}
-  <div class="wrap">
-    <header class="sec-head">
-      <p class="label">Ein Flug, zwei Formate</p>
-      {% if v.id and v.id != "" %}
-      <h2><span class="only-wide">Der helle Streifen ist Ihr Reel</span><span class="only-narrow">Dasselbe Haus als Reel</span></h2>
-      <p class="sub"><span class="only-wide">Dieselbe Aufnahme wie oben. Der markierte Bereich in der Mitte wird zum Hochformat für Instagram und TikTok, ohne zweiten Flug.</span><span class="only-narrow">Aus demselben Flug wie oben entsteht das Hochformat für Instagram und TikTok, ohne zweiten Flug.</span></p>
-    </header>
-    <div class="reel reel-embed only-wide">
-      <iframe data-src="https://player.vimeo.com/video/{{ d.formats_vimeo.id }}?h={{ d.formats_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" data-media="(min-width: 760px)" class="vimeo-auto" data-sound="🔊 Ton einschalten" data-sound-fallback="Ton über das Lautsprecher-Symbol im Video" title="Derselbe Flug mit markiertem 9:16-Bereich" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-      <button type="button" class="sound-on">🔊 Ton einschalten</button>
+  {% assign v = d.vertical_vimeo %}{% assign so = f.social %}
+  <div class="wrap c-social">
+    <div class="c-social-text">
+      <header class="sec-head">
+        <p class="label">{{ so.label }}</p>
+        <h2>{{ so.heading }}</h2>
+        <p class="sub">{{ so.text }}</p>
+      </header>
+      <ul class="c-checks">{% for pt in so.points %}<li>{{ pt }}</li>{% endfor %}</ul>
     </div>
-    <div class="reel reel-embed reel-vertical only-narrow">
-      <iframe data-src="https://player.vimeo.com/video/{{ v.id }}?h={{ v.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" data-media="(max-width: 759px)" class="vimeo-auto" data-sound="🔊 Ton einschalten" data-sound-fallback="Ton über das Lautsprecher-Symbol im Video" title="Derselbe Flug als 9:16-Reel" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-      <button type="button" class="sound-on">🔊 Ton einschalten</button>
-    </div>
-    <noscript><div class="reel reel-embed"><iframe src="https://player.vimeo.com/video/{{ d.formats_vimeo.id }}?h={{ d.formats_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" title="Derselbe Flug mit markiertem 9:16-Bereich" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></noscript>
-      {% else %}
-      <h2>Der helle Streifen ist Ihr Reel</h2>
-      <p class="sub">Dieselbe Aufnahme wie oben. Der markierte Bereich in der Mitte wird zum Hochformat für Instagram und TikTok, ohne zweiten Flug.</p>
-    </header>
-    <div class="reel reel-embed">
-      <iframe src="https://player.vimeo.com/video/{{ d.formats_vimeo.id }}?h={{ d.formats_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" class="vimeo-auto" data-sound="🔊 Ton einschalten" data-sound-fallback="Ton über das Lautsprecher-Symbol im Video" title="Derselbe Flug mit markiertem 9:16-Bereich" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-      <button type="button" class="sound-on">🔊 Ton einschalten</button>
-    </div>
-      {% endif %}
+    <figure class="phone">
+      <div class="phone-body">
+        <div class="phone-screen">
+          <div class="ph-status" aria-hidden="true"><span>9:41</span><span class="ph-island"></span><span class="ph-sys"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".4"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#fff" opacity=".5"/><rect x="2" y="2" width="16" height="8" rx="1.6"/><rect x="23.5" y="4" width="2" height="4" rx="1" opacity=".5"/></svg></span></div>
+          <div class="ph-top" aria-hidden="true"><b>Reels</b><svg viewBox="0 0 24 24"><path d="M4 7h3l2-3h6l2 3h3v13H4z M12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg></div>
+          <div class="ph-video">
+            <iframe src="https://player.vimeo.com/video/{{ v.id }}?h={{ v.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0&amp;controls=0" class="vimeo-auto" title="Derselbe Flug als Hochformat-Video fürs Handy" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+            <button type="button" class="sound-on">🔊 Ton einschalten</button>
+            <div class="ph-actions" aria-hidden="true">
+              <span><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.6-9.2C1 8.6 3 5 6.6 5c2 0 3.4 1.1 4.4 2.5C12 6.1 13.4 5 15.4 5 19 5 21 8.6 19.6 11.8 17.5 16.4 12 21 12 21z"/></svg>1.284</span>
+              <span><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>87</span>
+              <span><svg viewBox="0 0 24 24"><path d="M14 5l7 7-7 7v-4c-5 0-8 1.5-11 5 1-5 4-10 11-11z"/></svg>Teilen</span>
+              <span class="ph-dots">•••</span>
+            </div>
+            <div class="ph-caption" aria-hidden="true">
+              <p class="ph-user"><span class="ph-avatar"></span><b>{{ so.demo_account }}</b><span class="ph-follow">Folgen</span></p>
+              <p>{{ so.demo_caption }}</p>
+              <p class="ph-sound">♪ Originalton</p>
+            </div>
+          </div>
+          <div class="ph-nav" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9h-6v-6H9v6H3z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M10 4a6 6 0 1 1 0 12 6 6 0 0 1 0-12zm5 11l5 5"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM12 8v8M8 12h8"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM10 9l5 3-5 3z"/></svg>
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>
+          </div>
+        </div>
+      </div>
+      <figcaption>{{ so.demo_note }}</figcaption>
+    </figure>
   </div>
 </section>
 

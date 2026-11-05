@@ -67,3 +67,36 @@
 .c-intro { font-family: var(--font-mono); font-size: var(--step--1); color: var(--signal-ink); font-weight: 600; }
 .c-bundle { margin-top: 18px; display: grid; gap: 6px; }
 .c-bundle-price b { font-family: var(--font-display); font-stretch: 112%; font-weight: 800; font-size: var(--step-2); }
+
+/* "Für Social Media": text + a drawn phone playing the vertical film like a Reel.
+   Generic interface on purpose: no app logos. */
+.c-social { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px clamp(32px, 6vw, 80px); align-items: center; }
+.c-social .sec-head { margin-bottom: 20px; }
+.c-social .c-checks { max-width: 34rem; }
+@media (max-width: 759px) { .c-social { grid-template-columns: minmax(0, 1fr); } }
+
+.phone { margin: 0 auto; display: grid; gap: 10px; justify-items: center; }
+.phone figcaption { max-width: min(76vw, 300px); font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); text-align: center; }
+.phone-body { width: min(76vw, 300px); padding: 10px; border-radius: 46px; background: #101312; box-shadow: 0 0 0 2px #2b302e, 0 24px 60px rgba(0,0,0,.28); }
+.phone-screen { container-type: inline-size; position: relative; aspect-ratio: 9 / 19.5; border-radius: 36px; overflow: hidden; background: #000; color: #fff; display: flex; flex-direction: column; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+.ph-status { display: flex; justify-content: space-between; align-items: center; padding: 4cqw 7cqw 1cqw; font-size: 4.2cqw; font-weight: 600; flex: none; }
+.ph-island { width: 30cqw; height: 8.5cqw; border-radius: 99px; background: #000; box-shadow: 0 0 0 1px #1c1c1c; }
+.ph-sys { display: flex; align-items: center; gap: 1.4cqw; }
+.ph-sys svg { height: 3.6cqw; width: auto; fill: #fff; }
+.ph-top { display: flex; justify-content: space-between; align-items: center; padding: 1cqw 5cqw 2cqw; font-size: 6cqw; flex: none; }
+.ph-top svg { width: 7cqw; height: 7cqw; fill: none; stroke: #fff; stroke-width: 1.8; }
+.ph-video { position: relative; aspect-ratio: 9 / 16; width: 100%; background: #111; flex: none; }
+.ph-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.ph-video .sound-on { top: auto; bottom: 34%; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 3.8cqw; padding: 2.4cqw 4cqw; }
+.ph-actions { position: absolute; right: 2.5cqw; bottom: 25%; display: grid; gap: 4cqw; justify-items: center; pointer-events: none; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+.ph-actions span { display: grid; justify-items: center; gap: .6cqw; font-size: 3.2cqw; font-weight: 600; }
+.ph-actions svg { width: 8.5cqw; height: 8.5cqw; fill: none; stroke: #fff; stroke-width: 1.8; stroke-linejoin: round; filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
+.ph-dots { font-size: 4cqw !important; letter-spacing: .1em; }
+.ph-caption { position: absolute; left: 0; right: 0; bottom: 0; padding: 14cqw 18cqw 4cqw 4cqw; background: linear-gradient(transparent, rgba(0,0,0,.65)); pointer-events: none; font-size: 3.6cqw; line-height: 1.35; display: grid; gap: 1.6cqw; text-shadow: 0 1px 2px rgba(0,0,0,.5); }
+.ph-caption p { margin: 0; }
+.ph-user { display: flex; align-items: center; gap: 2cqw; }
+.ph-avatar { width: 7cqw; height: 7cqw; border-radius: 50%; background: linear-gradient(135deg, var(--signal), #e07b39); flex: none; }
+.ph-follow { border: 1px solid rgba(255,255,255,.8); border-radius: 2cqw; padding: .4cqw 2.4cqw; font-size: 3.2cqw; font-weight: 600; }
+.ph-sound { font-size: 3.2cqw; opacity: .9; }
+.ph-nav { flex: 1; display: flex; justify-content: space-around; align-items: center; padding: 0 3cqw 3cqw; border-top: 1px solid #222; }
+.ph-nav svg { width: 7cqw; height: 7cqw; fill: none; stroke: #fff; stroke-width: 1.8; stroke-linejoin: round; }
