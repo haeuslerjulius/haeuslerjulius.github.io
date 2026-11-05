@@ -149,6 +149,10 @@ function select(b) {
     if (!btn) return;
     var label = btn.textContent;
     btn.addEventListener('click', function () {
+      // Only one film with sound at a time: pause the others.
+      document.querySelectorAll('iframe[src*="player.vimeo.com"]').forEach(function (o) {
+        if (o !== f && o._vp) { o._vp.pause().catch(function () {}); }
+      });
       p.setMuted(false)
         .then(function () { return p.setVolume(1); })
         .then(function () { return p.play(); })
