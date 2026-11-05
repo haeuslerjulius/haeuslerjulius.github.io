@@ -65,7 +65,7 @@ fleet:
     status: planning
   - name: Dji Mini 5 Pro
     type: Camera drone, Long-range, Video and Photos
-    status: flying
+    status: planning
 
 kit:
   - DJI Goggles N3

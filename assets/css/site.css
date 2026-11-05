@@ -297,3 +297,6 @@ code { font-family: var(--font-mono); font-size: 0.85em; }
 .reel-vertical { aspect-ratio: 9 / 16; width: min(100%, calc(80vh * 9 / 16)); margin-inline: auto; }
 @media (min-width: 760px) { .only-narrow { display: none !important; } }
 @media (max-width: 759px) { .only-wide { display: none !important; } }
+.formats-vertical { grid-template-columns: minmax(220px, 340px) minmax(0, 1fr); }
+.formats-vertical .reel-vertical { width: 100%; }
+@media (max-width: 759px) { .formats-vertical { grid-template-columns: minmax(0, 1fr); } .formats-vertical .reel-vertical { width: min(100%, calc(80vh * 9 / 16)); } }
