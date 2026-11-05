@@ -158,13 +158,16 @@
 @media (max-width: 760px) { .c-faq-grid { grid-template-columns: minmax(0, 1fr); } .c-faq-head { position: static; } }
 
 /* Final call to action over the still, with an FPV goggle overlay */
-.c-final { position: relative; overflow: hidden; color: var(--on-band); padding-block: clamp(72px, 14vw, 150px) clamp(64px, 10vw, 110px); background: linear-gradient(180deg, rgba(14,17,16,.5) 0%, rgba(14,17,16,.8) 45%, rgba(22,26,25,.97) 100%), url("../fpv/share.jpg") center top / cover; }
-.c-final-in { position: relative; z-index: 1; display: grid; gap: 14px; justify-items: start; }
+.c-final { --img-h: clamp(600px, 62vw, 820px); position: relative; overflow: hidden; color: var(--on-band); background: var(--band); padding-block: calc(var(--img-h) * .57) clamp(64px, 10vw, 110px); }
+/* The house photo sits at the top, clearly visible, and fades to black so the card below sits on solid black like the footer */
+.c-final::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: var(--img-h); background: linear-gradient(180deg, rgba(14,17,16,.30) 0%, rgba(14,17,16,.08) 22%, rgba(14,17,16,.15) 48%, rgba(22,26,25,.8) 74%, var(--band) 97%), url("../fpv/final.jpg") center 42% / cover; }
+@media (max-width: 760px) { .c-final { padding-top: calc(var(--img-h) * .58); } }
+.c-final-in { position: relative; z-index: 2; display: grid; gap: 14px; justify-items: start; }
 .c-final .label { color: var(--signal); }
 .c-final h2 { font-size: var(--step-4); font-stretch: 125%; font-weight: 900; line-height: .95; letter-spacing: -.03em; max-width: 13ch; color: #fff; }
 .c-final-sub { font-size: var(--step-1); max-width: 34rem; color: rgba(255,255,255,.85); }
 .c-final .c-actions { margin-top: 8px; }
-.c-final-osd { position: absolute; inset: clamp(14px, 3vw, 28px); pointer-events: none; font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; color: rgba(255,255,255,.75); }
+.c-final-osd { position: absolute; top: clamp(14px, 3vw, 28px); left: clamp(14px, 3vw, 28px); right: clamp(14px, 3vw, 28px); height: calc(var(--img-h) * .5); z-index: 1; pointer-events: none; font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; color: rgba(255,255,255,.75); }
 .c-final-osd::before, .c-final-osd::after { content: ""; position: absolute; width: 26px; height: 26px; border: 2px solid rgba(255,255,255,.6); }
 .c-final-osd::before { top: 0; left: 0; border-right: 0; border-bottom: 0; }
 .c-final-osd::after { bottom: 0; right: 0; border-left: 0; border-top: 0; }
@@ -190,7 +193,7 @@
 @media (max-width: 560px) { .c-pilot { grid-template-columns: minmax(0, 1fr); } .c-pilot img { width: 110px; height: 110px; } }
 
 /* Pilot card inside the dark final section, styled like a goggle HUD */
-.c-final .c-pilot { margin-top: clamp(48px, 8vw, 88px); justify-self: stretch; background: rgba(10,12,12,.62); border: 1px solid rgba(255,255,255,.14); color: var(--on-band); box-shadow: 0 20px 60px rgba(0,0,0,.35); }
+.c-final .c-pilot { margin-top: clamp(56px, 9vw, 104px); justify-self: stretch; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); color: var(--on-band); box-shadow: 0 20px 60px rgba(0,0,0,.35); }
 .c-final .c-pilot::before, .c-final .c-pilot::after { border-color: var(--signal); }
 .c-final .c-pilot .label { color: var(--signal); letter-spacing: .1em; }
 .c-final .c-pilot h3 { color: #fff; }
