@@ -15,6 +15,9 @@
 <meta property="og:title" content="{{ page.title | strip_html | xml_escape }}">
 <meta property="og:description" content="{{ page.summary | default: site.description | strip_html | xml_escape }}">
 <meta property="og:locale" content="de_DE">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+<link rel="icon" href="{{ '/favicon.svg' | relative_url }}" type="image/svg+xml">
 {% if page.cover %}<meta property="og:image" content="{{ page.cover | absolute_url }}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -27,6 +30,7 @@
 <body class="client">
 <a class="skip" href="#main">Zum Inhalt</a>
 {% assign f = site.data.fpv %}
+{% capture wa_link %}https://wa.me/{{ f.whatsapp }}?text={{ f.whatsapp_text | url_encode | replace: '+', '%20' }}{% endcapture %}
 <header class="bar">
   <div class="bar-in">
     <a class="mark" href="{{ '/fpv/' | relative_url }}">Julius Häusler · FPV</a>
@@ -34,7 +38,8 @@
       <a href="{{ '/fpv/#paket' | relative_url }}">Paket</a>
       <a href="{{ '/fpv/#ablauf' | relative_url }}">Ablauf</a>
       <a href="{{ '/fpv/#fragen' | relative_url }}">Fragen</a>
-      <a class="bar-cta" href="{{ '/fpv/#anfrage' | relative_url }}">Anfragen</a>
+      <a class="bar-cta only-wide" href="{{ '/fpv/#anfrage' | relative_url }}">Anfragen</a>
+      <a class="bar-cta only-narrow" href="{{ wa_link }}">Anfragen</a>
     </nav>
   </div>
 </header>
@@ -48,7 +53,7 @@
     <div class="foot-contact">
       <p class="label">Kontakt</p>
       <p class="mail"><span class="copy-text">{{ site.email }}</span> <button type="button" class="copy" data-copy="{{ site.email }}" data-done="Kopiert">Kopieren</button></p>
-      <p><a href="https://wa.me/{{ f.whatsapp }}">WhatsApp</a> · <a href="mailto:{{ site.email }}?subject={{ f.email_subject | url_encode }}">E-Mail schreiben</a> · <a href="https://instagram.com/{{ site.instagram }}">Instagram</a></p>
+      <p><a href="{{ wa_link }}">WhatsApp</a> · <a href="mailto:{{ site.email }}?subject={{ f.email_subject | url_encode | replace: '+', '%20' }}">E-Mail schreiben</a></p>
       <p class="foot-legal"><a href="{{ '/impressum/' | relative_url }}">Impressum</a> · <a href="{{ '/datenschutz/' | relative_url }}">Datenschutz</a> · <a href="{{ '/' | relative_url }}">Über mich</a></p>
     </div>
   </div>

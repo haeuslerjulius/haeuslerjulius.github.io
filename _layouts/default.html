@@ -14,6 +14,9 @@
 <meta name="description" content="{% if page.summary %}{{ page.summary | strip_html | xml_escape }}{% else %}{{ site.description | xml_escape }}{% endif %}">
 <meta property="og:title" content="{{ page.title | default: site.title | strip_html | xml_escape }}">
 <meta property="og:description" content="{{ page.summary | default: site.description | strip_html | xml_escape }}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+<link rel="icon" href="{{ '/favicon.svg' | relative_url }}" type="image/svg+xml">
 <meta property="og:image" content="{{ page.cover | default: '/selfie.upscaled.jpg' | absolute_url }}">
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
 {% unless site.show_log %}{% assign is_log = false %}{% if page.url == "/log/" %}{% assign is_log = true %}{% endif %}{% if page.collection == "posts" %}{% unless page.tags contains "builds" %}{% assign is_log = true %}{% endunless %}{% endif %}{% if is_log %}<meta name="robots" content="noindex">

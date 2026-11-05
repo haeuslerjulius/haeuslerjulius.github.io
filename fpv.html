@@ -1,24 +1,25 @@
 ---
 layout: client
-title: FPV-Durchflüge für Immobilien
+title: "Immobilienvideo per Drohne – FPV-Durchflug Raum Rosenheim"
 permalink: /fpv/
 films: true
 cover: /assets/fpv/share.jpg
-summary: "Ein durchgehender FPV-Drohnenflug durch Ihr Objekt, als 16:9-Film und 9:16-Reel. Raum Rosenheim. Einführungspreis 340 € statt 490 €."
+summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objekt, als Film fürs Exposé und als Reel für Social Media. Raum Rosenheim."
 ---
 {% assign f = site.data.fpv %}{% assign d = site.data.drones %}
-{% capture wa %}https://wa.me/{{ f.whatsapp }}?text={{ f.whatsapp_text | url_encode }}{% endcapture %}
-{% capture mail %}mailto:{{ site.email }}?subject={{ f.email_subject | url_encode }}{% endcapture %}
+{% capture wa %}https://wa.me/{{ f.whatsapp }}?text={{ f.whatsapp_text | url_encode | replace: '+', '%20' }}{% endcapture %}
+{% capture mail %}mailto:{{ site.email }}?subject={{ f.email_subject | url_encode | replace: '+', '%20' }}&amp;body={{ f.email_body | url_encode | replace: '+', '%20' }}{% endcapture %}
 
 <section class="c-hero">
   <div class="wrap">
-    <p class="label">FPV-Durchflüge · Raum Rosenheim</p>
+    <p class="label">{{ f.label }}</p>
     <h1>{{ f.headline }}</h1>
     <p class="lede">{{ f.lede }}</p>
     <div class="reel reel-embed c-film has-poster is-loading">
       <iframe fetchpriority="high" src="https://player.vimeo.com/video/{{ d.reel_vimeo.id }}?h={{ d.reel_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" class="vimeo-auto" data-sound="🔊 Ton einschalten" data-sound-fallback="Ton über das Lautsprecher-Symbol im Video" title="FPV-Durchflug durch ein Einfamilienhaus im Bau" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
       <button type="button" class="sound-on">🔊 Ton einschalten</button>
     </div>
+    {% if f.film_note %}<p class="c-film-note">{{ f.film_note }}</p>{% endif %}
     <div class="c-actions">
       <a class="btn btn-solid" href="{{ wa }}">Per WhatsApp anfragen</a>
       <a class="btn" href="{{ mail }}">Per E-Mail anfragen</a>
@@ -94,6 +95,8 @@ summary: "Ein durchgehender FPV-Drohnenflug durch Ihr Objekt, als 16:9-Film und 
       {% if f.intro_left > 0 %}<p class="c-price"><s>{{ f.price }}</s> <b>{{ f.intro_price }}</b></p>
       <p class="c-intro">{{ f.intro_note }}, danach {{ f.price }}.</p>{% else %}<p class="c-price"><b>{{ f.price }}</b></p>{% endif %}
       <p class="sub">{{ f.price_note }}</p>
+      <div class="c-actions c-pk-actions"><a class="btn btn-solid" href="{{ wa }}">Per WhatsApp anfragen</a><a class="btn" href="{{ mail }}">Per E-Mail</a></div>
+      <ul class="tags c-creds c-creds-top">{% for c in f.credentials %}<li>{{ c }}</li>{% endfor %}</ul>
     </header>
     <div class="panel"><span class="tab">Enthalten</span>
       <ul class="c-checks">{% for p in f.package %}<li>{{ p }}</li>{% endfor %}</ul>
@@ -138,6 +141,9 @@ summary: "Ein durchgehender FPV-Drohnenflug durch Ihr Objekt, als 16:9-Film und 
         <a class="btn c-btn-light" href="{{ mail }}">E-Mail</a>
       </div>
     </div>
-    <p class="c-who">Ich bin Julius, 18, aus Stephanskirchen, und fliege FPV, seit ich 15 bin. Mehr über mich und meine Projekte auf <a href="{{ '/' | relative_url }}">meiner Website</a>.</p>
+    <div class="c-about">
+      {% if f.about.photo %}<img src="{{ f.about.photo | relative_url }}" alt="Julius Häusler" width="160" height="160" loading="lazy">{% endif %}
+      <div><p class="label">Über mich</p><p>{{ f.about.text }}</p><p class="c-about-more"><a href="{{ '/' | relative_url }}">Meine Website mit Projekten (Englisch)</a></p></div>
+    </div>
   </div>
 </section>

@@ -18,11 +18,11 @@ grades: ""
 #   result: What you achieved
 competitions: 
   - years: 2022/2023/2024/2025
-    title: Country-wide mathematics dompetition
+    title: Country-wide mathematics competition
     result: third national round solos
   - years: 2023/2023/2024
     title: Bavarian Robotics Competition
-    result: third place in microcontroller competiton
+    result: third place in microcontroller competition
 
 roles:
   - years: "2025/26"

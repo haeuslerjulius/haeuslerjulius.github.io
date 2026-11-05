@@ -30,6 +30,17 @@ plugins:
   - jekyll-sitemap
 
 defaults:
+  # Keep test pages, experiments, the review tool and the legal pages out of the sitemap
+  - scope: { path: "clients" }
+    values: { sitemap: false }
+  - scope: { path: "reviews" }
+    values: { sitemap: false }
+  - scope: { path: "level*.html" }
+    values: { sitemap: false }
+  - scope: { path: "impressum.html" }
+    values: { sitemap: false }
+  - scope: { path: "datenschutz.html" }
+    values: { sitemap: false }
   - scope:
       path: ""
       type: "posts"

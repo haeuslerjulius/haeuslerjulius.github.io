@@ -4,7 +4,7 @@
 pitch: ""
 
 # How you got into FPV. A short story in your words.
-story: "Speed has always fascinated me. The pure focus and risk management brings calm to my mind. Around the age of five I came into contact with drones. My dad had a Dji Phantom 3 Pro for his company. Shortly before my 15th birthday I watched the first and second Topgun films and I whished for a small analog fpv drone. My dad then giftet me a BetaFPV Cetus X Kit. That was my start."
+story: "Speed has always fascinated me. The pure focus and risk management brings calm to my mind. Around the age of five I came into contact with drones. My dad had a Dji Phantom 3 Pro for his company. Shortly before my 15th birthday I watched the first and second Topgun films and I wished for a small analog fpv drone. My dad then gifted me a BetaFPV Cetus X Kit. That was my start."
 
 offer:
   - title: Indoor FPV flythroughs
@@ -19,8 +19,6 @@ for_whom:
   - Car dealerships
 
 facts:
-  # - label: Business              # put back once the Gewerbe is registered
-  #   value: Kleingewerbe, registered 2026
   - label: Licence
     value: EU A1/A3
   - label: Based in

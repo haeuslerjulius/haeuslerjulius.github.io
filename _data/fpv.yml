@@ -2,35 +2,40 @@
 # Everything a client sees that you might want to change lives here.
 
 whatsapp: "491772383924"          # digits only, country code first
-whatsapp_text: "Hallo Julius, ich interessiere mich für einen FPV-Durchflug für folgendes Objekt: "
-email_subject: "Anfrage FPV-Durchflug"
+whatsapp_text: "Hallo Julius, ich interessiere mich für einen Durchflug.\nOrt / Adresse: \nWohnfläche (ca. m²): \nWunschtermin: \nIch bin: Makler / Bauträger / Eigentümer"
+email_subject: "Anfrage Immobilienvideo per Drohne"
+email_body: "Hallo Julius,\n\nich interessiere mich für einen Durchflug.\nOrt / Adresse: \nWohnfläche (ca. m²): \nWunschtermin: \nIch bin: Makler / Bauträger / Eigentümer\n"
 
+label: "Immobilienvideo per Drohne · Raum Rosenheim"
 headline: "Ein Flug. Das ganze Haus. Ohne Schnitt."
-lede: "FPV-Durchflüge für Immobilien im Raum Rosenheim. Ihre Interessenten erleben Grundriss, Licht und Übergänge in einer einzigen Kamerafahrt, bevor sie zur Besichtigung kommen."
+lede: "Ein FPV-Durchflug ist ein Immobilienvideo, gefilmt mit einer kleinen Drohne. Ihre Interessenten erleben Grundriss, Licht und Übergänge in einer einzigen Kamerafahrt, bevor sie zur Besichtigung kommen."
+film_note: "Beispiel: Einfamilienhaus im Bau · 66 Sekunden · ein Flug, ohne Schnitt"
 for_whom: "Für Makler, Bauträger und Eigentümer, die verkaufen oder vermieten."
 
 price: "490 €"                 # regular price
 intro_price: "340 €"           # introductory price (about 30 % off); set intro_left to 0 to end the introductory price
 intro_left: 3
 intro_note: "Einführungspreis für die ersten Aufträge"
-price_note: "Größere Objekte und Gewerbe auf Anfrage."
+price_note: "Endpreis: Als Kleinunternehmer berechne ich keine Umsatzsteuer. Größere Objekte und Gewerbe auf Anfrage."
 
 package:
   - "Ein durchgehender Flug durch das Objekt, ca. 45–90 Sekunden"
   - "Querformat 16:9 in 4K für Website und Exposé"
-  - "Hochformat 9:16 für Instagram, TikTok und Reels"
+  - "Hochformat 9:16 für Instagram, Facebook und TikTok"
   - "Farbkorrektur und Stabilisierung"
+  - "Sounddesign aus eigenen und frei nutzbaren Klängen, auf Wunsch ohne Ton"
+  - "Ihr Logo und Ihre Kontaktdaten am Ende des Films"
   - "Lieferung per Download-Link innerhalb von 5 Werktagen"
-  - "Eine Korrekturrunde"
-  - "Anfahrt im Umkreis von 30 km um Rosenheim inklusive"
+  - "Eine Korrekturrunde am Schnitt"
+  - "Anfahrt bis 30 km um Rosenheim inklusive, bis 60 km pauschal 30 €"
 
 why:
   - title: "Mehr als Fotos"
     text: "Fotos zeigen Räume. Ein Durchflug zeigt, wie sie zusammenhängen: vom Eingang durch den Wohnbereich bis auf die Terrasse."
   - title: "Ein Flug, zwei Formate"
     text: "Aus derselben Aufnahme entstehen der Film fürs Exposé und das Reel für Social Media. Ein Termin, kein zweiter Dreh."
-  - title: "Klein und leise im Haus"
-    text: "Ich fliege drinnen mit einer 85-mm-Drohne mit Propellerschutz. Sie passt durch Türen und Treppenhäuser."
+  - title: "Klein und sicher im Haus"
+    text: "Ich fliege drinnen mit einer handtellergroßen Drohne mit geschlossenem Propellerschutz. Sie passt durch Türen und Treppenhäuser."
 
 steps:
   - title: "Anfrage"
@@ -41,19 +46,32 @@ steps:
     text: "Innerhalb von 5 Werktagen bekommen Sie Querformat und Hochformat, bereit zum Hochladen."
 
 faq:
+  - q: "Was ist ein FPV-Durchflug?"
+    a: "FPV heißt First Person View: Ich steuere eine kleine Drohne mit einer Videobrille, als säße ich selbst darin. So fliegt sie in einem Zug durch Türen, Flure und Treppenhäuser. Das geht mit einer normalen Kameradrohne nicht."
   - q: "Ist das im Haus sicher?"
     a: "Ich fliege drinnen mit einer kleinen Drohne mit geschlossenem Propellerschutz. Die Route plane ich vorab, und ich fliege nur, wenn niemand im Weg ist. Für den Fall der Fälle bin ich mit einer Drohnen-Haftpflichtversicherung versichert."
+  - q: "Das Haus ist bewohnt. Geht das trotzdem?"
+    a: "Ja. Vorher räumen wir persönliche Dinge aus dem Bild, und wer im Haus ist, bleibt außerhalb der Flugroute. Spiegel und große Glasflächen plane ich in die Route ein. Jemand muss mir aufschließen, dabei sein müssen Sie nicht."
   - q: "Geht das auch draußen?"
-    a: "Ja, Außenaufnahmen fliege ich nach den EU-Regeln (Kenntnisnachweis A1/A3). Was an Ihrem Standort erlaubt ist, kläre ich vor dem Termin."
+    a: "Für kurze Strecken ja, zum Beispiel von außen durch die Haustür ins Haus, bei ruhigem Wetter. Ich fliege nach den EU-Regeln (EU-Kompetenznachweis A1/A3) und kläre vor dem Termin, was an Ihrem Standort erlaubt ist. Große Luftaufnahmen vom Grundstück biete ich derzeit nicht an."
   - q: "Geht das auch im Rohbau?"
     a: "Ja. Der Film oben ist in einem Haus im Bau entstanden. Für Bauträger eignet sich das gut, um Baufortschritt und Raumgefühl früh zu zeigen."
+  - q: "Wie weit im Voraus muss ich buchen?"
+    a: "Am besten etwa eine Woche vorher. Ich fliege nachmittags und am Wochenende."
+  - q: "Ist der Preis ein Endpreis?"
+    a: "Ja. Als Kleinunternehmer berechne ich keine Umsatzsteuer, der angegebene Preis ist der Endpreis. Sie bekommen eine Rechnung. Anfahrt bis 30 km um Rosenheim ist inklusive, bis 60 km kommen pauschal 30 € dazu."
+  - q: "Gibt es Musik?"
+    a: "Ich unterlege den Film mit Sounddesign aus eigenen Aufnahmen und frei nutzbaren Klängen, die Sie auch für Anzeigen verwenden dürfen. Oder Sie bekommen ihn ohne Ton und legen Ihre eigene Musik darunter."
+  - q: "Kann mein Logo in den Film?"
+    a: "Ja. Ihr Logo und Ihre Kontaktdaten kommen auf Wunsch ans Ende des Films, ohne Aufpreis."
+  - q: "Was umfasst die Korrekturrunde?"
+    a: "Änderungen am Schnitt: Länge, Farbe, Ton und Texte. Ein neuer Flug ist nicht enthalten, den biete ich auf Anfrage an."
   - q: "Wem gehören die Aufnahmen?"
     a: "Sie bekommen die Nutzungsrechte für die Vermarktung des Objekts. Ich darf den Film als Referenz zeigen, wenn Sie nichts dagegen haben."
 
 credentials:
-  - "EU-Kenntnisnachweis A1/A3"
+  - "EU-Kompetenznachweis A1/A3"
   - "Drohnen-Haftpflicht versichert"
-  # - "Angemeldetes Gewerbe"   # put back once the Gewerbe is registered
   - "Raum Rosenheim"
 
 # Impressum: the law needs a postal address where official mail reaches you.
@@ -70,7 +88,7 @@ legal:
 social:
   label: "Für Instagram, Facebook und TikTok"
   heading: "Dasselbe Haus als Kurzvideo fürs Handy"
-  text: "Aus demselben Flug schneide ich ein Video im Hochformat, so wie man es auf Instagram, Facebook und TikTok sieht. Dort heißt so ein Kurzvideo „Reel“. Sie posten es auf Ihrem Kanal oder schalten es als Anzeige und erreichen Interessenten dort, wo sie jeden Tag ohnehin scrollen."
+  text: "Aus demselben Flug entsteht ein Video im Hochformat, so wie man es auf Instagram, Facebook und TikTok sieht. Dort heißt so ein Kurzvideo „Reel“. Sie posten es auf Ihrem Kanal oder schalten es als Anzeige und erreichen Interessenten dort, wo sie jeden Tag ohnehin scrollen."
   points:
     - "Fertig zum Posten, im Format, das Instagram, Facebook und TikTok erwarten"
     - "Aus demselben Flug, kein zweiter Termin"
@@ -78,3 +96,8 @@ social:
   demo_account: "ihr_maklerbüro"     # contains ü on purpose: can't be a real account name
   demo_caption: "Neu im Angebot 🏡 Einmal durch alle Räume, in einem Flug."
   demo_note: "Beispielansicht: so kann der Film auf Ihrem Kanal aussehen."
+
+# "Über mich" at the bottom of /fpv
+about:
+  photo: /selfie.upscaled.jpg
+  text: "Ich bin Julius Häusler, 18, aus Stephanskirchen. Ich fliege FPV, seit ich 15 bin, und habe bei den SOCCACUP-Jugendturnieren in Regensburg und Rovinj Videos und Fotos produziert. Ihr Ansprechpartner bin ich selbst: Ich plane, fliege und schneide jeden Film persönlich."

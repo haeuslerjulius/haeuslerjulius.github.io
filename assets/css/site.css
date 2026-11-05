@@ -266,7 +266,7 @@ code { font-family: var(--font-mono); font-size: 0.85em; }
 .foot-in { max-width: 1120px; margin: 0 auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r); display: grid; gap: 28px; }
 .foot .label { color: color-mix(in srgb, var(--on-band) 65%, transparent); }
 .foot-contact { display: grid; gap: 10px; }
-.mail { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-family: var(--font-display); font-stretch: 112%; font-weight: 800; font-size: clamp(1.4rem, 5vw, 2.4rem); line-height: 1.1; word-break: break-all; }
+.mail { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-family: var(--font-display); font-stretch: 112%; font-weight: 800; font-size: clamp(1.05rem, 5.2vw, 2.4rem); line-height: 1.1; overflow-wrap: anywhere; }
 .copy { font-family: var(--font-mono); font-size: 12px; font-weight: 600; background: var(--signal); color: var(--on-signal); border: 0; border-radius: 4px; padding: 6px 10px; cursor: pointer; }
 .foot-meta { font-family: var(--font-mono); font-size: var(--step--1); color: color-mix(in srgb, var(--on-band) 60%, transparent); }
 
