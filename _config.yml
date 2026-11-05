@@ -41,6 +41,8 @@ defaults:
     values: { sitemap: false }
   - scope: { path: "datenschutz.html" }
     values: { sitemap: false }
+  - scope: { path: "googlebd36eca458949169.html" }
+    values: { sitemap: false }
   - scope:
       path: ""
       type: "posts"
