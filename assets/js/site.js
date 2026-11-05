@@ -117,35 +117,66 @@ function select(b) {
       .filter(function (id) { return SHORT[id]; })
       .sort(function (a, b) { return SHORT[a] - SHORT[b]; });
   }
-  // Windows: Edge and Chrome often decode Vimeo's high qualities in software
-  // (no AV1 hardware support installed), which makes playback stutter once sound
-  // is on. Stay at 1080p there.
-  var CAP = /Windows/i.test(navigator.userAgent) ? 1080 : 2160;
+  // Windows: many PCs decode Vimeo's high qualities (AV1) in software, which
+  // makes playback stutter. So on Windows we ask the browser which resolutions
+  // its graphics hardware decodes ("powerEfficient") and allow the highest of
+  // those: 4K, else 2K, else 1080p. Mac, iPhone and Android play 4K.
+  var WIN = /Windows/i.test(navigator.userAgent), CAP = WIN ? 1080 : 2160, capWhy = WIN ? 'Windows default' : 'not Windows';
+  var capReady = (function () {
+    var mc = navigator.mediaCapabilities;
+    if (!WIN || !mc || !mc.decodingInfo) return Promise.resolve(CAP);
+    function ask(codec, w, h, rate) {
+      return mc.decodingInfo({ type: 'media-source', video: { contentType: 'video/mp4; codecs="' + codec + '"', width: w, height: h, bitrate: rate, framerate: 60 } })
+        .catch(function () { return { supported: false }; });
+    }
+    var AV1 = 'av01.0.13M.08', H264 = 'avc1.640033';
+    return ask(AV1, 3840, 2160, 25e6).then(function (av1) {
+      // If the browser can play AV1 at all, Vimeo usually sends AV1.
+      var codec = av1.supported ? AV1 : H264, name = av1.supported ? 'AV1' : 'H.264';
+      return Promise.all([av1.supported ? av1 : ask(H264, 3840, 2160, 25e6), ask(codec, 2560, 1440, 12e6)]).then(function (r) {
+        if (r[0].powerEfficient) { CAP = 2160; capWhy = name + ' 4K in hardware'; }
+        else if (r[1].powerEfficient) { CAP = 1440; capWhy = name + ' 2K in hardware'; }
+        else if (r[1].smooth && (navigator.hardwareConcurrency || 0) >= 8) { CAP = 1440; capWhy = name + ' 2K smooth, 8+ cores'; }
+        else { CAP = 1080; capWhy = name + ' software only'; }
+        return CAP;
+      });
+    }).catch(function () { return CAP; });
+  })();
+  // Add ?videodebug to the address to see which quality each film plays in.
+  var dbg = /[?&]videodebug/.test(location.search) ? document.createElement('pre') : null;
+  var dbgRows = {};
+  function debug(name, text) {
+    if (!dbg) return;
+    if (!dbg.parentNode) { dbg.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:9999;margin:0;padding:8px 10px;background:rgba(0,0,0,.8);color:#7CFC00;font:12px/1.4 monospace;border-radius:6px;pointer-events:none'; document.body.appendChild(dbg); }
+    dbgRows[name] = text;
+    dbg.textContent = 'cap ' + CAP + 'p (' + capWhy + ')\n' + Object.keys(dbgRows).map(function (k) { return k + ': ' + dbgRows[k]; }).join('\n');
+  }
   var players = [], soundOn = null;
   function reveal(f) { var box = f.closest('.is-loading'); if (box) box.classList.remove('is-loading'); }
 
   // Picks the quality, steps up after 2 s (first film only) and steps down on real stalls.
   function tune(p, f, first) {
     var have = [], cur = null, best = null, up = false, playing = false, switchedAt = 0, stallT = null;
-    function set(q) { if (!q || q === cur) return; cur = q; switchedAt = Date.now(); p.setQuality(q).catch(function () {}); }
+    var label = f.hasAttribute('data-defer') ? 'phone film' : 'main film';
+    function set(q, why) { if (!q || q === cur) return; cur = q; switchedAt = Date.now(); p.setQuality(q).catch(function () {}); debug(label, q + (why ? ' (' + why + ')' : '')); }
     function lower(q) {
       var i = have.indexOf(q);
       return (i > 0 && SHORT[have[i - 1]] >= FLOOR) ? have[i - 1] : null;
     }
-    var picked = p.ready().then(function () { return p.getQualities(); }).then(function (qs) {
-      have = ladder(qs);
+    var picked = Promise.all([p.ready().then(function () { return p.getQualities(); }), capReady]).then(function (r) {
+      have = ladder(r[0]);
       if (!have.length) return;
       best = have[have.length - 1];
       while (SHORT[best] > CAP && have.indexOf(best) > 0) best = have[have.indexOf(best) - 1];
       var start = first && SHORT[best] > 1080 && have.indexOf('1080p') > -1 ? '1080p' : best;
       up = start === best;
       if (up && first) setTimeout(loadDeferred, 4000);
-      set(start);
+      set(start, first && !up ? 'fast start' : 'best');
     }).catch(function () {});
     p.on('playing', function () { playing = true; });
     p.on('timeupdate', function (d) {
       if (!up && best && d && d.seconds >= STEP_UP_AT) {
-        up = true; set(best);
+        up = true; set(best, 'after ' + STEP_UP_AT + ' s');
         // Phone film starts loading 4 s after the first film switched to 4K.
         if (first) setTimeout(loadDeferred, 4000);
       }
@@ -154,7 +185,7 @@ function select(b) {
     p.on('bufferstart', function () {
       if (!playing || Date.now() - switchedAt < GRACE_MS) return;
       clearTimeout(stallT);
-      stallT = setTimeout(function () { var q = lower(cur); if (q) { best = q; set(q); } }, STALL_MS);
+      stallT = setTimeout(function () { var q = lower(cur); if (q) { best = q; set(q, 'stalled, stepped down'); } }, STALL_MS);
     });
     p.on('bufferend', function () { clearTimeout(stallT); });
     return picked;
