@@ -120,6 +120,11 @@ function select(b) {
     for (var i = 0; i < have.length; i++) if (SHORT[have[i]] >= need && SHORT[have[i]] >= 720) return have[i];
     return have[have.length - 1];
   }
+  // Windows: Edge and Chrome often decode Vimeo's high qualities in software
+  // (no AV1 hardware support installed), which makes playback stutter once sound
+  // is on. Stay at 1080p there.
+  var CAP = /Windows/i.test(navigator.userAgent) ? 1080 : 2160;
+  var players = [], soundOn = null;
   function reveal(f) { var box = f.closest('.is-loading'); if (box) box.classList.remove('is-loading'); }
 
   var io = null, api = false, queue = [];
@@ -127,18 +132,26 @@ function select(b) {
     if (!api) { queue.push(f); return; }
     var p = new Vimeo.Player(f);
     f._vp = p;
+    players.push(p);
     setTimeout(function () { reveal(f); }, 5000);
     p.on('playing', function () { reveal(f); loadDeferred(); });
     p.ready().then(function () { return p.getQualities(); }).then(function (qs) {
       var have = ladder(qs);
       if (!have.length) return;
       var best = ideal(have, f);
+      while (SHORT[best] > CAP && have.indexOf(best) > 0) best = have[have.indexOf(best) - 1];
       var start = SHORT[best] > 1080 && have.indexOf('1080p') > -1 ? '1080p' : best;
       p.setQuality(start).catch(function () {});
       if (start !== best) {
-        var up = false;
+        // Step up after 5 s, but only if nothing stalled so far; step back down
+        // to the start quality if it stalls after the step-up.
+        var up = false, stalled = false;
+        p.on('bufferstart', function () {
+          if (up) { p.setQuality(start).catch(function () {}); }
+          stalled = true;
+        });
         p.on('timeupdate', function (d) {
-          if (!up && d && d.seconds >= 5) { up = true; p.setQuality(best).catch(function () {}); }
+          if (!up && !stalled && d && d.seconds >= 5) { up = true; p.setQuality(best).catch(function () {}); }
         });
       }
     }).catch(function () {});
@@ -156,14 +169,20 @@ function select(b) {
       p.setMuted(false)
         .then(function () { return p.setVolume(1); })
         .then(function () { return p.play(); })
-        .then(function () { btn.remove(); })
+        .then(function () { btn.remove(); soloSound(p); })
         .catch(function () { btn.textContent = f.getAttribute('data-sound-fallback') || label; });
     });
     p.on('volumechange', function (d) {
-      if (d && d.volume > 0) p.getMuted().then(function (m) { if (!m) btn.remove(); }).catch(function () {});
+      if (d && d.volume > 0) p.getMuted().then(function (m) { if (!m) { btn.remove(); soloSound(p); } }).catch(function () {});
     });
   }
 
+  // Once a film plays with sound, the other films pause and stop autoplaying,
+  // so only one video plays at a time.
+  function soloSound(p) {
+    soundOn = p;
+    players.forEach(function (o) { if (o !== p) o.pause().catch(function () {}); });
+  }
   function loadOne(f) {
     if (f.src) return;
     f.src = f.getAttribute('data-src');
@@ -187,8 +206,8 @@ function select(b) {
       entries.forEach(function (e) {
         var p = e.target._vp;
         if (!p) return;
-        if (e.isIntersecting) { p.play().catch(function () {}); }
-        else { p.pause().catch(function () {}); }
+        if (e.isIntersecting) { if (!soundOn || soundOn === p) p.play().catch(function () {}); }
+        else { p.pause().catch(function () {}); if (soundOn === p) soundOn = null; }
       });
     }, { threshold: 0.5 }) : null;
     api = true;
