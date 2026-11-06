@@ -19,6 +19,8 @@ for_whom:
   - Car dealerships
 
 facts:
+  - label: Business
+    value: Registered business, since Nov 2026
   - label: Licence
     value: EU A1/A3
   - label: Based in
