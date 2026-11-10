@@ -17,6 +17,8 @@
 <meta property="og:url" content="{{ page.url | absolute_url }}">
 <link rel="canonical" href="{{ page.url | absolute_url }}">
 <link rel="icon" href="{{ '/favicon.svg' | relative_url }}" type="image/svg+xml">
+<link rel="icon" href="{{ '/favicon-32.png' | relative_url }}" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="{{ '/apple-touch-icon.png' | relative_url }}" sizes="180x180">
 <meta property="og:image" content="{{ page.cover | default: '/assets/me/portrait.jpg' | absolute_url }}">
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
 {% unless site.show_log %}{% assign is_log = false %}{% if page.url == "/log/" %}{% assign is_log = true %}{% endif %}{% if page.collection == "posts" %}{% unless page.tags contains "builds" %}{% assign is_log = true %}{% endunless %}{% endif %}{% if is_log %}<meta name="robots" content="noindex">
