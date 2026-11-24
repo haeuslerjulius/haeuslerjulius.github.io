@@ -9,7 +9,7 @@ email_body: "Hallo Julius,\n\nich interessiere mich für einen Durchflug.\nOrt /
 
 label: "Immobilienvideo per Drohne · Raum Rosenheim"
 headline: "Ein Flug. Das ganze Haus. Ohne Schnitt."
-lede: "Ein FPV-Durchflug ist ein Immobilienvideo, gefilmt mit einer kleinen Drohne. Ihre Interessenten erleben Grundriss, Licht und Übergänge in einer einzigen Kamerafahrt, bevor sie zur Besichtigung kommen."
+lede: "Eine handtellergroße Drohne fliegt in einer einzigen Kamerafahrt durch alle Räume: Grundriss, Licht und Übergänge, bevor Ihre Interessenten zur Besichtigung kommen. In der Region Rosenheim, zum Festpreis, fertig in fünf Werktagen."
 film_note: "Beispiel: Einfamilienhaus im Bau · 66 Sekunden · ein Flug, ohne Schnitt"
 for_whom: "Für Makler, Bauträger und Eigentümer, die verkaufen oder vermieten."
 
@@ -29,6 +29,39 @@ package:
   - "Lieferung per Download-Link innerhalb von 5 Werktagen"
   - "Eine Korrekturrunde am Schnitt"
   - "Anfahrt bis 30 km um Rosenheim inklusive, bis 60 km pauschal 30 €"
+
+# Section "Vergleich" directly under the film (fpv.html, #vergleich).
+# Compares formats, never names other firms. Mark your own row with own: true.
+# Delete the whole "compare:" block to hide the section.
+compare:
+  label: "Vergleich"
+  heading: "Was der Durchflug anders macht"
+  text: "Fotos, 360°-Rundgänge und Luftaufnahmen bekommen Sie in der Region von mehreren Fotografen. Der Durchflug ersetzt sie nicht. Er ergänzt sie um das, was ihnen fehlt: eine Kamerafahrt durch das ganze Objekt."
+  col_format: "Format"
+  col_shows: "Das zeigt es"
+  col_lacks: "Das zeigt es nicht"
+  rows:
+    - name: "Fotos"
+      shows: "Jeden Raum einzeln, im besten Licht."
+      lacks: "Wie die Räume zusammenhängen."
+    - name: "360°-Rundgang"
+      shows: "Alles, zum Selbst-Durchklicken."
+      lacks: "Einen Film, den man in einer Minute ansieht und weiterschickt."
+    - name: "Luftaufnahmen"
+      note: "Kameradrohne"
+      shows: "Haus, Grundstück und Lage von außen."
+      lacks: "Die Innenräume. Durch Türen und Treppenhäuser fliegt sie nicht."
+    - name: "FPV-Filmproduktion"
+      note: "Agentur"
+      shows: "Dieselbe Art Flug, meist als Teil eines Imagefilms."
+      lacks: "Meist für Firmen und Premium-Objekte kalkuliert, mit Anreise von außerhalb."
+    - name: "Durchflug"
+      note: "mein Angebot"
+      own: true
+      shows: "Das ganze Objekt von innen, in einer einzigen Kamerafahrt, auch im Rohbau und in bewohnten Wohnungen."
+      lacks: "Einzelfotos und Luftbilder vom Grundstück. Die macht weiterhin Ihr Fotograf."
+  foot: "Ein Objekt, ein Festpreis, Querformat und Hochformat, fertig in 5 Werktagen."
+  foot_link: "Zum Paket"
 
 why:
   - title: "Mehr als Fotos"

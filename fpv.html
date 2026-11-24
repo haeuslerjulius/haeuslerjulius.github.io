@@ -31,6 +31,30 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
   </div>
 </section>
 
+{% assign cp = f.compare %}{% if cp %}
+<section class="sec c-compare" id="vergleich">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="label">{{ cp.label }}</p>
+      <h2>{{ cp.heading }}</h2>
+      <p class="sub">{{ cp.text }}</p>
+    </header>
+    <div class="c-cmp">
+      <div class="c-cmp-head" aria-hidden="true"><span>{{ cp.col_format }}</span><span>{{ cp.col_shows }}</span><span>{{ cp.col_lacks }}</span></div>
+      <ul>
+        {% for r in cp.rows %}<li{% if r.own %} class="is-own"{% endif %}>
+          <h3>{{ r.name }}{% if r.note %} <small>{{ r.note }}</small>{% endif %}</h3>
+          <dl>
+            <div class="c-cmp-yes"><dt>{{ cp.col_shows }}</dt><dd>{{ r.shows }}</dd></div>
+            <div class="c-cmp-no"><dt>{{ cp.col_lacks }}</dt><dd>{{ r.lacks }}</dd></div>
+          </dl>
+        </li>{% endfor %}
+      </ul>
+    </div>
+    <p class="c-cmp-foot">{{ cp.foot }} <a href="#paket">{{ cp.foot_link }}</a></p>
+  </div>
+</section>
+{% endif %}
 <section class="sec c-why">
   <div class="wrap">
     <ul class="c-three">
