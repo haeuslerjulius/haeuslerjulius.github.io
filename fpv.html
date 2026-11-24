@@ -55,14 +55,6 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
   </div>
 </section>
 {% endif %}
-<section class="sec c-why">
-  <div class="wrap">
-    <ul class="c-three">
-      {% for w in f.why %}<li class="panel"><span class="tab">{{ forloop.index | prepend: '0' }}</span><h2>{{ w.title }}</h2><p>{{ w.text }}</p></li>{% endfor %}
-    </ul>
-  </div>
-</section>
-
 <section class="sec" id="formate">
   {% assign v = d.vertical_vimeo %}{% assign so = f.social %}
   <div class="wrap c-social">
@@ -75,6 +67,7 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
       <ul class="c-checks">{% for pt in so.points %}<li>{{ pt }}</li>{% endfor %}</ul>
     </div>
     <figure class="phone">
+      <div class="phone-stage">
       <div class="phone-body">
         <div class="phone-screen">
           <div class="ph-video has-poster is-loading">
@@ -108,8 +101,17 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
           </div>
         </div>
       </div>
+      </div>
       <figcaption>{{ so.demo_note }}</figcaption>
     </figure>
+  </div>
+</section>
+
+<section class="sec c-why">
+  <div class="wrap">
+    <ul class="c-three">
+      {% for w in f.why %}<li class="panel"><span class="tab">{{ forloop.index | prepend: '0' }}</span><h2>{{ w.title }}</h2><p>{{ w.text }}</p></li>{% endfor %}
+    </ul>
   </div>
 </section>
 

@@ -9,7 +9,7 @@ email_body: "Hallo Julius,\n\nich interessiere mich für einen Durchflug.\nOrt /
 
 label: "Immobilienvideo per Drohne · Raum Rosenheim"
 headline: "Ein Flug. Das ganze Haus. Ohne Schnitt."
-lede: "Eine handtellergroße Drohne fliegt in einer einzigen Kamerafahrt durch alle Räume: Grundriss, Licht und Übergänge, bevor Ihre Interessenten zur Besichtigung kommen. In der Region Rosenheim, zum Festpreis, fertig in fünf Werktagen."
+lede: "Eine handtellergroße Drohne fliegt in einer einzigen Kamerafahrt durch alle Räume: Grundriss, Licht und Übergänge, bevor Ihre Interessenten zur Besichtigung kommen. In der Region Rosenheim, zum Festpreis, fertig in sieben Werktagen."
 film_note: "Beispiel: Einfamilienhaus im Bau · 66 Sekunden · ein Flug, ohne Schnitt"
 for_whom: "Für Makler, Bauträger und Eigentümer, die verkaufen oder vermieten."
 
@@ -26,7 +26,7 @@ package:
   - "Farbkorrektur und Stabilisierung"
   - "Sounddesign aus eigenen und frei nutzbaren Klängen, auf Wunsch ohne Ton"
   - "Ihr Logo und Ihre Kontaktdaten am Ende des Films"
-  - "Lieferung per Download-Link innerhalb von 5 Werktagen"
+  - "Lieferung per Download-Link innerhalb von 7 Werktagen"
   - "Eine Korrekturrunde am Schnitt"
   - "Anfahrt bis 30 km um Rosenheim inklusive, bis 60 km pauschal 30 €"
 
@@ -48,19 +48,14 @@ compare:
       shows: "Alles, zum Selbst-Durchklicken."
       lacks: "Einen Film, den man in einer Minute ansieht und weiterschickt."
     - name: "Luftaufnahmen"
-      note: "Kameradrohne"
       shows: "Haus, Grundstück und Lage von außen."
-      lacks: "Die Innenräume. Durch Türen und Treppenhäuser fliegt sie nicht."
-    - name: "FPV-Filmproduktion"
-      note: "Agentur"
-      shows: "Dieselbe Art Flug, meist als Teil eines Imagefilms."
-      lacks: "Meist für Firmen und Premium-Objekte kalkuliert, mit Anreise von außerhalb."
+      lacks: "Die Innenräume. Durch Türen und Treppenhäuser fliegt eine Kameradrohne nicht."
     - name: "Durchflug"
       note: "mein Angebot"
       own: true
-      shows: "Das ganze Objekt von innen, in einer einzigen Kamerafahrt, auch im Rohbau und in bewohnten Wohnungen."
-      lacks: "Einzelfotos und Luftbilder vom Grundstück. Die macht weiterhin Ihr Fotograf."
-  foot: "Ein Objekt, ein Festpreis, Querformat und Hochformat, fertig in 5 Werktagen."
+      shows: "Das ganze Objekt von außen sowie von innen, in einer einzigen Kamerafahrt, auch im Rohbau und in bewohnten Wohnungen."
+      lacks: "Einzelfotos und große Luftbilder vom Grundstück. Die macht weiterhin Ihr Fotograf."
+  foot: "Ein Objekt, ein Festpreis, Querformat und Hochformat, fertig in 7 Werktagen."
   foot_link: "Zum Paket"
 
 why:
@@ -79,8 +74,8 @@ steps:
     when: "ca. 1 Woche später"
     text: "Ich bin ein bis zwei Stunden vor Ort. Licht an, Türen offen, Personen und Haustiere außerhalb der Flugroute: mehr brauche ich nicht."
   - title: "Lieferung"
-    when: "bis 5 Werktage danach"
-    text: "Innerhalb von 5 Werktagen bekommen Sie Querformat und Hochformat, bereit zum Hochladen."
+    when: "bis 7 Werktage danach"
+    text: "Innerhalb von 7 Werktagen bekommen Sie Querformat und Hochformat, bereit zum Hochladen."
 
 faq:
   - q: "Was ist ein FPV-Durchflug?"

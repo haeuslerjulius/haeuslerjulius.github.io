@@ -242,3 +242,9 @@
   .c-cmp-yes::before { content: "✓"; color: var(--good); }
   .c-cmp-no::before { content: "–"; color: var(--muted); }
 }
+
+/* Yellow slab behind the phone so it stands out from the bench.
+   The phone is taller than the slab and overlaps it at the top and bottom. */
+.phone-stage { --over: clamp(18px, 3vw, 28px); margin-block: var(--over); padding-inline: clamp(22px, 5vw, 56px); border-radius: 28px; background: var(--signal); display: grid; justify-items: center; }
+.phone-stage .phone-body { margin-block: calc(var(--over) * -1); box-shadow: 0 0 0 2px #2b302e, 0 26px 50px rgba(0,0,0,.38); }
+@media (max-width: 759px) { .phone { width: 100%; } .phone-stage { justify-self: stretch; } }
