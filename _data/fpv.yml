@@ -49,7 +49,7 @@ compare:
       lacks: "Einen Film, den man in einer Minute ansieht und weiterschickt."
     - name: "Luftaufnahmen"
       shows: "Haus, Grundstück und Lage von außen."
-      lacks: "Die Innenräume. Durch Türen und Treppenhäuser fliegt eine Kameradrohne nicht."
+      lacks: "Die Innenräume. Durch Türen und Treppenhäuser fliegt eine Standard-Drohne nicht."
     - name: "Durchflug"
       note: "mein Angebot"
       own: true
