@@ -9,12 +9,12 @@ email_body: "Hallo Julius,\n\nich interessiere mich für einen Durchflug.\nOrt /
 
 label: "Immobilienvideo per Drohne · Raum Rosenheim"
 headline: "Ein Flug. Das ganze Haus. Ohne Schnitt."
-lede: "Eine handtellergroße Drohne fliegt in einer einzigen Kamerafahrt durch alle Räume: Grundriss, Licht und Übergänge, bevor Ihre Interessenten zur Besichtigung kommen. In der Region Rosenheim, zum Festpreis, fertig in sieben Werktagen."
+lede: "Eine handtellergroße Drohne fliegt in einer einzigen Kamerafahrt durch alle Räume. Ihre Interessenten sehen Grundriss, Licht und Übergänge, bevor sie zur Besichtigung kommen. Zum Festpreis, geliefert in 7&nbsp;Werktagen."
 film_note: "Beispiel: Einfamilienhaus im Bau · 66 Sekunden · ein Flug, ohne Schnitt"
 for_whom: "Für Makler, Bauträger und Eigentümer, die verkaufen oder vermieten."
 
-price: "490 €"                 # regular price
-intro_price: "340 €"           # introductory price (about 30 % off); set intro_left to 0 to end the introductory price
+price: "490&nbsp;€"            # regular price. &nbsp; keeps the € on the same line as the number
+intro_price: "340&nbsp;€"           # introductory price (about 30 % off); set intro_left to 0 to end the introductory price
 intro_left: 3
 intro_note: "Einführungspreis für die ersten Aufträge"
 price_note: "Endpreis: Als Kleinunternehmer berechne ich keine Umsatzsteuer. Größere Objekte und Gewerbe auf Anfrage."
@@ -28,7 +28,7 @@ package:
   - "Ihr Logo und Ihre Kontaktdaten am Ende des Films"
   - "Lieferung per Download-Link innerhalb von 7 Werktagen"
   - "Eine Korrekturrunde am Schnitt"
-  - "Anfahrt bis 30 km um Rosenheim inklusive, bis 60 km pauschal 30 €"
+  - "Anfahrt bis 30 km um Rosenheim inklusive, bis 60 km pauschal 30&nbsp;€"
 
 # Section "Vergleich" directly under the film (fpv.html, #vergleich).
 # Compares formats, never names other firms. Mark your own row with own: true.
@@ -36,7 +36,7 @@ package:
 compare:
   label: "Vergleich"
   heading: "Was der Durchflug anders macht"
-  text: "Fotos, 360°-Rundgänge und Luftaufnahmen bekommen Sie in der Region von mehreren Fotografen. Der Durchflug ersetzt sie nicht. Er ergänzt sie um das, was ihnen fehlt: eine Kamerafahrt durch das ganze Objekt."
+  text: "Fotos, 360°-Rundgänge und Luftaufnahmen bekommen Sie in der Region von mehreren Fotografen. Der Durchflug ergänzt sie um eine Kamerafahrt durch das ganze Objekt."
   col_format: "Format"
   col_shows: "Das zeigt es"
   col_lacks: "Das zeigt es nicht"
@@ -91,7 +91,7 @@ faq:
   - q: "Wie weit im Voraus muss ich buchen?"
     a: "Am besten etwa eine Woche vorher. Ich fliege nachmittags und am Wochenende."
   - q: "Ist der Preis ein Endpreis?"
-    a: "Ja. Als Kleinunternehmer berechne ich keine Umsatzsteuer, der angegebene Preis ist der Endpreis. Sie bekommen eine Rechnung. Anfahrt bis 30 km um Rosenheim ist inklusive, bis 60 km kommen pauschal 30 € dazu."
+    a: "Ja. Als Kleinunternehmer berechne ich keine Umsatzsteuer, der angegebene Preis ist der Endpreis. Sie bekommen eine Rechnung. Anfahrt bis 30 km um Rosenheim ist inklusive, bis 60 km kommen pauschal 30&nbsp;€ dazu."
   - q: "Gibt es Musik?"
     a: "Ich unterlege den Film mit Sounddesign aus eigenen Aufnahmen und frei nutzbaren Klängen, die Sie auch für Anzeigen verwenden dürfen. Oder Sie bekommen ihn ohne Ton und legen Ihre eigene Musik darunter."
   - q: "Kann mein Logo in den Film?"

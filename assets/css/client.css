@@ -225,7 +225,7 @@
 .c-cmp dt { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .c-cmp dd { margin: 0; line-height: 1.45; }
 .c-cmp-no dd { color: var(--muted); }
-.c-cmp li.is-own { background: color-mix(in srgb, var(--signal) 20%, var(--sheet)); box-shadow: inset 5px 0 0 var(--signal); }
+.c-cmp li.is-own { background: color-mix(in srgb, var(--signal) 20%, var(--sheet)); }
 .c-cmp li.is-own h3 { font-size: var(--step-1); }
 .c-cmp li.is-own h3 small { color: var(--signal-ink); font-weight: 600; }
 .c-cmp li.is-own .c-cmp-yes dd { font-weight: 600; }
