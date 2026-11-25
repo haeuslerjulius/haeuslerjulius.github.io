@@ -7,7 +7,7 @@
 
 .c-hero { padding-block: clamp(28px, 6vw, 64px) clamp(40px, 7vw, 72px); border-bottom: 1px solid var(--rule); }
 .c-hero .wrap { display: grid; gap: 16px; }
-.c-hero h1 { font-size: var(--step-4); line-height: 1; letter-spacing: -0.02em; }
+.c-hero h1 { font-size: var(--step-4); font-weight: 900; line-height: 1; letter-spacing: -0.02em; }   /* the one place that uses the heaviest weight */
 .c-hero h1 span { display: inline-block; margin-right: .22em; }   /* lines break between the sentences, never inside one */
 @media (max-width: 759px) { .c-hero h1 span { display: block; margin-right: 0; } }   /* phones: one sentence per line */
 .c-hero .lede { max-width: 40rem; }
@@ -191,7 +191,7 @@
 
 /* ---------- Type system for the client pages ----------
    Two families (Archivo for headings and interface, Newsreader for reading text),
-   six sizes (--step--1 … --step-4), three weights (400, 600, 800) and one heading width (112%).
+   six sizes (--step--1 … --step-4), three weights (400, 600, 800; the page headline alone is 900) and one heading width (112%).
    site.css uses a monospace label font for the portfolio; client pages don't. */
 .client { --font-mono: var(--font-display); --step-4: clamp(2.1rem, 5.4vw, 4.25rem); }
 .client .label { letter-spacing: .06em; }
