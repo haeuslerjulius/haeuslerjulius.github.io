@@ -214,9 +214,6 @@ function select(b) {
     }
 
   var btn = f.parentNode.querySelector('.sound-on');
-    // The main film has autoplay=1 in its address so it starts with the page, before this
-    // script is ready. People who ask for reduced motion get it paused again.
-    if (still) p.pause().catch(function () {});
     if (!f.classList.contains('vimeo-auto') || still || !io) { if (btn) btn.remove(); reveal(f); return; }
     io.observe(f);
     if (!btn) return;
