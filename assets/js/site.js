@@ -198,6 +198,18 @@ function select(b) {
     f._vp = p;
     players.push(p);
     setTimeout(function () { reveal(f); }, 5000);
+    // Phone preview: the thin bar above the tab icons follows the film, as in a social app.
+    var phone = f.closest('.phone'), bar = phone && phone.querySelector('.ph-progress span');
+    if (bar) {
+      var last = 0;
+      p.on('timeupdate', function (d) {
+        if (!d || !(d.percent >= 0)) return;
+        // When the film loops, jump back to the start without animating backwards.
+        bar.style.transition = d.percent < last ? 'none' : '';
+        bar.style.width = Math.min(100, d.percent * 100) + '%';
+        last = d.percent;
+      });
+    }
     p.on('playing', function () { reveal(f); });
     var first = !firstDone && !f.hasAttribute('data-defer');
     if (first) firstDone = true;
