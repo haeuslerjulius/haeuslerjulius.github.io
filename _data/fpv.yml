@@ -118,12 +118,14 @@ legal:
   phone: "+49 177 2383924"
   vat_note: "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmer)."   # delete if you charge VAT
 
-# Section with the vertical film (fpv.html, #formate).
+# Section with the phone preview of the vertical film (fpv.html, #formate).
 social:
   label: "Hochformat 9:16"
   heading: "Dasselbe Haus als Kurzvideo fürs Handy"
   text: "Sie erhalten denselben Flug auch im Hochformat, passend für Instagram, Facebook und TikTok. Die Version ist im Preis enthalten, ein zweiter Drehtermin entfällt."
-  film_note: "Derselbe Flug wie oben, im Hochformat."
+  demo_account: "ihr_maklerbüro"     # contains ü on purpose: can't be a real account name
+  demo_caption: "Neu im Angebot 🏡 Einmal durch alle Räume, in einem Flug."
+  demo_note: "Beispielansicht: so kann der Film auf Ihrem Kanal aussehen."
 
 # "Über mich" at the bottom of /fpv
 about:
