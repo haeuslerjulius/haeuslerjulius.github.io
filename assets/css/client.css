@@ -313,9 +313,11 @@
 .dr-strap { stroke: #161A19 !important; stroke-width: 9; }
 .dr-cam-side rect { fill: #1F2422; }
 .dr-cam rect { fill: #4A524E; stroke: #6B7570; stroke-width: 2; }
-.dr-lens { fill: #0E1110 !important; stroke: #8A938E !important; stroke-width: 4; }
-.dr-glass { fill: var(--signal) !important; }
-.dr-ant { fill: #7C8681 !important; }
+.dr-barrel { fill: #2C3230 !important; }
+.dr-lens { fill: #0B0D0C !important; stroke: #9AA39E !important; stroke-width: 2.5; }
+.dr-glass { fill: #26303A !important; }
+.dr-glint { fill: #E6E9E5 !important; opacity: .8; }
+.dr-ant { fill: #AEB6B1 !important; }
 .dr-ant-tip { fill: #F1F3F0 !important; }
 .dr-body { animation: dr-hover 4s ease-in-out infinite; }
 @keyframes dr-spin { to { transform: rotate(360deg); } }
