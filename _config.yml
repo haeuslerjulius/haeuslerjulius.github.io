@@ -1,4 +1,4 @@
-# Site settings for haeuslerjulius.github.io
+# Site settings for häuslair.de (xn--huslair-5wa.de), served by GitHub Pages
 # Most of the content lives in _data/ (me, school, drones, now) and _posts/.
 # See HOWTO.md for how to add projects, photos and log posts.
 
@@ -7,7 +7,7 @@ description: Builder from Bavaria. FPV drone pilot, electronics and 3D printing,
 author: Julius Häusler
 email: haeuslerjulius@icloud.com
 instagram: julius.haeusler
-url: "https://haeuslerjulius.github.io"
+url: "https://xn--huslair-5wa.de"
 baseurl: ""
 
 # While true, every empty spot shows a yellow "fill in" box with a hint.
