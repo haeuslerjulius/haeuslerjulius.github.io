@@ -220,6 +220,8 @@
 
 /* Vertical film: text + a drawn phone playing it like a Reel. Generic interface on purpose: no app logos. */
 .c-social { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px clamp(32px, 6vw, 80px); align-items: center; }
+/* Wide screens: the phone sits on the left, so the page alternates right, left, right. Phones keep text first. */
+@media (min-width: 760px) { .c-social { grid-template-columns: auto minmax(0, 1fr); } .c-social > :last-child { order: -1; } }
 .c-social .sec-head { margin-bottom: 0; }
 .phone { margin: 0 auto; display: grid; gap: 10px; justify-items: center; }
 .phone figcaption { max-width: min(76vw, 300px); font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); text-align: center; }
