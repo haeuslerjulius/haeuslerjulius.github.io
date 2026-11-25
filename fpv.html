@@ -128,21 +128,31 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
 
 <section class="sec c-dark" id="paket">
   <div class="wrap c-deal">
-    <header class="c-deal-head">
-      <div>
+    <div class="c-deal-top">
+      <div class="c-deal-text">
         <p class="label">Paket</p>
         <h2>Durchflug Immobilie</h2>
-      </div>
-      <div class="c-deal-price">
         {% if f.intro_left > 0 %}<p class="c-price"><s>{{ f.price }}</s> <b>{{ f.intro_price }}</b></p>
         <p class="c-intro">{{ f.intro_note }}, danach {{ f.price }}.</p>{% else %}<p class="c-price"><b>{{ f.price }}</b></p>{% endif %}
+        <div class="c-actions"><a class="btn btn-solid" href="{{ wa }}">Per WhatsApp anfragen</a><a class="btn c-btn-light" href="{{ mail }}">Per E-Mail</a></div>
+        <p class="sub">{{ f.price_note }}</p>
       </div>
-    </header>
-    <ul class="c-incl">{% for p in f.package %}<li>{{ p }}</li>{% endfor %}</ul>
-    <div class="c-deal-foot">
-      <div class="c-actions"><a class="btn btn-solid" href="{{ wa }}">Per WhatsApp anfragen</a><a class="btn c-btn-light" href="{{ mail }}">Per E-Mail</a></div>
-      <p class="sub">{{ f.price_note }}</p>
+      <svg class="c-drone" viewBox="-40 -40 480 560" aria-hidden="true">
+        <path class="dr-trail" d="M-30 520C40 470 60 400 120 350"/>
+        <g class="dr-body" transform="rotate(18 200 200)">
+          <path class="dr-arm" d="M110 110L290 290M290 110L110 290"/>
+          <g class="dr-duct"><circle cx="110" cy="110" r="80"/><circle class="dr-guard" cx="110" cy="110" r="66"/><g class="dr-prop"><ellipse cx="110" cy="110" rx="58" ry="9"/><ellipse cx="110" cy="110" rx="9" ry="58"/></g><circle class="dr-hub" cx="110" cy="110" r="9"/></g><g class="dr-duct"><circle cx="290" cy="110" r="80"/><circle class="dr-guard" cx="290" cy="110" r="66"/><g class="dr-prop"><ellipse cx="290" cy="110" rx="58" ry="9"/><ellipse cx="290" cy="110" rx="9" ry="58"/></g><circle class="dr-hub" cx="290" cy="110" r="9"/></g><g class="dr-duct"><circle cx="110" cy="290" r="80"/><circle class="dr-guard" cx="110" cy="290" r="66"/><g class="dr-prop"><ellipse cx="110" cy="290" rx="58" ry="9"/><ellipse cx="110" cy="290" rx="9" ry="58"/></g><circle class="dr-hub" cx="110" cy="290" r="9"/></g><g class="dr-duct"><circle cx="290" cy="290" r="80"/><circle class="dr-guard" cx="290" cy="290" r="66"/><g class="dr-prop"><ellipse cx="290" cy="290" rx="58" ry="9"/><ellipse cx="290" cy="290" rx="9" ry="58"/></g><circle class="dr-hub" cx="290" cy="290" r="9"/></g>
+          <rect class="dr-frame" x="152" y="120" width="96" height="160" rx="22"/>
+          <rect class="dr-batt" x="166" y="176" width="68" height="86" rx="8"/>
+          <path class="dr-strap" d="M160 204H240M160 234H240"/>
+          <rect class="dr-cam" x="170" y="92" width="60" height="50" rx="10"/>
+          <circle class="dr-lens" cx="200" cy="108" r="13"/>
+        </g>
+      </svg>
     </div>
+    <ul class="c-groups">
+      {% for g in f.package %}<li><h3>{{ g.title }}</h3><ul>{% for p in g.items %}<li>{{ p }}</li>{% endfor %}</ul></li>{% endfor %}
+    </ul>
     <ul class="tags c-creds">{% for c in f.credentials %}<li>{{ c }}</li>{% endfor %}</ul>
   </div>
 </section>

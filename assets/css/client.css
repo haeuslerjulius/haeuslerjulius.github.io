@@ -288,19 +288,35 @@
 .c-facts-note { margin-top: 28px; max-width: 46rem; color: var(--muted); }
 @media (max-width: 759px) { .c-facts-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
-/* ---------- Package without a box ---------- */
-.c-deal { display: grid; gap: clamp(28px, 4vw, 48px); }
-.c-deal-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 20px 40px; }
-.c-deal-head h2 { font-size: var(--step-3); line-height: 1; }
-.c-deal-price { text-align: right; }
-@media (min-width: 900px) { .c-deal-head { flex-wrap: nowrap; } }
-.c-dark .c-deal-price .c-price b { font-size: clamp(4.5rem, 13vw, 9rem); font-weight: 900; line-height: .85; letter-spacing: -0.03em; }
-.c-deal-price .c-intro { margin-top: 10px; }
-.c-incl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 clamp(20px, 3vw, 44px); }
-.c-incl li { position: relative; padding: 16px 0 16px 30px; border-top: 1px solid color-mix(in srgb, var(--on-band) 20%, transparent); line-height: 1.4; }
-.c-incl li::before { content: ""; position: absolute; left: 2px; top: 23px; width: 14px; height: 7px; border-left: 3px solid var(--signal); border-bottom: 3px solid var(--signal); transform: rotate(-45deg); }
-.c-deal-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 32px; }
-.c-deal-foot .sub { margin: 0; flex: 1 1 22rem; font-size: var(--step-0); }
-@media (max-width: 899px) { .c-incl { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 899px) { .c-deal-price { text-align: left; } }
-@media (max-width: 599px) { .c-incl { grid-template-columns: minmax(0, 1fr); } }
+/* ---------- Package: price, a drawn drone, three groups ---------- */
+.c-deal { display: grid; gap: clamp(28px, 4vw, 52px); overflow: hidden; }
+.c-deal-top { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 24px clamp(24px, 5vw, 64px); align-items: center; }
+.c-deal-text { display: grid; gap: 14px; justify-items: start; }
+.c-deal-text h2 { font-size: var(--step-3); line-height: 1; }
+.c-dark .c-deal-text .c-price b { font-size: clamp(5rem, 15vw, 10rem); font-weight: 900; line-height: .85; letter-spacing: -0.03em; }
+.c-deal-text .sub { font-size: var(--step-0); max-width: 34rem; }
+.c-drone { width: 100%; max-width: 460px; height: auto; justify-self: center; overflow: visible; }
+.c-drone * { fill: none; stroke: var(--on-band); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.dr-trail { stroke: var(--signal); stroke-width: 6; stroke-dasharray: 2 16; }
+.dr-arm { stroke-width: 16; }
+.dr-guard { stroke-width: 2; opacity: .45; }
+.dr-prop ellipse { fill: var(--on-band); stroke: none; opacity: .9; }
+.dr-prop { transform-box: fill-box; transform-origin: center; animation: dr-spin .7s linear infinite; }
+.dr-hub, .dr-frame { fill: var(--band); }
+.dr-batt { fill: var(--signal); stroke: var(--signal); }
+.dr-strap { stroke: var(--band); stroke-width: 6; }
+.dr-cam { fill: var(--band); }
+.dr-lens { fill: var(--signal); stroke: var(--signal); }
+.dr-body { animation: dr-hover 4s ease-in-out infinite; }
+@keyframes dr-spin { to { transform: rotate(360deg); } }
+@keyframes dr-hover { 50% { translate: 0 -10px; } }
+@media (prefers-reduced-motion: reduce) { .dr-prop, .dr-body { animation: none; } }
+.c-groups { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px clamp(24px, 4vw, 56px); }
+.c-groups h3 { font-size: var(--step-1); color: var(--signal); margin-bottom: 10px; }
+.c-groups ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.c-groups ul li { line-height: 1.4; color: color-mix(in srgb, var(--on-band) 86%, transparent); }
+@media (max-width: 759px) {
+  .c-deal-top { grid-template-columns: minmax(0, 1fr); }
+  .c-drone { max-width: 250px; order: -1; justify-self: end; margin-bottom: -30px; }
+  .c-groups { grid-template-columns: minmax(0, 1fr); }
+}
