@@ -20,52 +20,39 @@ intro_left: 3
 intro_note: "Kostenlos für die ersten drei Kunden"
 price_note: "Endpreis: Als Kleinunternehmer berechne ich keine Umsatzsteuer. Größere Objekte und Gewerbe auf Anfrage."
 
+# What the package contains: short phrases, shown as one running line (fpv.html, #paket).
+# Details such as travel beyond 30 km are in the FAQ.
 package:
-  - "Ein durchgehender Flug durch das Objekt, ca. 45–90 Sekunden"
-  - "Querformat 16:9 in 4K für Website und Exposé"
-  - "Hochformat 9:16 für Instagram, Facebook und TikTok"
+  - "Ein Flug, 45–90 Sekunden"
+  - "Querformat 16:9 in 4K"
+  - "Hochformat 9:16 für Social Media"
   - "Farbkorrektur und Stabilisierung"
-  - "Sounddesign aus eigenen und frei nutzbaren Klängen, auf Wunsch ohne Ton"
-  - "Ihr Logo und Ihre Kontaktdaten am Ende des Films"
-  - "Lieferung per Download-Link innerhalb von 7 Werktagen"
-  - "Eine Korrekturrunde am Schnitt"
-  - "Anfahrt bis 30 km um Rosenheim inklusive, bis 60 km pauschal 30&nbsp;€"
+  - "Sounddesign"
+  - "Ihr Logo am Ende"
+  - "Eine Korrekturrunde"
+  - "Lieferung in 7 Werktagen"
+  - "Anfahrt bis 30&nbsp;km inklusive"
 
-# Section "Vergleich" directly under the film (fpv.html, #vergleich).
-# Compares formats, never names other firms. Mark your own row with own: true.
-# Delete the whole "compare:" block to hide the section.
-compare:
-  label: "Vergleich"
-  heading: "Was der Durchflug anders macht"
-  text: "Fotos, 360°-Rundgänge und Luftaufnahmen bekommen Sie in der Region von mehreren Fotografen. Der Durchflug ergänzt sie um eine Kamerafahrt durch das ganze Objekt."
-  col_format: "Format"
-  col_shows: "Das zeigt es"
-  col_lacks: "Das zeigt es nicht"
-  rows:
-    - name: "Fotos"
-      shows: "Jeden Raum einzeln, im besten Licht."
-      lacks: "Wie die Räume zusammenhängen."
-    - name: "360°-Rundgang"
-      shows: "Alles, zum Selbst-Durchklicken."
-      lacks: "Einen Film, den man in einer Minute ansieht und weiterschickt."
-    - name: "Luftaufnahmen"
-      shows: "Haus, Grundstück und Lage von außen."
-      lacks: "Die Innenräume. Durch Türen und Treppenhäuser fliegt eine Standard-Drohne nicht."
-    - name: "Durchflug"
-      note: "mein Angebot"
-      own: true
-      shows: "Das ganze Objekt in einer einzigen Kamerafahrt, von außen nach innen. Der Zuschauer fliegt mit, auch im Rohbau und in bewohnten Wohnungen."
-      lacks: "Einzelfotos und große Luftbilder vom Grundstück. Die macht weiterhin Ihr Fotograf."
-  foot: "Ein Objekt, ein Festpreis, Querformat und Hochformat, fertig in 7 Werktagen."
-  foot_link: "Zum Paket"
+# Section with the floor plan: photos are single viewpoints, the flight is one line through the house.
+idea:
+  label: "Der Unterschied"
+  heading_1: "Fotos zeigen Räume."
+  heading_2: "Der Durchflug zeigt den Weg."
+  text: "Ein Foto pro Raum verrät nicht, wie man von der Haustür auf die Terrasse kommt. Eine einzige Kamerafahrt schon."
+  key_photos: "Fotos: ein Standpunkt pro Raum"
+  key_flight: "Durchflug: eine Fahrt durchs ganze Haus"
 
-why:
-  - title: "Auf Augenhöhe durchs Haus"
-    text: "Die Kamera fliegt von der Haustür durch den Wohnbereich bis auf die Terrasse. Wer zusieht, bekommt ein Gefühl für Wege und Raumgrößen."
-  - title: "Hilft beim nächsten Auftrag"
-    text: "Verkäufer wählen den Makler, der ihr Haus am besten zeigt. Mit einem Durchflug in Ihrer Vermarktung haben Sie beim nächsten Verkäufergespräch etwas, das andere nicht zeigen können."
-  - title: "Klein und sicher im Haus"
-    text: "Ich fliege drinnen mit einer handtellergroßen Drohne mit geschlossenem Propellerschutz. Sie passt durch Türen und Treppenhäuser."
+# The four big numbers under the phone preview.
+facts:
+  - n: "1"
+    t: "Flug durchs ganze Objekt"
+  - n: "0"
+    t: "Schnitte"
+  - n: "2"
+    t: "Formate: quer und hoch"
+  - n: "7"
+    t: "Werktage bis zur Lieferung"
+facts_note: "Geflogen wird drinnen mit einer handtellergroßen Drohne mit geschlossenem Propellerschutz. Sie passt durch Türen und Treppenhäuser."
 
 steps:
   - title: "Anfrage"
