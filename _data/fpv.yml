@@ -10,7 +10,8 @@ email_body: "Hallo Julius,\n\nich interessiere mich für einen Durchflug.\nOrt /
 label: "Immobilienvideo per Drohne · Raum Rosenheim"
 headline: "Ein Flug. Das ganze Haus. Ohne Schnitt."
 lede: "Eine handtellergroße Drohne fliegt in einer einzigen Kamerafahrt durch alle Räume. Ihre Interessenten sehen Grundriss, Licht und Übergänge, bevor sie zur Besichtigung kommen. Zum Festpreis, geliefert in 7&nbsp;Werktagen."
-film_note: "Beispiel: Einfamilienhaus im Bau · 66 Sekunden · ein Flug, ohne Schnitt"
+film_note: "Einfamilienhaus im Bau · 66 Sekunden."
+film_credit: "Geflogen von Julius Häusler aus Stephanskirchen. Ich plane die Route, fliege und schneide jeden Film selbst."   # shown beside your photo, directly under the film
 for_whom: "Für Makler, Bauträger und Eigentümer, die verkaufen oder vermieten."
 
 price: "490&nbsp;€"            # regular price. &nbsp; keeps the € on the same line as the number
@@ -117,18 +118,12 @@ legal:
   phone: "+49 177 2383924"
   vat_note: "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmer)."   # delete if you charge VAT
 
-# Section "Für Social Media" with the phone preview (fpv.html, #formate).
+# Section with the vertical film (fpv.html, #formate).
 social:
-  label: "Für Instagram, Facebook und TikTok"
+  label: "Hochformat 9:16"
   heading: "Dasselbe Haus als Kurzvideo fürs Handy"
-  text: "Aus demselben Flug entsteht ein Video im Hochformat, so wie man es auf Instagram, Facebook und TikTok sieht. Sie posten es auf Ihrem Kanal oder schalten es als Anzeige und erreichen Interessenten dort, wo sie jeden Tag ohnehin scrollen."
-  points:
-    - "Fertig zum Posten, im Format, das Instagram, Facebook und TikTok erwarten"
-    - "Aus demselben Flug, kein zweiter Termin"
-    - "Im Preis enthalten"
-  demo_account: "ihr_maklerbüro"     # contains ü on purpose: can't be a real account name
-  demo_caption: "Neu im Angebot 🏡 Einmal durch alle Räume, in einem Flug."
-  demo_note: "Beispielansicht: so kann der Film auf Ihrem Kanal aussehen."
+  text: "Sie erhalten denselben Flug auch im Hochformat, passend für Instagram, Facebook und TikTok. Die Version ist im Preis enthalten, ein zweiter Drehtermin entfällt."
+  film_note: "Derselbe Flug wie oben, im Hochformat."
 
 # "Über mich" at the bottom of /fpv
 about:
