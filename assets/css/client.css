@@ -264,10 +264,6 @@
 .c-idea-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 32px clamp(28px, 5vw, 72px); align-items: center; }
 .c-idea h2 { font-size: var(--step-3); }
 .c-idea .sub { margin-top: 14px; }
-.c-idea-key { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 8px; font-family: var(--font-display); font-size: var(--step--1); font-weight: 600; }
-.c-idea-key li { display: flex; align-items: center; gap: 12px; }
-.k-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--muted); flex: none; margin-inline: 9px; }
-.k-line { width: 32px; height: 5px; border-radius: 3px; background: var(--signal); flex: none; }
 .c-plan { width: 100%; height: auto; display: block; overflow: visible; }
 .pl-floor { fill: var(--paper, #F7F7F5); }
 .pl-terrace { fill: none; stroke: var(--rule); stroke-width: 2; stroke-dasharray: 7 7; }

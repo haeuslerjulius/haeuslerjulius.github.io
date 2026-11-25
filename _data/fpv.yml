@@ -39,8 +39,6 @@ idea:
   heading_1: "Fotos zeigen Räume."
   heading_2: "Der Durchflug zeigt den Weg."
   text: "Ein Foto pro Raum verrät nicht, wie man von der Haustür auf die Terrasse kommt. Eine einzige Kamerafahrt schon."
-  key_photos: "Fotos: ein Standpunkt pro Raum"
-  key_flight: "Durchflug: eine Fahrt durchs ganze Haus"
 
 # The four big numbers under the phone preview.
 facts:
