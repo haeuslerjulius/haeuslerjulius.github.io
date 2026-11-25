@@ -3,15 +3,15 @@
 .client .bar nav { align-items: center; }
 .bar nav .bar-cta { background: var(--signal); color: var(--on-signal); padding: 7px 16px; line-height: 1.2; white-space: nowrap; border-radius: 4px; text-decoration: none; font-weight: 600; }
 .bar nav .bar-cta:hover { background: var(--ink); color: var(--bench); text-decoration: none !important; }
-@media (max-width: 520px) { .client .bar nav a:not(.bar-cta) { display: none; } .client .bar-in { justify-content: space-between; flex-wrap: nowrap; } .client .mark { display: inline; font-size: .95rem; } }
+@media (max-width: 520px) { .client .bar nav a:not(.bar-cta):not(:first-child) { display: none; } .client .bar-in { justify-content: space-between; flex-wrap: nowrap; } .client .mark { display: inline; font-size: .95rem; } }
 
 .c-hero { padding-block: clamp(28px, 6vw, 64px) clamp(40px, 7vw, 72px); border-bottom: 1px solid var(--rule); }
 .c-hero .wrap { display: grid; gap: 16px; }
-.c-hero h1 { font-size: var(--step-4); font-stretch: 125%; font-weight: 900; line-height: 0.92; letter-spacing: -0.03em; }
-.c-hero h1 span { display: block; }   /* one sentence of the headline per line */
-@media (max-width: 480px) { .c-hero h1 { font-size: clamp(1.8rem, 9.6vw, 3rem); } }   /* "Ohne Schnitt." fits on one line on phones */
+.c-hero h1 { font-size: var(--step-4); font-weight: 900; line-height: 1; letter-spacing: -0.02em; }   /* the one place that uses the heaviest weight */
+.c-hero h1 span { display: inline-block; margin-right: .22em; }   /* lines break between the sentences, never inside one */
+@media (max-width: 759px) { .c-hero h1 span { display: block; margin-right: 0; } }   /* phones: one sentence per line */
 .c-hero .lede { max-width: 40rem; }
-.c-film { margin-top: 10px; }
+.c-film { margin-top: 6px; }
 .c-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; }
 .c-hero .c-actions { margin-top: 8px; }
 .c-from { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); }
@@ -70,46 +70,7 @@
 .c-bundle { margin-top: 18px; display: grid; gap: 6px; }
 .c-bundle-price b { font-family: var(--font-display); font-stretch: 112%; font-weight: 800; font-size: var(--step-2); }
 
-/* "Für Social Media": text + a drawn phone playing the vertical film like a Reel.
-   Generic interface on purpose: no app logos. */
-.c-social { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px clamp(32px, 6vw, 80px); align-items: center; }
-.c-social .sec-head { margin-bottom: 20px; }
-.c-social .c-checks { max-width: 34rem; }
-@media (max-width: 759px) { .c-social { grid-template-columns: minmax(0, 1fr); } }
 
-.phone { margin: 0 auto; display: grid; gap: 10px; justify-items: center; }
-.phone figcaption { max-width: min(76vw, 300px); font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); text-align: center; }
-
-.phone-body { width: min(76vw, 300px); padding: 9px; border-radius: 48px; background: #0d0f0f; box-shadow: 0 0 0 2px #2b302e, 0 24px 60px rgba(0,0,0,.28); }
-.phone-screen { container-type: inline-size; position: relative; aspect-ratio: 9 / 19.5; border-radius: 39px; overflow: hidden; background: #111; color: #fff; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; isolation: isolate; }
-/* The film fills the whole screen up to the rounded corners (9:16 film in a 9:19.5 screen: full height, sides cropped) */
-.ph-video { position: absolute; inset: 0; }
-.ph-video iframe { position: absolute; top: 0; left: 50%; height: 100%; width: 121.9cqw; transform: translateX(-50%); border: 0; }
-.ph-video .sound-on { top: 40%; left: 50%; transform: translate(-50%, -50%); white-space: nowrap; font-size: 3.8cqw; padding: 2.4cqw 4cqw; z-index: 5; }
-.ph-shade { position: absolute; inset: 0; pointer-events: none; z-index: 1; background: linear-gradient(rgba(0,0,0,.28), transparent 12%, transparent 62%, rgba(0,0,0,.55) 88%, rgba(0,0,0,.7)); }
-.ph-status { position: absolute; top: 0; left: 0; right: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; padding: 4.2cqw 8cqw 0 9cqw; font-size: 4.4cqw; font-weight: 600; pointer-events: none; }
-.ph-island { width: 30cqw; height: 8.6cqw; border-radius: 99px; background: #000; }
-.ph-sys { display: flex; align-items: center; gap: 1.4cqw; }
-.ph-sys svg { height: 3.6cqw; width: auto; fill: #fff; }
-.ph-actions { position: absolute; right: 1.6cqw; bottom: 15.5%; z-index: 2; width: 13cqw; display: grid; gap: 3.4cqw; justify-items: center; pointer-events: none; }
-.ph-actions span { display: grid; justify-items: center; gap: .8cqw; font-size: 3.4cqw; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,.45); }
-.ph-actions svg { width: 8.2cqw; height: 8.2cqw; fill: none; stroke: #fff; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-.ph-thumb { width: 7.6cqw; height: 7.6cqw; border-radius: 1.8cqw; border: .6cqw solid #fff; background: url("../fpv/share.jpg") center / cover; margin-top: 1.4cqw; }
-.ph-caption { position: absolute; left: 4cqw; right: 18cqw; bottom: 14.6%; z-index: 2; display: grid; gap: 2cqw; pointer-events: none; text-shadow: 0 1px 2px rgba(0,0,0,.45); }
-.ph-caption p { margin: 0; }
-.ph-user { display: flex; align-items: center; gap: 2.4cqw; font-size: 4cqw; }
-.ph-avatar { width: 8.4cqw; height: 8.4cqw; border-radius: 50%; background: url("../fpv/share.jpg") 30% center / cover; flex: none; box-shadow: 0 0 0 .4cqw rgba(255,255,255,.25); }
-.ph-follow { border: 1px solid rgba(255,255,255,.75); border-radius: 2.2cqw; padding: .6cqw 2.8cqw; font-size: 3.5cqw; font-weight: 600; }
-.ph-text { font-size: 3.6cqw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ph-progress { position: absolute; left: 4cqw; right: 4cqw; bottom: 11.4%; height: .5cqw; border-radius: 1cqw; background: rgba(255,255,255,.3); z-index: 2; overflow: hidden; }
-.ph-progress span { display: block; height: 100%; width: 14%; background: #fff; }
-.ph-nav { position: absolute; left: 13cqw; right: 13cqw; bottom: 2.6%; z-index: 2; height: 15.6cqw; border-radius: 99px; background: rgba(28,31,34,.86); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); display: flex; justify-content: space-around; align-items: center; padding: 0 2cqw; pointer-events: none; }
-.ph-nav svg { width: 7cqw; height: 7cqw; fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.ph-nav-on { display: grid; place-items: center; width: 15cqw; height: 10.6cqw; border-radius: 99px; background: rgba(255,255,255,.16); }
-.ph-me { width: 7.2cqw; height: 7.2cqw; border-radius: 50%; background: linear-gradient(135deg, var(--signal), #e07b39); position: relative; }
-.ph-me::after { content: ""; position: absolute; right: -.6cqw; bottom: -.2cqw; width: 2cqw; height: 2cqw; border-radius: 50%; background: #ff3040; }
-
-.c-film-note { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); margin-top: -6px; }
 .c-pk-actions { margin-top: 14px; }
 .c-creds-top { margin-top: 14px; }
 .c-about { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 18px 24px; align-items: center; margin-top: 28px; max-width: 46rem; }
@@ -134,18 +95,17 @@
 
 /* Ablauf as a flight route with waypoints */
 .c-route { --gap: clamp(20px, 4vw, 48px); list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px var(--gap); position: relative; }
-.c-route::before { content: ""; position: absolute; top: 9px; left: 9px; right: calc((100% - 2 * var(--gap)) / 3 - 10px); border-top: 2px dashed var(--signal-ink); opacity: .55; }
+.c-route::before { content: ""; position: absolute; top: 13px; left: 13px; right: calc((100% - 2 * var(--gap)) / 3 - 10px); border-top: 2px dashed var(--signal-ink); opacity: .55; }
 .c-route li { position: relative; display: grid; gap: 10px; align-content: start; }
 .c-wp { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-family: var(--font-mono); font-size: var(--step--1); }
-.c-wp-dot { display: block; width: 20px; height: 20px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 5px var(--bench), 0 0 0 7px color-mix(in srgb, var(--signal) 45%, transparent); position: relative; z-index: 1; }
-.c-wp-id { font-weight: 600; letter-spacing: .06em; }
+.c-wp-dot { display: grid; place-items: center; width: 28px; height: 28px; font-family: var(--font-display); font-size: var(--step--1); font-weight: 600; line-height: 1; color: var(--on-signal); border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 5px var(--bench), 0 0 0 7px color-mix(in srgb, var(--signal) 45%, transparent); position: relative; z-index: 1; }
 .c-wp-when { color: var(--muted); border: 1px solid var(--rule); border-radius: 99px; padding: 1px 9px; background: var(--sheet); }
 .c-route h3 { font-size: var(--step-2); margin-top: 6px; }
 .c-route p { line-height: 1.5; color: var(--muted); max-width: 30ch; }
 @media (max-width: 760px) {
   .c-route { grid-template-columns: minmax(0, 1fr); gap: 30px; padding-left: 0; }
-  .c-route::before { top: 10px; bottom: 10px; left: 9px; right: auto; border-top: 0; border-left: 2px dashed var(--signal-ink); }
-  .c-route li { padding-left: 38px; }
+  .c-route::before { top: 14px; bottom: 14px; left: 13px; right: auto; border-top: 0; border-left: 2px dashed var(--signal-ink); }
+  .c-route li { padding-left: 46px; }
   .c-wp-dot { position: absolute; left: 0; top: 0; }
   .c-route p { max-width: none; }
 }
@@ -159,7 +119,7 @@
 .c-faq details[open] summary { color: var(--signal-ink); }
 @media (max-width: 760px) { .c-faq-grid { grid-template-columns: minmax(0, 1fr); } .c-faq-head { position: static; } }
 
-/* Final call to action over the still, with an FPV goggle overlay */
+/* Final call to action over the still */
 .c-final { --img-h: clamp(600px, 62vw, 820px); position: relative; overflow: hidden; color: var(--on-band); background: var(--band); padding-block: calc(var(--img-h) * .57) clamp(64px, 10vw, 110px); }
 /* The house photo sits at the top, clearly visible, and fades to black so the card below sits on solid black like the footer */
 .c-final::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: var(--img-h); background: linear-gradient(180deg, rgba(14,17,16,.30) 0%, rgba(14,17,16,.08) 22%, rgba(14,17,16,.15) 48%, rgba(22,26,25,.8) 74%, var(--band) 97%), url("../fpv/final.jpg") center 42% / cover; }
@@ -167,42 +127,25 @@
   /* Phones: shorter photo area, zoomed in on the house, text starts below it */
   .c-final { --img-h: 470px; padding-top: calc(var(--img-h) * .6); }
   .c-final::before { background-size: 100% 100%, auto 132%; background-position: 0 0, 57% 80%; }
-  .c-final-osd { height: calc(var(--img-h) * .5); }
-  .c-final-osd .osd-bl, .c-final-osd .osd-br { display: none; }
 }
 .c-final-in { position: relative; z-index: 2; display: grid; gap: 14px; justify-items: start; }
 .c-final .label { color: var(--signal); }
 .c-final h2 { font-size: var(--step-4); font-stretch: 125%; font-weight: 900; line-height: .95; letter-spacing: -.03em; max-width: 13ch; color: #fff; }
 .c-final-sub { font-size: var(--step-1); max-width: 34rem; color: rgba(255,255,255,.85); }
 .c-final .c-actions { margin-top: 8px; }
-.c-final-osd { position: absolute; top: clamp(14px, 3vw, 28px); left: clamp(14px, 3vw, 28px); right: clamp(14px, 3vw, 28px); height: calc(var(--img-h) * .5); z-index: 1; pointer-events: none; font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; color: rgba(255,255,255,.75); }
-.c-final-osd::before, .c-final-osd::after { content: ""; position: absolute; width: 26px; height: 26px; border: 2px solid rgba(255,255,255,.6); }
-.c-final-osd::before { top: 0; left: 0; border-right: 0; border-bottom: 0; }
-.c-final-osd::after { bottom: 0; right: 0; border-left: 0; border-top: 0; }
-.c-final-osd span { position: absolute; }
-.c-final-osd .osd-tl { top: 4px; left: 38px; display: flex; align-items: center; gap: 6px; }
-.c-final-osd .osd-tl i { width: 8px; height: 8px; border-radius: 50%; background: #ff3b30; animation: rec 1.6s steps(2, start) infinite; }
-.c-final-osd .osd-tr { top: 4px; right: 0; }
-.c-final-osd .osd-bl { bottom: 4px; left: 0; }
-.c-final-osd .osd-br { bottom: 4px; right: 38px; }
-@keyframes rec { to { visibility: hidden; } }
 
 /* Pilot card */
 .c-about-sec { border-bottom: 0; }
 .c-pilot { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 20px clamp(20px, 4vw, 40px); align-items: center; max-width: 52rem; padding: clamp(20px, 4vw, 36px); background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; }
-.c-pilot::before, .c-pilot::after { content: ""; position: absolute; width: 18px; height: 18px; border: 2px solid var(--signal-ink); }
-.c-pilot::before { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
-.c-pilot::after { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
 .c-pilot img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 4px var(--bench), 0 0 0 6px var(--signal); }
 .c-pilot h3 { font-size: var(--step-2); margin: 2px 0 10px; }
 .c-pilot p { line-height: 1.55; }
 .c-pilot .tags { margin-top: 14px; }
 @media (max-width: 560px) { .c-pilot { grid-template-columns: minmax(0, 1fr); padding: 38px 24px 40px; } .c-pilot img { width: 110px; height: 110px; } }
 
-/* Pilot card inside the dark final section, styled like a goggle HUD */
+/* Pilot card inside the dark final section */
 .c-final .c-pilot { margin-top: clamp(56px, 9vw, 104px); justify-self: stretch; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); color: var(--on-band); box-shadow: 0 20px 60px rgba(0,0,0,.35); }
-.c-final .c-pilot::before, .c-final .c-pilot::after { border-color: var(--signal); }
-.c-final .c-pilot .label { color: var(--signal); letter-spacing: .1em; }
+.c-final .c-pilot .label { color: var(--signal); }
 .c-final .c-pilot h3 { color: #fff; }
 .c-final .c-pilot p { color: rgba(255,255,255,.84); }
 .c-final .c-pilot img { box-shadow: 0 0 0 4px rgba(10,12,12,.9), 0 0 0 6px var(--signal); }
@@ -245,8 +188,41 @@
   .c-cmp-no::before { content: "–"; color: var(--muted); }
 }
 
-/* Yellow slab behind the phone so it stands out from the bench.
-   The phone is taller than the slab and overlaps it at the top and bottom. */
-.phone-stage { --over: clamp(18px, 3vw, 28px); margin-block: var(--over); padding-inline: clamp(22px, 5vw, 56px); border-radius: 28px; background: var(--signal); display: grid; justify-items: center; }
-.phone-stage .phone-body { margin-block: calc(var(--over) * -1); box-shadow: 0 0 0 2px #2b302e, 0 26px 50px rgba(0,0,0,.38); }
-@media (max-width: 759px) { .phone { width: 100%; } .phone-stage { justify-self: stretch; } }
+
+/* ---------- Type system for the client pages ----------
+   Two families (Archivo for headings and interface, Newsreader for reading text),
+   six sizes (--step--1 … --step-4), three weights (400, 600, 800; the page headline alone is 900) and one heading width (112%).
+   site.css uses a monospace label font for the portfolio; client pages don't. */
+.client { --font-mono: var(--font-display); --step-4: clamp(2.1rem, 5.4vw, 4.25rem); }
+.client .label { letter-spacing: .06em; }
+.client .mark { font-size: var(--step-0); font-stretch: 112%; font-weight: 800; }
+.client .bar nav, .client .btn, .client .tags li, .client .copy, .client .sound-on, .client .foot-legal { font-size: var(--step--1); }
+.client .panel > .tab { font-size: var(--step--1); letter-spacing: .06em; }
+.client .mail { font-size: var(--step-2); }
+@media (max-width: 520px) { .client .mail { font-size: var(--step-1); } }
+/* Notes and captions are reading text */
+.c-from, .c-intro, .c-quick, .c-cmp-foot, .c-vert figcaption { font-family: var(--font-body); font-size: var(--step-0); }
+.c-from b, .c-bundle-price b { font-weight: 800; }
+.c-price b, .c-dark .c-price b { font-size: var(--step-4); font-stretch: 112%; font-weight: 800; }
+.c-final h2 { font-stretch: 112%; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+.c-faq summary { font-size: var(--step-0); font-stretch: 100%; font-weight: 600; }
+.c-faq summary::after { font-size: var(--step-1); font-weight: 400; line-height: 1; }
+.c-cmp-head, .c-cmp h3 small { font-size: var(--step--1); font-weight: 600; letter-spacing: .06em; }
+.c-cmp h3 { font-size: var(--step-1); }
+.c-wp { font-family: var(--font-display); }
+
+/* Pilot credit directly under the first film */
+.c-credit { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: center; max-width: 46rem; }
+.c-credit img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 1px solid var(--rule); }
+.c-credit p { line-height: 1.45; }
+.c-credit-film { color: var(--muted); }
+.c-hero .lede { margin-top: 8px; }
+
+/* The vertical film on its own, with the player's normal controls */
+.c-social { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px clamp(32px, 6vw, 80px); align-items: center; }
+.c-social .sec-head { margin-bottom: 0; }
+.c-vert { margin: 0 auto; display: grid; gap: 10px; justify-items: center; }
+.c-vert-film { position: relative; width: min(76vw, 300px); aspect-ratio: 9 / 16; border-radius: 10px; overflow: hidden; background-color: #0e1110; box-shadow: 0 18px 44px rgba(0,0,0,.22); }
+.c-vert-film iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.c-vert figcaption { max-width: min(76vw, 300px); color: var(--muted); text-align: center; }
+@media (max-width: 759px) { .c-social { grid-template-columns: minmax(0, 1fr); } }

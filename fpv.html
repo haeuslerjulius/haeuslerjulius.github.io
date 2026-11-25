@@ -15,12 +15,15 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
   <div class="wrap">
     <p class="label">{{ f.label }}</p>
     <h1>{% assign hs = f.headline | split: '. ' %}{% for part in hs %}<span>{{ part }}{% unless forloop.last %}. {% endunless %}</span>{% endfor %}</h1>
-    <p class="lede">{{ f.lede }}</p>
     <div class="reel reel-embed c-film has-poster is-loading">
       <iframe fetchpriority="high" src="https://player.vimeo.com/video/{{ d.reel_vimeo.id }}?h={{ d.reel_vimeo.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" class="vimeo-auto" data-sound="🔊 Ton einschalten" data-sound-fallback="Ton über das Lautsprecher-Symbol im Video" title="FPV-Durchflug durch ein Einfamilienhaus im Bau" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
       <button type="button" class="sound-on">🔊 Ton einschalten</button>
     </div>
-    {% if f.film_note %}<p class="c-film-note">{{ f.film_note }}</p>{% endif %}
+    <div class="c-credit">
+      {% if f.about.photo %}<img src="{{ f.about.photo | relative_url }}" alt="Julius Häusler" width="56" height="56">{% endif %}
+      <p>{% if f.film_note %}<span class="c-credit-film">{{ f.film_note }}</span> {% endif %}{{ f.film_credit }}</p>
+    </div>
+    <p class="lede">{{ f.lede }}</p>
     <div class="c-actions">
       <a class="btn btn-solid" href="{{ wa }}">Per WhatsApp anfragen</a>
       <a class="btn" href="{{ mail }}">Per E-Mail anfragen</a>
@@ -64,45 +67,13 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
         <h2>{{ so.heading }}</h2>
         <p class="sub">{{ so.text }}</p>
       </header>
-      <ul class="c-checks">{% for pt in so.points %}<li>{{ pt }}</li>{% endfor %}</ul>
     </div>
-    <figure class="phone">
-      <div class="phone-stage">
-      <div class="phone-body">
-        <div class="phone-screen">
-          <div class="ph-video has-poster is-loading">
-            <iframe data-defer data-src="https://player.vimeo.com/video/{{ v.id }}?h={{ v.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0&amp;controls=0" class="vimeo-auto" title="Derselbe Flug als Hochformat-Video fürs Handy" allow="autoplay; fullscreen; picture-in-picture"></iframe>
-            <button type="button" class="sound-on">🔊 Ton einschalten</button>
-          </div>
-          <div class="ph-shade" aria-hidden="true"></div>
-          <div class="ph-status" aria-hidden="true">
-            <span>9:41</span><span class="ph-island"></span>
-            <span class="ph-sys"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".4"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#fff" opacity=".5"/><rect x="2" y="2" width="16" height="8" rx="1.6"/><rect x="23.5" y="4" width="2" height="4" rx="1" opacity=".5"/></svg></span>
-          </div>
-          <div class="ph-actions" aria-hidden="true">
-            <span><svg viewBox="0 0 24 24"><path d="M12 20.5s-8-4.7-8-10.6C4 7 6 5 8.5 5c1.6 0 2.8.8 3.5 2 .7-1.2 1.9-2 3.5-2C18 5 20 7 20 9.9c0 5.9-8 10.6-8 10.6z"/></svg>836</span>
-            <span><svg viewBox="0 0 24 24"><path d="M12 4a8 8 0 0 0-6.9 12.1L4 20l4-1.1A8 8 0 1 0 12 4z"/></svg>41</span>
-            <span><svg viewBox="0 0 24 24"><path d="M5 11V9.5A2.5 2.5 0 0 1 7.5 7H18m-3-3 3 3-3 3M19 13v1.5a2.5 2.5 0 0 1-2.5 2.5H6m3 3-3-3 3-3"/></svg>37</span>
-            <span><svg viewBox="0 0 24 24"><path d="M20 4 4 10.5l6.5 2.6L13.5 20zM10.5 13.1 20 4"/></svg>17</span>
-            <span><svg viewBox="0 0 24 24"><path d="M8 9.5h8M5 14.5h14"/></svg></span>
-            <span class="ph-thumb"></span>
-          </div>
-          <div class="ph-caption" aria-hidden="true">
-            <p class="ph-user"><span class="ph-avatar"></span><b>{{ so.demo_account }}</b><span class="ph-follow">Folgen</span></p>
-            <p class="ph-text">{{ so.demo_caption }}</p>
-          </div>
-          <div class="ph-progress" aria-hidden="true"><span></span></div>
-          <div class="ph-nav" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20h-5.5v-5.5h-5V20H4z"/></svg>
-            <span class="ph-nav-on"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4.5" fill="#fff" stroke="none"/><path d="M10 9l5 3-5 3z" fill="#1d2023" stroke="none"/></svg></span>
-            <svg viewBox="0 0 24 24"><path d="M20 4 4 10.5l6.5 2.6L13.5 20zM10.5 13.1 20 4"/></svg>
-            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
-            <span class="ph-me"></span>
-          </div>
-        </div>
+    <figure class="c-vert">
+      <div class="c-vert-film has-poster is-loading">
+        <iframe data-defer data-src="https://player.vimeo.com/video/{{ v.id }}?h={{ v.hash }}&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1&amp;loop=1&amp;autopause=0" class="vimeo-auto" title="Derselbe Flug als Hochformat-Video fürs Handy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        <button type="button" class="sound-on">🔊 Ton einschalten</button>
       </div>
-      </div>
-      <figcaption>{{ so.demo_note }}</figcaption>
+      <figcaption>{{ so.film_note }}</figcaption>
     </figure>
   </div>
 </section>
@@ -110,7 +81,7 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
 <section class="sec c-why">
   <div class="wrap">
     <ul class="c-three">
-      {% for w in f.why %}<li class="panel"><span class="tab">{{ forloop.index | prepend: '0' }}</span><h2>{{ w.title }}</h2><p>{{ w.text }}</p></li>{% endfor %}
+      {% for w in f.why %}<li class="panel"><h2>{{ w.title }}</h2><p>{{ w.text }}</p></li>{% endfor %}
     </ul>
   </div>
 </section>
@@ -140,8 +111,8 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
     </header>
     <ol class="c-route">
       {% for st in f.steps %}<li>
-        <span class="c-wp-dot" aria-hidden="true"></span>
-        <div class="c-wp"><span class="c-wp-id">WP 0{{ forloop.index }}</span>{% if st.when %}<span class="c-wp-when">{{ st.when }}</span>{% endif %}</div>
+        <span class="c-wp-dot" aria-hidden="true">{{ forloop.index }}</span>
+        {% if st.when %}<div class="c-wp"><span class="c-wp-when">{{ st.when }}</span></div>{% endif %}
         <h3>{{ st.title }}</h3><p>{{ st.text }}</p>
       </li>{% endfor %}
     </ol>
@@ -162,7 +133,6 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
 </section>
 
 <section class="c-final" id="anfrage">
-  <div class="c-final-osd" aria-hidden="true"><span class="osd-tl"><i></i>REC</span><span class="osd-tr">4K · 9:16</span><span class="osd-bl">Raum Rosenheim</span><span class="osd-br">ALT 1,5 m · 66 s</span></div>
   <div class="wrap c-final-in">
     <p class="label">Anfrage</p>
     <h2>Termin für Ihr Objekt anfragen</h2>
@@ -171,7 +141,7 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
     <div class="c-pilot">
       {% if f.about.photo %}<img src="{{ f.about.photo | relative_url }}" alt="Julius Häusler" width="160" height="160" loading="lazy">{% endif %}
       <div>
-        <p class="label">Ihr Pilot · ID 01</p>
+        <p class="label">Ihr Pilot</p>
         <h3>Julius Häusler</h3>
         <p>{{ f.about.text }}</p>
         <ul class="tags">{% for c in f.credentials %}<li>{{ c }}</li>{% endfor %}</ul>
