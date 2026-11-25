@@ -316,20 +316,18 @@
 .dr-cam rect { fill: #4A524E; stroke: #6B7570; stroke-width: 2; }
 .dr-lens { fill: #0E1110 !important; stroke: #8A938E !important; stroke-width: 4; }
 .dr-glass { fill: var(--signal) !important; }
+.dr-ant { fill: #7C8681 !important; }
+.dr-ant-tip { fill: #F1F3F0 !important; }
 .dr-body { animation: dr-hover 4s ease-in-out infinite; }
 @keyframes dr-spin { to { transform: rotate(360deg); } }
 @keyframes dr-hover { 50% { translate: 0 -10px; } }
 @media (prefers-reduced-motion: reduce) { .dr-prop, .dr-body { animation: none; } }
-/* The package contents as one running line */
+/* The package contents as one running line; every second item is dimmed, so no separators are needed */
 .c-roll { display: grid; gap: 12px; }
-.c-roll ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 0; font-family: var(--font-display); font-stretch: 112%; font-weight: 800; font-size: var(--step-2); line-height: 1.15; letter-spacing: -0.01em; }
-.c-roll li { display: flex; align-items: center; }
-.c-roll li:not(:last-child)::after { content: ""; width: .32em; height: .32em; border-radius: 50%; background: var(--signal); margin: 0 .55em; flex: none; }
+.c-roll ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px .7em; font-family: var(--font-display); font-stretch: 112%; font-weight: 800; font-size: var(--step-2); line-height: 1.15; letter-spacing: -0.01em; }
+.c-roll li:nth-child(even) { color: color-mix(in srgb, var(--on-band) 48%, transparent); }
 @media (max-width: 759px) {
   .c-deal-top { grid-template-columns: minmax(0, 1fr); }
   .c-drone { max-width: 250px; order: -1; justify-self: end; margin-bottom: -30px; }
-  .c-roll ul { font-size: var(--step-1); flex-direction: column; gap: 7px; }
-  .c-roll li { display: block; padding-left: .95em; position: relative; }
-  .c-roll li:not(:last-child)::after { display: none; }
-  .c-roll li::before { content: ""; position: absolute; left: 0; top: .42em; width: .34em; height: .34em; border-radius: 50%; background: var(--signal); }
+  .c-roll ul { font-size: var(--step-1); flex-direction: column; gap: 5px; }
 }
