@@ -277,6 +277,9 @@
 @media (max-width: 759px) { .c-idea-grid { grid-template-columns: minmax(0, 1fr); } }
 
 /* ---------- Four big numbers ---------- */
+/* No rule above or below the numbers: they sit between the floor plan and the phone preview as one block. */
+.c-idea { border-bottom: 0; }
+.c-facts { border-bottom: 0; padding-block: 0 clamp(16px, 3vw, 32px); }
 .c-facts-row { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px clamp(16px, 3vw, 40px); }
 .c-facts-row li { display: grid; gap: 6px; padding-top: 14px; border-top: 5px solid var(--signal); }
 .c-facts-row b { font-family: var(--font-display); font-stretch: 112%; font-weight: 900; font-size: clamp(3.5rem, 9vw, 6.5rem); line-height: .9; letter-spacing: -0.03em; }

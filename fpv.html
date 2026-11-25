@@ -62,6 +62,15 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
     </svg>
   </div>
 </section>
+<section class="sec c-facts">
+  <div class="wrap">
+    <ul class="c-facts-row">
+      {% for x in f.facts %}<li><b>{{ x.n }}</b><span>{{ x.t }}</span></li>{% endfor %}
+    </ul>
+    <p class="c-facts-note">{{ f.facts_note }}</p>
+  </div>
+</section>
+
 <section class="sec" id="formate">
   {% assign v = d.vertical_vimeo %}{% assign so = f.social %}
   <div class="wrap c-social">
@@ -110,15 +119,6 @@ summary: "Immobilienvideo per Drohne: ein durchgehender FPV-Flug durch Ihr Objek
       </div>
       <figcaption>{{ so.demo_note }}</figcaption>
     </figure>
-  </div>
-</section>
-
-<section class="sec c-facts">
-  <div class="wrap">
-    <ul class="c-facts-row">
-      {% for x in f.facts %}<li><b>{{ x.n }}</b><span>{{ x.t }}</span></li>{% endfor %}
-    </ul>
-    <p class="c-facts-note">{{ f.facts_note }}</p>
   </div>
 </section>
 
