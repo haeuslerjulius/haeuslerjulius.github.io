@@ -313,8 +313,9 @@
 .dr-cam-side rect { fill: #1F2422; }
 .dr-cam rect { fill: #4A524E; stroke: #6B7570; stroke-width: 2; }
 .dr-barrel { fill: #2C3230 !important; }
-.dr-lens { fill: #0B0D0C !important; stroke: #9AA39E !important; stroke-width: 2.5; }
-.dr-glass { fill: #26303A !important; }
+.dr-lens { fill: #0B0D0C !important; stroke: #F1F3F0 !important; stroke-width: 3; }
+.dr-glass { fill: #2B3A4A !important; stroke: var(--signal) !important; stroke-width: 2; }
+.dr-pupil { fill: #0B0D0C !important; }
 .dr-glint { fill: #E6E9E5 !important; opacity: .8; }
 .dr-ant { fill: #AEB6B1 !important; }
 .dr-ant-tip { fill: #F1F3F0 !important; }
