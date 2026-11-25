@@ -216,7 +216,7 @@
 .c-credit img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 1px solid var(--rule); }
 .c-credit p { line-height: 1.45; }
 .c-credit-film { color: var(--muted); }
-.c-hero .lede { margin-top: 8px; }
+.c-credit { margin-bottom: clamp(20px, 3vw, 36px); }   /* air between the credit and the text below */
 
 /* Vertical film: text + a drawn phone playing it like a Reel. Generic interface on purpose: no app logos. */
 .c-social { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px clamp(32px, 6vw, 80px); align-items: center; }
