@@ -50,7 +50,6 @@ facts:
     t: "Formate: quer und hoch"
   - n: "7"
     t: "Werktage bis zur Lieferung"
-facts_note: "Geflogen wird drinnen mit einer handtellergroßen Drohne mit geschlossenem Propellerschutz. Sie passt durch Türen und Treppenhäuser."
 
 steps:
   - title: "Anfrage"
