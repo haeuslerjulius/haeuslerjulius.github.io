@@ -20,23 +20,18 @@ intro_left: 3
 intro_note: "Kostenlos für die ersten drei Kunden"
 price_note: "Endpreis: Als Kleinunternehmer berechne ich keine Umsatzsteuer. Größere Objekte und Gewerbe auf Anfrage."
 
-# What the package contains, in three groups (fpv.html, #paket).
+# What the package contains: short phrases, shown as one running line (fpv.html, #paket).
+# Details such as travel beyond 30 km are in the FAQ.
 package:
-  - title: "Der Film"
-    items:
-      - "Ein durchgehender Flug durch das Objekt, ca. 45–90 Sekunden"
-      - "Querformat 16:9 in 4K für Website und Exposé"
-      - "Hochformat 9:16 für Instagram, Facebook und TikTok"
-  - title: "Die Bearbeitung"
-    items:
-      - "Farbkorrektur und Stabilisierung"
-      - "Sounddesign aus eigenen und frei nutzbaren Klängen, auf Wunsch ohne Ton"
-      - "Ihr Logo und Ihre Kontaktdaten am Ende des Films"
-  - title: "Der Service"
-    items:
-      - "Lieferung per Download-Link innerhalb von 7 Werktagen"
-      - "Eine Korrekturrunde am Schnitt"
-      - "Anfahrt bis 30 km um Rosenheim inklusive, bis 60 km pauschal 30&nbsp;€"
+  - "Ein Flug, 45–90 Sekunden"
+  - "Querformat 16:9 in 4K"
+  - "Hochformat 9:16 für Social Media"
+  - "Farbkorrektur und Stabilisierung"
+  - "Sounddesign"
+  - "Ihr Logo am Ende"
+  - "Eine Korrekturrunde"
+  - "Lieferung in 7 Werktagen"
+  - "Anfahrt bis 30&nbsp;km inklusive"
 
 # Section with the floor plan: photos are single viewpoints, the flight is one line through the house.
 idea:

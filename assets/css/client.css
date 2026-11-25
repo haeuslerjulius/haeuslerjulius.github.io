@@ -295,28 +295,41 @@
 .c-deal-text h2 { font-size: var(--step-3); line-height: 1; }
 .c-dark .c-deal-text .c-price b { font-size: clamp(5rem, 15vw, 10rem); font-weight: 900; line-height: .85; letter-spacing: -0.03em; }
 .c-deal-text .sub { font-size: var(--step-0); max-width: 34rem; }
-.c-drone { width: 100%; max-width: 460px; height: auto; justify-self: center; overflow: visible; }
-.c-drone * { fill: none; stroke: var(--on-band); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
-.dr-trail { stroke: var(--signal); stroke-width: 6; stroke-dasharray: 2 16; }
-.dr-arm { stroke-width: 16; }
-.dr-guard { stroke-width: 2; opacity: .45; }
-.dr-prop ellipse { fill: var(--on-band); stroke: none; opacity: .9; }
-.dr-prop { transform-box: fill-box; transform-origin: center; animation: dr-spin .7s linear infinite; }
-.dr-hub, .dr-frame { fill: var(--band); }
-.dr-batt { fill: var(--signal); stroke: var(--signal); }
-.dr-strap { stroke: var(--band); stroke-width: 6; }
-.dr-cam { fill: var(--band); }
-.dr-lens { fill: var(--signal); stroke: var(--signal); }
+.c-drone { width: 100%; max-width: 520px; height: auto; justify-self: center; overflow: visible; }
+.c-drone circle, .c-drone rect, .c-drone path { fill: none; stroke: none; }
+.dr-shadow { fill: #000; opacity: .35; }
+.dr-trail { stroke: var(--signal) !important; stroke-width: 6; stroke-linecap: round; stroke-dasharray: 2 16; }
+.dr-arm { stroke: #2C3230 !important; stroke-width: 20; stroke-linecap: round; }
+.dr-wall circle { stroke: #9AA39E; stroke-width: 5; }
+.dr-rim circle { stroke: #F1F3F0; stroke-width: 7; }
+.dr-motor { fill: #4A524E !important; }
+.dr-disc { fill: #E6E9E5 !important; opacity: .1; }
+.dr-prop path { fill: #E6E9E5; }
+.dr-prop { transform-box: fill-box; transform-origin: center; animation: dr-spin .5s linear infinite; }
+.dr-hub { fill: var(--signal) !important; }
+.dr-plate-side rect { fill: #262B29; }
+.dr-plate rect { fill: #3B423F; stroke: #59625E; stroke-width: 2; }
+.dr-batt-side rect { fill: #B48A12; }
+.dr-batt rect { fill: var(--signal); }
+.dr-strap { stroke: #161A19 !important; stroke-width: 9; }
+.dr-cam-side rect { fill: #1F2422; }
+.dr-cam rect { fill: #4A524E; stroke: #6B7570; stroke-width: 2; }
+.dr-lens { fill: #0E1110 !important; stroke: #8A938E !important; stroke-width: 4; }
+.dr-glass { fill: var(--signal) !important; }
 .dr-body { animation: dr-hover 4s ease-in-out infinite; }
 @keyframes dr-spin { to { transform: rotate(360deg); } }
 @keyframes dr-hover { 50% { translate: 0 -10px; } }
 @media (prefers-reduced-motion: reduce) { .dr-prop, .dr-body { animation: none; } }
-.c-groups { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px clamp(24px, 4vw, 56px); }
-.c-groups h3 { font-size: var(--step-1); color: var(--signal); margin-bottom: 10px; }
-.c-groups ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.c-groups ul li { line-height: 1.4; color: color-mix(in srgb, var(--on-band) 86%, transparent); }
+/* The package contents as one running line */
+.c-roll { display: grid; gap: 12px; }
+.c-roll ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 0; font-family: var(--font-display); font-stretch: 112%; font-weight: 800; font-size: var(--step-2); line-height: 1.15; letter-spacing: -0.01em; }
+.c-roll li { display: flex; align-items: center; }
+.c-roll li:not(:last-child)::after { content: ""; width: .32em; height: .32em; border-radius: 50%; background: var(--signal); margin: 0 .55em; flex: none; }
 @media (max-width: 759px) {
   .c-deal-top { grid-template-columns: minmax(0, 1fr); }
   .c-drone { max-width: 250px; order: -1; justify-self: end; margin-bottom: -30px; }
-  .c-groups { grid-template-columns: minmax(0, 1fr); }
+  .c-roll ul { font-size: var(--step-1); flex-direction: column; gap: 7px; }
+  .c-roll li { display: block; padding-left: .95em; position: relative; }
+  .c-roll li:not(:last-child)::after { display: none; }
+  .c-roll li::before { content: ""; position: absolute; left: 0; top: .42em; width: .34em; height: .34em; border-radius: 50%; background: var(--signal); }
 }
