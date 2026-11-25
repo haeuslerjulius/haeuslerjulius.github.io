@@ -15,9 +15,9 @@ film_credit: "Geflogen von Julius Häusler aus Stephanskirchen. Ich plane die Ro
 for_whom: "Für Makler, Bauträger und Eigentümer, die verkaufen oder vermieten."
 
 price: "490&nbsp;€"            # regular price. &nbsp; keeps the € on the same line as the number
-intro_price: "340&nbsp;€"           # introductory price (about 30 % off); set intro_left to 0 to end the introductory price
+intro_price: "0&nbsp;€"             # the first three customers pay nothing; set intro_left to 0 to end the offer and show the regular price
 intro_left: 3
-intro_note: "Einführungspreis für die ersten Aufträge"
+intro_note: "Kostenlos für die ersten drei Kunden"
 price_note: "Endpreis: Als Kleinunternehmer berechne ich keine Umsatzsteuer. Größere Objekte und Gewerbe auf Anfrage."
 
 package:
